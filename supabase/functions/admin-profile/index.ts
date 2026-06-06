@@ -1,11 +1,12 @@
 import { createClient } from "npm:@supabase/supabase-js@2"
-import { corsHeaders } from "../_shared/cors.ts"
-import { LONG_BAN_DURATION } from "../_shared/helpers.ts"
+import { ensureAllowedOrigin, getCorsHeaders } from "../_shared/cors.ts"
+import { isUuid, LONG_BAN_DURATION } from "../_shared/helpers.ts"
 
 const ALLOWED_ROLES = new Set(["employee", "okk_member", "okk_head", "admin"])
 const ALLOWED_STATUSES = new Set(["pending", "approved", "blocked", "rejected"])
 
 async function requireAdmin(req: Request) {
+  const corsHeaders = getCorsHeaders(req)
   const authHeader = req.headers.get("Authorization")
   if (!authHeader) {
     throw new Error("unauthorized")
@@ -36,10 +37,11 @@ async function requireAdmin(req: Request) {
     throw new Error("forbidden")
   }
 
-  return { supabaseAdmin }
+  return { supabaseAdmin, userId: userData.user.id }
 }
 
 Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req)
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders })
   }
@@ -47,14 +49,21 @@ Deno.serve(async (req) => {
     return new Response("Method not allowed", { status: 405, headers: corsHeaders })
   }
 
+  if (!ensureAllowedOrigin(req)) {
+    return new Response(JSON.stringify({ error: "Недопустимый источник запроса." }), {
+      status: 403,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    })
+  }
+
   try {
-    const { supabaseAdmin } = await requireAdmin(req)
+    const { supabaseAdmin, userId } = await requireAdmin(req)
     const body = await req.json()
     const profileId = String(body.profileId || "").trim()
     const role = String(body.role || "").trim()
     const status = String(body.status || "").trim()
 
-    if (!profileId || !role || !status || !ALLOWED_ROLES.has(role) || !ALLOWED_STATUSES.has(status)) {
+    if (!profileId || !isUuid(profileId) || !role || !status || !ALLOWED_ROLES.has(role) || !ALLOWED_STATUSES.has(status)) {
       return new Response(JSON.stringify({ error: "Некорректный запрос." }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } })
     }
 
@@ -66,6 +75,10 @@ Deno.serve(async (req) => {
 
     if (!profile) {
       return new Response(JSON.stringify({ error: "Пользователь не найден." }), { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } })
+    }
+
+    if (profile.auth_user_id === userId && (role !== "admin" || status !== "approved")) {
+      return new Response(JSON.stringify({ error: "Нельзя снять доступ или роль администратора у своей текущей учетной записи." }), { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } })
     }
 
     await supabaseAdmin

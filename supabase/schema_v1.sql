@@ -69,6 +69,19 @@ create table if not exists public.password_reset_requests (
     created_at timestamptz not null default now()
 );
 
+create unique index if not exists password_reset_requests_one_pending_per_login
+    on public.password_reset_requests (login)
+    where status = 'pending';
+
+create index if not exists registration_requests_status_created_idx
+    on public.registration_requests (status, created_at desc);
+
+create index if not exists messages_status_created_idx
+    on public.messages (status, created_at desc);
+
+create index if not exists profiles_role_status_idx
+    on public.profiles (role, status, created_at desc);
+
 create or replace function public.current_profile_id()
 returns uuid
 language sql

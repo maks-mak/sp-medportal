@@ -1,8 +1,9 @@
 import { createClient } from "npm:@supabase/supabase-js@2"
-import { corsHeaders } from "../_shared/cors.ts"
-import { LONG_BAN_DURATION } from "../_shared/helpers.ts"
+import { ensureAllowedOrigin, getCorsHeaders } from "../_shared/cors.ts"
+import { isUuid, LONG_BAN_DURATION } from "../_shared/helpers.ts"
 
 async function getAdminContext(req: Request) {
+  const corsHeaders = getCorsHeaders(req)
   const authHeader = req.headers.get("Authorization")
   if (!authHeader) {
     return { error: new Response(JSON.stringify({ error: "Нет авторизации." }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }) }
@@ -38,12 +39,20 @@ async function getAdminContext(req: Request) {
 }
 
 Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req)
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders })
   }
 
   if (req.method !== "POST") {
     return new Response("Method not allowed", { status: 405, headers: corsHeaders })
+  }
+
+  if (!ensureAllowedOrigin(req)) {
+    return new Response(JSON.stringify({ error: "Недопустимый источник запроса." }), {
+      status: 403,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    })
   }
 
   const context = await getAdminContext(req)
@@ -56,7 +65,7 @@ Deno.serve(async (req) => {
   const requestId = String(body.requestId || "").trim()
   const action = String(body.action || "").trim()
 
-  if (!requestId || !["approve", "reject"].includes(action)) {
+  if (!requestId || !isUuid(requestId) || !["approve", "reject"].includes(action)) {
     return new Response(JSON.stringify({ error: "Некорректный запрос." }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } })
   }
 

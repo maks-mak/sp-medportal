@@ -1,5 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2"
-import { corsHeaders } from "../_shared/cors.ts"
+import { ensureAllowedOrigin, getCorsHeaders } from "../_shared/cors.ts"
+import { isUuid } from "../_shared/helpers.ts"
 
 function generateTemporaryPassword() {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$%"
@@ -11,6 +12,7 @@ function generateTemporaryPassword() {
 }
 
 async function requireAdmin(req: Request) {
+  const corsHeaders = getCorsHeaders(req)
   const authHeader = req.headers.get("Authorization")
   if (!authHeader) {
     throw new Error("unauthorized")
@@ -45,6 +47,7 @@ async function requireAdmin(req: Request) {
 }
 
 Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req)
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders })
   }
@@ -52,12 +55,19 @@ Deno.serve(async (req) => {
     return new Response("Method not allowed", { status: 405, headers: corsHeaders })
   }
 
+  if (!ensureAllowedOrigin(req)) {
+    return new Response(JSON.stringify({ error: "Недопустимый источник запроса." }), {
+      status: 403,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    })
+  }
+
   try {
     const { supabaseAdmin, adminProfile } = await requireAdmin(req)
     const body = await req.json()
     const requestId = String(body.requestId || "").trim()
 
-    if (!requestId) {
+    if (!requestId || !isUuid(requestId)) {
       return new Response(JSON.stringify({ error: "Некорректный запрос." }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } })
     }
 

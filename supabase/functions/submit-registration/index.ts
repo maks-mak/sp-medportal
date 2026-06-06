@@ -1,5 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2"
-import { corsHeaders } from "../_shared/cors.ts"
+import { ensureAllowedOrigin, getCorsHeaders } from "../_shared/cors.ts"
 import {
   buildAuthEmail,
   json,
@@ -9,12 +9,21 @@ import {
 } from "../_shared/helpers.ts"
 
 Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req)
+
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders })
   }
 
   if (req.method !== "POST") {
     return new Response("Method not allowed", { status: 405, headers: corsHeaders })
+  }
+
+  if (!ensureAllowedOrigin(req)) {
+    return new Response(JSON.stringify({ error: "Недопустимый источник запроса." }), {
+      status: 403,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    })
   }
 
   try {
@@ -48,6 +57,17 @@ Deno.serve(async (req) => {
       .maybeSingle()
 
     if (existingProfile || (existingRequest && existingRequest.status === "pending")) {
+      return new Response(JSON.stringify({ error: "Такой логин уже занят или ожидает одобрения." }), {
+        status: 409,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      })
+    }
+
+    const { data: existingEmailUser } = await supabaseAdmin.auth.admin.listUsers({
+      page: 1,
+      perPage: 200,
+    })
+    if ((existingEmailUser?.users || []).some((item) => item.email === authEmail)) {
       return new Response(JSON.stringify({ error: "Такой логин уже занят или ожидает одобрения." }), {
         status: 409,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

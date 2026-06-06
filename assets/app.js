@@ -206,6 +206,133 @@
             text: "Причина, решение, ответственный, срок, тип меры и отдельная проверка эффективности после внедрения."
         }
     ];
+    const adverseEventLifecycle = [
+        {
+            title: "1. Сообщение о событии",
+            owner: "Сотрудник / заявитель",
+            body: "Сотрудник подает НС через форму, указывает факты, место, время, участников, последствия и контакт для обратной связи. Сообщение нельзя задерживать до конца смены, если есть риск для пациента или повторения случая."
+        },
+        {
+            title: "2. Первичный triage",
+            owner: "Специалист ОКК / дежурный куратор",
+            body: "ОКК верифицирует полноту сигнала, определяет срочность, категорию, повторяемость и необходимость немедленных защитных действий: остановить процесс, изолировать оборудование, уведомить руководителя смены."
+        },
+        {
+            title: "3. Маршрутизация и уведомление",
+            owner: "ОКК и БМД",
+            body: "Случай назначается куратору. При критическом риске сразу уведомляются руководитель подразделения, профильный зам. главного врача, при необходимости инженер по МИ, эпидемиолог или фармаконадзор."
+        },
+        {
+            title: "4. Разбор и сбор материалов",
+            owner: "Куратор случая",
+            body: "Собираются документы, объяснения, выписки из системы, сведения об оборудовании и лекарственных назначениях. Разбор должен отделять факты от оценок и исключать давление на заявителя."
+        },
+        {
+            title: "5. Причины и меры",
+            owner: "ОКК + руководитель подразделения",
+            body: "Определяются коренные причины, формируется набор мер: немедленные, корректирующие, предупредительные, обучение, пересмотр СОП, контроль среды, настройка маршрута пациента."
+        },
+        {
+            title: "6. Информирование сторон",
+            owner: "ОКК / руководитель",
+            body: "Заявитель получает обратную связь, подразделение — решение и сроки, руководство — сводную информацию по критическим и повторным случаям. Коммуникация фиксируется, даже если разбор продолжается."
+        },
+        {
+            title: "7. Проверка эффективности",
+            owner: "ОКК и БМД",
+            body: "После внедрения мер проверяется, снизился ли риск: нет ли повторов, соблюдаются ли новые действия, прошли ли сотрудники обучение, подтверждена ли работоспособность оборудования и процессов."
+        },
+        {
+            title: "8. Закрытие случая",
+            owner: "Руководитель ОКК / уполномоченный администратор",
+            body: "Случай закрывается только когда зафиксированы причина, меры, ответственные, сроки, доказательства выполнения и итог проверки эффективности. При незавершенных мерах случай остается открытым."
+        }
+    ];
+    const adverseEventOwnership = [
+        {
+            role: "Заявитель",
+            responsibility: "Сообщает факты без задержки, прикладывает минимально достаточное описание и при необходимости остается на связи для уточнений.",
+            result: "Старт сигнала и первичное содержание случая."
+        },
+        {
+            role: "Специалист ОКК",
+            responsibility: "Принимает случай, проверяет полноту, категоризирует, определяет срочность и запускает маршрут разбора.",
+            result: "Карточка случая, куратор, статус и первичные действия."
+        },
+        {
+            role: "Начальник ОКК",
+            responsibility: "Берет критические и конфликтные случаи, утверждает эскалацию, контролирует качество разбора и закрытие.",
+            result: "Решение по сложным случаям и санкция на закрытие."
+        },
+        {
+            role: "Руководитель подразделения",
+            responsibility: "Обеспечивает исполнение мер на месте, участие сотрудников, доступ к документам и отсутствие давления на заявителя.",
+            result: "Исполнение мер и организационные изменения."
+        },
+        {
+            role: "Профильный эксперт",
+            responsibility: "Подключается по тематике: эпидемиолог, инженер по МИ, фармаконадзор, зам. главного врача, главная медсестра.",
+            result: "Экспертное заключение и профессиональные меры."
+        },
+        {
+            role: "Администратор портала",
+            responsibility: "Не разбирает клиническую часть, но обеспечивает доступы, защищённые контуры, аудит и сохранность данных.",
+            result: "Техническая устойчивость и контроль доступа."
+        }
+    ];
+    const adverseEventEscalation = [
+        {
+            title: "Немедленная эскалация",
+            text: "Летальный исход, тяжелый вред, непосредственная угроза жизни, грубая ошибка маршрутизации, отказ критического оборудования, вспышка инфекционного риска. Уведомление — сразу, без ожидания полного разбора."
+        },
+        {
+            title: "Эскалация в течение 24 часов",
+            text: "Повторный случай, серьезный организационный сбой, конфликт с пациентом/родственниками, существенная ошибка в лекарственной терапии, давление на сотрудника после сообщения."
+        },
+        {
+            title: "Обычный маршрут",
+            text: "Случаи без немедленного риска, но требующие анализа процесса, обучения, корректировки СОП и профилактики повторов."
+        }
+    ];
+    const adverseEventCommunication = [
+        {
+            title: "Кому сообщаем",
+            text: "Заявителю, куратору, руководителю подразделения, профильному эксперту и руководству — по уровню риска и последствиям."
+        },
+        {
+            title: "Как сообщаем",
+            text: "Через защищённый контур ОКК, служебные уведомления, рабочий реестр и отдельные эскалационные сообщения по критическим случаям. Не использовать открытые чаты для чувствительных данных."
+        },
+        {
+            title: "Что обязано быть в обратной связи",
+            text: "Подтверждение принятия сигнала, текущий статус, ответственный куратор, нужны ли уточнения, какие меры уже запущены и когда ждать следующего обновления."
+        },
+        {
+            title: "Когда обновлять статус",
+            text: "После triage, после решения об эскалации, после определения мер, после проверки эффективности и при закрытии. Тишина дольше согласованного срока недопустима."
+        }
+    ];
+    const adverseEventClosureChecklist = [
+        "Категория, подкатегория, срочность и последствия заполнены",
+        "Назначен куратор и определены привлеченные эксперты",
+        "Зафиксированы факты, материалы и объяснения сторон",
+        "Определены коренные причины, а не только внешние симптомы",
+        "Назначены меры, сроки и ответственные исполнители",
+        "Проведена обратная связь заявителю и подразделению",
+        "Есть подтверждение выполнения мер",
+        "Проверка эффективности завершена и риск снижен"
+    ];
+    const adverseEventCaseFields = [
+        {
+            title: "Что должно быть в карточке случая",
+            items: ["дата и время", "подразделение", "описание фактов", "категория и подкатегория", "срочность", "последствия", "куратор", "статус", "меры"]
+        },
+        {
+            title: "Что не должно теряться",
+            items: ["контакт с заявителем", "следы повторяемости", "информация о давлении", "связанные документы", "оборудование / серия", "лекарство / дозировка"]
+        }
+    ];
+
     const qualityResourceCards = [
         {
             title: "Рабочий реестр ОКК",
@@ -1818,6 +1945,19 @@
             }).join("");
         }
 
+        const lifecycleGrid = document.getElementById("quality-lifecycle-grid");
+        if (lifecycleGrid) {
+            lifecycleGrid.innerHTML = adverseEventLifecycle.map(function (item) {
+                return [
+                    '<article class="quality-step-card quality-lifecycle-card">',
+                    "  <strong>" + escapeHtml(item.title) + "</strong>",
+                    '  <span class="quality-owner-line">Ответственный: ' + escapeHtml(item.owner) + "</span>",
+                    "  <p>" + escapeHtml(item.body) + "</p>",
+                    "</article>"
+                ].join("");
+            }).join("");
+        }
+
         const taxonomyRoot = document.getElementById("quality-taxonomy-summary");
         if (taxonomyRoot) {
             const groups = [
@@ -1842,6 +1982,20 @@
             }).join("");
         }
 
+        const ownershipGrid = document.getElementById("quality-ownership-grid");
+        if (ownershipGrid) {
+            ownershipGrid.innerHTML = adverseEventOwnership.map(function (item) {
+                return [
+                    '<article class="quality-step-card quality-lifecycle-card">',
+                    "  <strong>" + escapeHtml(item.role) + "</strong>",
+                    '  <span class="quality-owner-line">Зона ответственности</span>',
+                    "  <p>" + escapeHtml(item.responsibility) + "</p>",
+                    '  <span class="quality-result-line">Результат: ' + escapeHtml(item.result) + "</span>",
+                    "</article>"
+                ].join("");
+            }).join("");
+        }
+
         const curatorGrid = document.getElementById("quality-curator-grid");
         if (curatorGrid) {
             curatorGrid.innerHTML = qualityTaxonomy.curators.map(function (item) {
@@ -1861,6 +2015,58 @@
                     '<article class="quality-mini-card">',
                     "  <strong>" + escapeHtml(item.title) + "</strong>",
                     "  <span>" + escapeHtml(item.text) + "</span>",
+                    "</article>"
+                ].join("");
+            }).join("");
+        }
+
+        const escalationGrid = document.getElementById("quality-escalation-grid");
+        if (escalationGrid) {
+            escalationGrid.innerHTML = adverseEventEscalation.map(function (item) {
+                return [
+                    '<article class="quality-mini-card">',
+                    "  <strong>" + escapeHtml(item.title) + "</strong>",
+                    "  <span>" + escapeHtml(item.text) + "</span>",
+                    "</article>"
+                ].join("");
+            }).join("");
+        }
+
+        const communicationGrid = document.getElementById("quality-communication-grid");
+        if (communicationGrid) {
+            communicationGrid.innerHTML = adverseEventCommunication.map(function (item) {
+                return [
+                    '<article class="quality-mini-card">',
+                    "  <strong>" + escapeHtml(item.title) + "</strong>",
+                    "  <span>" + escapeHtml(item.text) + "</span>",
+                    "</article>"
+                ].join("");
+            }).join("");
+        }
+
+        const closureGrid = document.getElementById("quality-closure-grid");
+        if (closureGrid) {
+            closureGrid.innerHTML = adverseEventClosureChecklist.map(function (item) {
+                return [
+                    '<article class="quality-mini-card quality-check-card">',
+                    '  <strong>✓ Контрольный пункт</strong>',
+                    "  <span>" + escapeHtml(item) + "</span>",
+                    "</article>"
+                ].join("");
+            }).join("");
+        }
+
+        const caseFieldsGrid = document.getElementById("quality-casefields-grid");
+        if (caseFieldsGrid) {
+            caseFieldsGrid.innerHTML = adverseEventCaseFields.map(function (group) {
+                return [
+                    '<article class="quality-mini-card">',
+                    "  <strong>" + escapeHtml(group.title) + "</strong>",
+                    '  <div class="quality-chip-wrap">',
+                    group.items.map(function (item) {
+                        return '<span class="quality-chip">' + escapeHtml(item) + '</span>';
+                    }).join(''),
+                    "  </div>",
                     "</article>"
                 ].join("");
             }).join("");

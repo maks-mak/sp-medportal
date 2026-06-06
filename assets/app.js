@@ -1,5 +1,11 @@
 (function () {
     const storageKey = "spMedPortalSession";
+    const adminCredentials = {
+        username: "admin",
+        saltBase64: "aBfTpOYw64maNA1BaTymWQ==",
+        hashBase64: "+yyl3ljfrPf5EFrhdgdi6lUsMc3xbbvfmuL034P2Hpc=",
+        iterations: 120000
+    };
 
     const profileMap = {
         doctor: {
@@ -43,16 +49,55 @@
 
     function getProfile(email) {
         const localPart = String(email || "").split("@")[0].toLowerCase();
-        if (localPart.includes("doctor")) {
-            return profileMap.doctor;
-        }
-        if (localPart.includes("nurse")) {
-            return profileMap.nurse;
-        }
         if (localPart.includes("admin")) {
             return profileMap.admin;
         }
         return profileMap.default;
+    }
+
+    function base64ToBytes(base64) {
+        const binary = window.atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let index = 0; index < binary.length; index += 1) {
+            bytes[index] = binary.charCodeAt(index);
+        }
+        return bytes;
+    }
+
+    function bytesToBase64(bytes) {
+        let binary = "";
+        bytes.forEach(function (value) {
+            binary += String.fromCharCode(value);
+        });
+        return window.btoa(binary);
+    }
+
+    async function verifyPassword(username, password) {
+        if (username !== adminCredentials.username || !window.crypto || !window.crypto.subtle) {
+            return false;
+        }
+
+        const keyMaterial = await window.crypto.subtle.importKey(
+            "raw",
+            new TextEncoder().encode(password),
+            "PBKDF2",
+            false,
+            ["deriveBits"]
+        );
+
+        const derivedBits = await window.crypto.subtle.deriveBits(
+            {
+                name: "PBKDF2",
+                salt: base64ToBytes(adminCredentials.saltBase64),
+                iterations: adminCredentials.iterations,
+                hash: "SHA-256"
+            },
+            keyMaterial,
+            256
+        );
+
+        const derivedHash = bytesToBase64(new Uint8Array(derivedBits));
+        return derivedHash === adminCredentials.hashBase64;
     }
 
     function formatDate() {
@@ -76,14 +121,21 @@
             return;
         }
 
-        form.addEventListener("submit", function (event) {
+        form.addEventListener("submit", async function (event) {
             event.preventDefault();
             const formData = new FormData(form);
             const email = String(formData.get("email") || "").trim();
             const password = String(formData.get("password") || "").trim();
 
             if (!email || !password || password.length < 6) {
-                message.textContent = "Проверьте почту и длину пароля.";
+                message.textContent = "Проверьте логин и длину пароля.";
+                message.className = "form-message error";
+                return;
+            }
+
+            const isValid = await verifyPassword(email, password);
+            if (!isValid) {
+                message.textContent = "Неверный логин или пароль.";
                 message.className = "form-message error";
                 return;
             }
@@ -97,7 +149,7 @@
                 signedInAt: new Date().toISOString()
             });
 
-            message.textContent = "Вход выполнен. Переходим в кабинет.";
+            message.textContent = "Вход выполнен. Открываем панель администратора.";
             message.className = "form-message success";
 
             window.setTimeout(function () {

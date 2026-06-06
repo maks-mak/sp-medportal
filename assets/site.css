@@ -277,7 +277,7 @@ h3 {
 .metric-card,
 .content-card {
     border-radius: var(--radius-lg);
-    padding: 22px;
+    padding: 26px;
 }
 
 .card-heading {
@@ -410,7 +410,7 @@ h3 {
 }
 
 .ghost-btn {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.68);
     border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
@@ -521,7 +521,7 @@ h3 {
 }
 
 .profile-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.68);
 }
 
 .profile-card strong {
@@ -556,7 +556,7 @@ h3 {
     padding: 0 14px;
     border-radius: 14px;
     color: var(--muted);
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.68);
 }
 
 .sidebar-logout {
@@ -633,7 +633,7 @@ h3 {
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
     padding: 18px;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.68);
 }
 
 .doc-item strong,
@@ -710,10 +710,17 @@ h3 {
 }
 
 .portal-theme {
+    --text: #17324d;
+    --muted: rgba(23, 50, 77, 0.72);
+    --soft: rgba(23, 50, 77, 0.52);
+    --line: rgba(91, 143, 201, 0.18);
+    --panel: rgba(255, 255, 255, 0.88);
+    --panel-2: rgba(255, 252, 246, 0.94);
+    --shadow: 0 24px 70px rgba(95, 126, 163, 0.14);
     background:
-        radial-gradient(circle at top right, rgba(218, 180, 62, 0.09), transparent 18%),
-        radial-gradient(circle at top left, rgba(52, 89, 156, 0.24), transparent 24%),
-        linear-gradient(180deg, #091425 0%, #0c1930 42%, #091321 100%);
+        radial-gradient(circle at top right, rgba(255, 215, 158, 0.35), transparent 18%),
+        radial-gradient(circle at top left, rgba(146, 203, 255, 0.36), transparent 24%),
+        linear-gradient(180deg, #f6fbff 0%, #eef6ff 40%, #fdf9f2 100%);
 }
 
 .portal-shell {
@@ -754,11 +761,11 @@ h3 {
     width: 56px;
     height: 56px;
     border-radius: 18px;
-    background: linear-gradient(180deg, rgba(16, 34, 60, 0.95), rgba(10, 22, 40, 0.96));
-    border: 1px solid rgba(214, 180, 66, 0.34);
-    color: #f0c94b;
+    background: linear-gradient(180deg, rgba(255, 248, 232, 0.98), rgba(242, 248, 255, 0.96));
+    border: 1px solid rgba(223, 189, 112, 0.45);
+    color: #cf9b2f;
     font-size: 1.5rem;
-    box-shadow: 0 12px 30px rgba(5, 10, 20, 0.32);
+    box-shadow: 0 14px 34px rgba(147, 177, 214, 0.18);
 }
 
 .portal-brand-copy {
@@ -774,7 +781,7 @@ h3 {
 }
 
 .portal-brand-copy small {
-    color: rgba(240, 201, 75, 0.82);
+    color: rgba(180, 137, 48, 0.9);
     text-transform: uppercase;
     letter-spacing: 0.18em;
     font-size: 0.75rem;
@@ -786,7 +793,7 @@ h3 {
     padding: 10px 16px;
     border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(180deg, rgba(18, 30, 51, 0.9), rgba(15, 25, 42, 0.86));
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 250, 244, 0.96));
 }
 
 .portal-user-pill {
@@ -811,15 +818,15 @@ h3 {
 }
 
 .portal-user-meta small {
-    color: rgba(255, 255, 255, 0.48);
+    color: rgba(23, 50, 77, 0.48);
 }
 
 .portal-role-pill {
     display: inline-flex;
     padding: 6px 12px;
     border-radius: 999px;
-    background: rgba(214, 180, 66, 0.14);
-    color: #e0bc4d;
+    background: rgba(219, 181, 96, 0.14);
+    color: #b48426;
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -848,14 +855,14 @@ h3 {
 
 .portal-admin-btn,
 .portal-banner-btn {
-    background: linear-gradient(180deg, #e1b735, #c99c21);
-    color: #16213a;
-    border: 1px solid rgba(255, 221, 132, 0.46);
+    background: linear-gradient(180deg, #efc85f, #e2b247);
+    color: #5b4310;
+    border: 1px solid rgba(226, 178, 71, 0.42);
 }
 
 .portal-ghost-btn {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(144, 184, 224, 0.28);
     color: var(--text);
 }
 
@@ -870,7 +877,7 @@ h3 {
 .portal-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 330px;
-    gap: 20px;
+    gap: 24px;
 }
 
 .portal-main-column,
@@ -884,12 +891,12 @@ h3 {
 .portal-wide-banner {
     border-radius: 28px;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    background: linear-gradient(180deg, rgba(16, 28, 49, 0.93), rgba(13, 24, 43, 0.92));
-    box-shadow: 0 24px 80px rgba(2, 8, 18, 0.38);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(250, 252, 255, 0.92));
+    box-shadow: 0 24px 60px rgba(119, 151, 188, 0.14);
 }
 
 .portal-panel {
-    padding: 22px;
+    padding: 26px;
 }
 
 .portal-intro {
@@ -900,7 +907,7 @@ h3 {
 
 .portal-kicker {
     margin: 0 0 10px;
-    color: #d5b65a;
+    color: #b78728;
     font-size: 0.76rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -916,7 +923,7 @@ h3 {
 
 .portal-lead {
     margin-top: 12px;
-    color: rgba(255, 255, 255, 0.68);
+    color: rgba(23, 50, 77, 0.68);
     line-height: 1.72;
 }
 
@@ -929,8 +936,8 @@ h3 {
 .portal-status-item,
 .portal-counter {
     border-radius: 16px;
-    border: 1px solid rgba(214, 180, 66, 0.16);
-    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(229, 192, 115, 0.22);
+    background: rgba(255, 248, 238, 0.9);
 }
 
 .portal-status-item {
@@ -939,7 +946,7 @@ h3 {
 
 .portal-status-item span {
     display: block;
-    color: rgba(255, 255, 255, 0.48);
+    color: rgba(23, 50, 77, 0.48);
     font-size: 0.84rem;
     margin-bottom: 6px;
 }
@@ -956,7 +963,7 @@ h3 {
 
 .portal-counter {
     padding: 10px 14px;
-    color: #e0bc4d;
+    color: #b8882a;
     font-size: 0.82rem;
     font-weight: 800;
 }
@@ -973,8 +980,8 @@ h3 {
     gap: 14px;
     padding: 18px;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(151, 189, 226, 0.18);
 }
 
 .notice-read {
@@ -993,7 +1000,7 @@ h3 {
 .admin-note,
 .mini-link-card span,
 .service-tile p {
-    color: rgba(255, 255, 255, 0.62);
+    color: rgba(23, 50, 77, 0.62);
 }
 
 .notice-copy p {
@@ -1003,7 +1010,7 @@ h3 {
 .notice-check-btn {
     border: 1px solid rgba(214, 180, 66, 0.28);
     background: rgba(214, 180, 66, 0.12);
-    color: #e0bc4d;
+    color: #b8882a;
     border-radius: 14px;
     font-weight: 800;
     cursor: pointer;
@@ -1028,7 +1035,7 @@ h3 {
 .service-tile,
 .mini-link-card {
     display: block;
-    padding: 22px;
+    padding: 26px;
     border-radius: 24px;
     background: linear-gradient(180deg, rgba(23, 37, 63, 0.96), rgba(15, 27, 49, 0.96));
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -1067,7 +1074,7 @@ h3 {
 
 .service-tile-arrow,
 .service-tile-action {
-    color: #d5b65a;
+    color: #b78728;
     font-weight: 800;
 }
 
@@ -1130,7 +1137,7 @@ h3 {
     width: 100%;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(6, 13, 26, 0.7);
+    background: rgba(255, 255, 255, 0.86);
     color: var(--text);
     padding: 14px 16px;
 }
@@ -1190,7 +1197,7 @@ h3 {
     padding: 16px 18px;
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.68);
 }
 
 .register-info-item strong {
@@ -1216,7 +1223,7 @@ h3 {
     padding: 0 14px;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(6, 13, 26, 0.7);
+    background: rgba(255, 255, 255, 0.86);
     color: var(--text);
 }
 
@@ -1225,7 +1232,7 @@ h3 {
 }
 
 .service-tile-locked .service-tile-action {
-    color: rgba(255, 255, 255, 0.48);
+    color: rgba(23, 50, 77, 0.48);
 }
 
 .admin-grid {
@@ -1247,13 +1254,13 @@ h3 {
     padding: 18px;
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.68);
 }
 
 .admin-summary-card span,
 .quality-stat-card span {
     display: block;
-    color: rgba(255, 255, 255, 0.62);
+    color: rgba(23, 50, 77, 0.62);
     margin-bottom: 8px;
 }
 
@@ -1274,19 +1281,19 @@ h3 {
     padding: 18px;
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.68);
 }
 
 .admin-card p {
     margin-top: 8px;
-    color: rgba(255, 255, 255, 0.62);
+    color: rgba(23, 50, 77, 0.62);
     line-height: 1.6;
 }
 
 .password-policy-note,
 .temp-password-line {
     margin-top: 14px;
-    color: rgba(255, 255, 255, 0.62);
+    color: rgba(23, 50, 77, 0.62);
     line-height: 1.6;
 }
 
@@ -1303,12 +1310,12 @@ h3 {
     display: inline-flex;
     gap: 8px;
     align-items: center;
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(23, 50, 77, 0.72);
 }
 
 .quality-role-banner {
     margin: 20px 0;
-    color: #e0bc4d;
+    color: #b8882a;
 }
 
 .quality-shell {
@@ -1343,7 +1350,7 @@ h3 {
 .quality-taxonomy-card,
 .quality-action-card {
     border: 1px solid var(--line);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(250, 252, 255, 0.9));
     box-shadow: var(--shadow);
     backdrop-filter: blur(18px);
 }
@@ -1357,7 +1364,7 @@ h3 {
 }
 
 .quality-next-step {
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(23, 50, 77, 0.72);
     line-height: 1.7;
 }
 
@@ -1404,7 +1411,7 @@ h3 {
 .quality-action-card:hover,
 .quality-mini-link:hover {
     transform: translateY(-4px);
-    border-color: rgba(141, 224, 255, 0.28);
+    border-color: rgba(214, 176, 93, 0.28);
 }
 
 .quality-action-top {
@@ -1420,8 +1427,8 @@ h3 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(141, 224, 255, 0.08);
-    border: 1px solid rgba(141, 224, 255, 0.2);
+    background: rgba(248, 238, 212, 0.9);
+    border: 1px solid rgba(229, 192, 115, 0.3);
     font-size: 1.25rem;
 }
 
@@ -1434,7 +1441,7 @@ h3 {
 .quality-action-card p,
 .quality-step-card p,
 .quality-mini-card span {
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(23, 50, 77, 0.72);
     line-height: 1.7;
 }
 
@@ -1450,7 +1457,7 @@ h3 {
     padding: 8px 12px;
     border-radius: 999px;
     border: 1px solid rgba(141, 224, 255, 0.16);
-    background: rgba(141, 224, 255, 0.07);
+    background: rgba(247, 239, 221, 0.9);
     color: var(--text);
     font-size: 0.9rem;
 }

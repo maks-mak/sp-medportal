@@ -37,6 +37,28 @@ export function isRequestBodyTooLarge(req: Request, maxBytes = MAX_JSON_BODY_BYT
   return Number.isFinite(contentLength) && contentLength > maxBytes
 }
 
+export async function readLimitedJson(req: Request, maxBytes = MAX_JSON_BODY_BYTES) {
+  if (!hasJsonContentType(req)) {
+    return { error: "Ожидается JSON-запрос.", status: 415 }
+  }
+
+  if (isRequestBodyTooLarge(req, maxBytes)) {
+    return { error: "Запрос слишком большой.", status: 413 }
+  }
+
+  const body = await req.text()
+  const bodyBytes = new TextEncoder().encode(body).byteLength
+  if (bodyBytes > maxBytes) {
+    return { error: "Запрос слишком большой.", status: 413 }
+  }
+
+  try {
+    return { data: JSON.parse(body) as Record<string, unknown> }
+  } catch (_error) {
+    return { error: "Некорректный JSON.", status: 400 }
+  }
+}
+
 export function validateRegistrationPayload(payload: Record<string, unknown>) {
   const fullName = String(payload.full_name || "").trim()
   const departmentType = String(payload.department_type || "").trim()
@@ -68,5 +90,29 @@ export function validateRegistrationPayload(payload: Record<string, unknown>) {
     position,
     requestedLogin,
     requestedPassword,
+  }
+}
+
+export function validatePasswordResetPayload(payload: Record<string, unknown>) {
+  const login = String(payload.login || "").trim().toLowerCase()
+  const departmentName = String(payload.department_name || "").trim()
+  const note = String(payload.note || "").trim()
+
+  if (!login || !departmentName) {
+    return { error: "Укажите логин и подразделение." }
+  }
+
+  if (!LOGIN_PATTERN.test(login)) {
+    return { error: "Некорректный формат логина." }
+  }
+
+  if (departmentName.length > 120 || note.length > 500) {
+    return { error: "Комментарий или подразделение слишком длинные." }
+  }
+
+  return {
+    login,
+    departmentName,
+    note,
   }
 }

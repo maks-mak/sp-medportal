@@ -24,6 +24,7 @@
         ? window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey)
         : null;
     const secureServerModeReady = hasSupabaseConfig;
+    const passwordResetFunctionReady = Boolean(config.passwordResetFunctionReady);
     const defaultRegistryUrl = "https://docs.google.com/spreadsheets/d/1_b5-VF9Nvk8Rn4i9W7Tvx4SAWWmhAmti2V9hR-KeTCU/edit?gid=633307791#gid=633307791";
     const qualityWorkbookUrl = "https://docs.google.com/spreadsheets/d/1Y1HCTc9C2_FpMl3q2HbhswrUBaQCSZPqQFg8id_lUUQ/edit?gid=1322485474#gid=1322485474";
     const adverseEventUrl = "https://forms.yandex.ru/u/68be9fa4e010dbff11d321b6";
@@ -657,6 +658,39 @@
             body: payload
         });
         return result;
+    }
+
+    async function submitPasswordResetRequest(login, department, note) {
+        if (passwordResetFunctionReady) {
+            return invokeEdgeFunction("submit-password-reset", {
+                login: login,
+                department_name: department,
+                note: note
+            });
+        }
+
+        const existing = await supabaseClient
+            .from("password_reset_requests")
+            .select("id")
+            .eq("login", login)
+            .eq("status", "pending");
+
+        if (existing.error) {
+            return { error: existing.error };
+        }
+
+        if (existing.data && existing.data.length) {
+            return { data: { error: "Запрос на сброс уже отправлен и ожидает обработки." } };
+        }
+
+        return supabaseClient
+            .from("password_reset_requests")
+            .insert({
+                login: login,
+                department_name: department,
+                note: note,
+                status: "pending"
+            });
     }
 
     async function fetchServerNotices() {
@@ -1583,7 +1617,7 @@
         }
 
         const message = document.getElementById("forgot-message");
-        form.addEventListener("submit", function (event) {
+        form.addEventListener("submit", async function (event) {
             event.preventDefault();
             const formData = new FormData(form);
             if (String(formData.get("website") || "").trim()) {
@@ -1610,33 +1644,20 @@
             }
 
             if (isServerAuthAvailable()) {
-                supabaseClient
-                    .from("password_reset_requests")
-                    .select("id")
-                    .eq("login", login)
-                    .eq("status", "pending")
-                    .then(function (existing) {
-                        if (existing.data && existing.data.length) {
-                            showMessage(message, "Запрос на сброс уже отправлен и ожидает обработки.", "error");
-                            return;
-                        }
-                        supabaseClient
-                            .from("password_reset_requests")
-                            .insert({
-                                login: login,
-                                department_name: department,
-                                note: note,
-                                status: "pending"
-                            })
-                            .then(function (result) {
-                                if (result.error) {
-                                    showMessage(message, "Не удалось отправить запрос на восстановление.", "error");
-                                    return;
-                                }
-                                form.reset();
-                                showMessage(message, "Запрос на восстановление отправлен администратору.", "success");
-                            });
-                    });
+                const result = await submitPasswordResetRequest(login, department, note);
+
+                if (result.error) {
+                    showMessage(message, result.error.message || "Не удалось отправить запрос на восстановление.", "error");
+                    return;
+                }
+
+                if (result.data && result.data.error) {
+                    showMessage(message, result.data.error, "error");
+                    return;
+                }
+
+                form.reset();
+                showMessage(message, "Запрос на восстановление отправлен администратору.", "success");
                 return;
             }
 

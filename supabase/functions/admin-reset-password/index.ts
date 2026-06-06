@@ -1,6 +1,6 @@
-import { createClient } from "npm:@supabase/supabase-js@2"
+import { createClient } from "npm:@supabase/supabase-js@2.107.0"
 import { ensureAllowedOrigin, getCorsHeaders } from "../_shared/cors.ts"
-import { hasJsonContentType, isRequestBodyTooLarge, isUuid } from "../_shared/helpers.ts"
+import { isUuid, readLimitedJson } from "../_shared/helpers.ts"
 
 function generateTemporaryPassword() {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$%"
@@ -62,23 +62,17 @@ Deno.serve(async (req) => {
     })
   }
 
-  if (!hasJsonContentType(req)) {
-    return new Response(JSON.stringify({ error: "Ожидается JSON-запрос." }), {
-      status: 415,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    })
-  }
-
-  if (isRequestBodyTooLarge(req)) {
-    return new Response(JSON.stringify({ error: "Запрос слишком большой." }), {
-      status: 413,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    })
-  }
-
   try {
     const { supabaseAdmin, adminProfile } = await requireAdmin(req)
-    const body = await req.json()
+    const bodyResult = await readLimitedJson(req)
+    if ("error" in bodyResult) {
+      return new Response(JSON.stringify({ error: bodyResult.error }), {
+        status: bodyResult.status,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      })
+    }
+
+    const body = bodyResult.data
     const requestId = String(body.requestId || "").trim()
 
     if (!requestId || !isUuid(requestId)) {

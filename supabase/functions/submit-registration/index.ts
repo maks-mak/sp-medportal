@@ -1,10 +1,9 @@
-import { createClient } from "npm:@supabase/supabase-js@2"
+import { createClient } from "npm:@supabase/supabase-js@2.107.0"
 import { ensureAllowedOrigin, getCorsHeaders } from "../_shared/cors.ts"
 import {
   buildAuthEmail,
-  hasJsonContentType,
-  isRequestBodyTooLarge,
   LONG_BAN_DURATION,
+  readLimitedJson,
   shortName,
   validateRegistrationPayload,
 } from "../_shared/helpers.ts"
@@ -27,22 +26,16 @@ Deno.serve(async (req) => {
     })
   }
 
-  if (!hasJsonContentType(req)) {
-    return new Response(JSON.stringify({ error: "Ожидается JSON-запрос." }), {
-      status: 415,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    })
-  }
-
-  if (isRequestBodyTooLarge(req)) {
-    return new Response(JSON.stringify({ error: "Запрос слишком большой." }), {
-      status: 413,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    })
-  }
-
   try {
-    const payload = await req.json()
+    const payloadResult = await readLimitedJson(req)
+    if ("error" in payloadResult) {
+      return new Response(JSON.stringify({ error: payloadResult.error }), {
+        status: payloadResult.status,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      })
+    }
+
+    const payload = payloadResult.data
     const parsed = validateRegistrationPayload(payload)
 
     if ("error" in parsed) {

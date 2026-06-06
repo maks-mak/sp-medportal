@@ -1,6 +1,6 @@
 # Быстрый запуск backend для SP MedPortal
 
-Боевой backend состоит из SQL-схемы, секретов проекта и четырёх `Edge Functions`.
+Боевой backend состоит из SQL-схемы, секретов проекта и пяти `Edge Functions`.
 
 ## Что уже должно быть
 - Выполнен `schema_v1.sql`
@@ -10,8 +10,9 @@
 
 ## Что осталось после изменения backend
 1. Проверить секреты в `Supabase`
-2. Задеплоить 4 `Edge Functions` из папки `supabase/functions`
-3. Проверить регистрацию, одобрение заявки и сброс пароля
+2. Задеплоить 5 `Edge Functions` из папки `supabase/functions`
+3. Включить серверный сброс пароля в `assets/config.js`
+4. Проверить регистрацию, одобрение заявки и сброс пароля
 
 ## 1. Секреты
 В `Supabase` открой `Edge Functions` → `Secrets` и добавь:
@@ -24,6 +25,7 @@
 Источник функций находится только здесь:
 
 - `submit-registration`
+- `submit-password-reset`
 - `admin-registration`
 - `admin-profile`
 - `admin-reset-password`
@@ -33,7 +35,7 @@
 ```bash
 read -s SUPABASE_ACCESS_TOKEN
 export SUPABASE_ACCESS_TOKEN
-for fn in submit-registration admin-registration admin-profile admin-reset-password; do
+for fn in submit-registration submit-password-reset admin-registration admin-profile admin-reset-password; do
   .tools/supabase functions deploy "$fn" --project-ref pgifephtehfyfzgpbelu
 done
 unset SUPABASE_ACCESS_TOKEN
@@ -41,7 +43,19 @@ unset SUPABASE_ACCESS_TOKEN
 
 Так токен не попадает в текст команды. После деплоя проверь, что `Origin: null` больше не разрешается.
 
-## 3. Проверка
+## 3. Включение серверного сброса пароля
+
+До деплоя `submit-password-reset` живой сайт использует временный совместимый режим, чтобы не сломать форму восстановления.
+
+После успешного деплоя функции измени `assets/config.js`:
+
+```js
+passwordResetFunctionReady: true
+```
+
+Затем выполни актуальный `supabase/schema_v1.sql`: он закрывает прямую вставку в `password_reset_requests` через клиент и оставляет сброс пароля только через Edge Function.
+
+## 4. Проверка
 После публикации функций:
 - `register.html` должен принимать заявку
 - в админ-панели должна появляться заявка

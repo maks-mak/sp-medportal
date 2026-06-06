@@ -22,7 +22,7 @@
 - вход работает через `Supabase Auth`
 - регистрация идет через `Edge Function`
 - админ подтверждает заявки и управляет ролями
-- запросы на сброс пароля и уведомления хранятся в базе
+- запросы на сброс пароля подготовлены к переводу на `Edge Function`, уведомления хранятся в базе
 
 Локальный прототип отключён по умолчанию. Боевой сценарий — только через `Supabase Auth`, RLS и `Edge Functions`.
 
@@ -66,11 +66,16 @@ SQL-схема лежит в:
 Код функций:
 
 - `supabase/functions/submit-registration/index.ts`
+- `supabase/functions/submit-password-reset/index.ts`
 - `supabase/functions/admin-registration/index.ts`
 - `supabase/functions/admin-profile/index.ts`
 - `supabase/functions/admin-reset-password/index.ts`
 
 Папки с ручными копиями функций больше нет: единственный источник backend-кода — `supabase/functions/`.
+
+`submit-password-reset` уже добавлена в код, но на живом сайте включается флагом `passwordResetFunctionReady` только после деплоя функции. После включения нужно выполнить актуальный `supabase/schema_v1.sql`, чтобы закрыть legacy-вставку запросов сброса пароля напрямую из браузера.
+
+Внешняя библиотека `@supabase/supabase-js` закреплена точной версией `2.107.0`: в HTML через `SRI`, в Edge Functions через точный `npm:` импорт.
 
 Она содержит:
 

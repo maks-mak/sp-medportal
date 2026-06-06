@@ -86,6 +86,8 @@ create or replace function public.current_profile_id()
 returns uuid
 language sql
 stable
+security definer
+set search_path = public
 as $$
     select id
     from public.profiles
@@ -99,6 +101,8 @@ create or replace function public.current_role()
 returns text
 language sql
 stable
+security definer
+set search_path = public
 as $$
     select role
     from public.profiles
@@ -112,6 +116,8 @@ create or replace function public.is_admin()
 returns boolean
 language sql
 stable
+security definer
+set search_path = public
 as $$
     select exists (
         select 1
@@ -127,6 +133,8 @@ create or replace function public.has_quality_access()
 returns boolean
 language sql
 stable
+security definer
+set search_path = public
 as $$
     select exists (
         select 1
@@ -241,11 +249,6 @@ using (public.is_admin())
 with check (public.is_admin());
 
 drop policy if exists "allow reset request insert" on public.password_reset_requests;
-create policy "allow reset request insert"
-on public.password_reset_requests
-for insert
-to anon, authenticated
-with check (status = 'pending');
 
 drop policy if exists "admins read reset requests" on public.password_reset_requests;
 create policy "admins read reset requests"

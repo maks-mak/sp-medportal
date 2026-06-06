@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://pgifephtehfyfzgpbelu.supabase.co https://*.supabase.co; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Админ-панель — SP MedPortal</title>
+    <meta name="description" content="Администрирование пользователей, заявок и уведомлений в портале Сергиево-Посадской больницы.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="dashboard-page portal-theme">
+    <div class="page-shell">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="grid-noise"></div>
+
+        <main class="portal-shell">
+            <header class="portal-header admin-header">
+                <a class="portal-brand" href="dashboard.html">
+                    <span class="portal-brand-mark">✚</span>
+                    <span class="portal-brand-copy">
+                        <strong>Админ-панель</strong>
+                        <small>Управление порталом</small>
+                    </span>
+                </a>
+                <div class="portal-user-actions">
+                    <a class="portal-ghost-btn" href="dashboard.html">К кабинету</a>
+                    <button id="logout-button" class="portal-admin-btn" type="button">Выйти</button>
+                </div>
+            </header>
+
+            <section class="admin-grid">
+                <section class="portal-panel">
+                    <div class="portal-section-head">
+                        <div>
+                            <p class="portal-kicker">Заявки</p>
+                            <h2>Ожидают одобрения</h2>
+                        </div>
+                    </div>
+                    <div id="request-list" class="admin-card-list"></div>
+                </section>
+
+                <section class="portal-panel">
+                    <div class="portal-section-head">
+                        <div>
+                            <p class="portal-kicker">Пользователи</p>
+                            <h2>Кто зарегистрирован</h2>
+                        </div>
+                    </div>
+                    <div id="user-list" class="admin-card-list"></div>
+                </section>
+
+                <section class="portal-panel">
+                    <div class="portal-section-head">
+                        <div>
+                            <p class="portal-kicker">Уведомления</p>
+                            <h2>Публикация для сотрудников</h2>
+                        </div>
+                    </div>
+                    <form id="admin-notice-form" class="admin-form">
+                        <label for="notice-title">Заголовок</label>
+                        <input id="notice-title" name="title" type="text" placeholder="Например: Обновлен приказ по маршрутизации" maxlength="120" required>
+
+                        <label for="notice-body">Текст</label>
+                        <textarea id="notice-body" name="body" rows="4" placeholder="Короткое уведомление для сотрудников" maxlength="2000" required></textarea>
+
+                        <button class="portal-admin-btn wide-btn" type="submit">Опубликовать уведомление</button>
+                        <p id="admin-form-message" class="form-message" aria-live="polite"></p>
+                    </form>
+                </section>
+
+                <section class="portal-panel">
+                    <div class="portal-section-head">
+                        <div>
+                            <p class="portal-kicker">Обращения</p>
+                            <h2>Сообщения руководству</h2>
+                        </div>
+                    </div>
+                    <div id="message-list" class="admin-card-list"></div>
+                </section>
+
+                <section class="portal-panel">
+                    <div class="portal-section-head">
+                        <div>
+                            <p class="portal-kicker">Восстановление доступа</p>
+                            <h2>Запросы на сброс пароля</h2>
+                        </div>
+                    </div>
+                    <div id="reset-request-list" class="admin-card-list"></div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/config.js"></script>
+    <script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://pgifephtehfyfzgpbelu.supabase.co https://*.supabase.co; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex,nofollow">
+    <title>ОКК и БМД — SP MedPortal</title>
+    <meta name="description" content="Отдел контроля качества, безопасности и медицинской деятельности.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="dashboard-page portal-theme">
+    <div class="page-shell">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="grid-noise"></div>
+        <main class="portal-shell simple-page-shell" id="quality-page-marker">
+            <header class="portal-simple-header">
+                <a class="portal-ghost-btn" href="dashboard.html">Назад в кабинет</a>
+            </header>
+            <section class="portal-panel simple-page-panel">
+                <p class="portal-kicker">ОКК и БМД</p>
+                <h1>Отдел контроля качества, безопасность и медицинская деятельность</h1>
+                <p class="portal-lead">
+                    Это отдельная рабочая зона для сотрудников отдела контроля качества. Здесь можно разместить
+                    роли, зоны ответственности, приказы, разбор нежелательных событий и внутренние формы.
+                </p>
+                <div class="quality-role-banner">
+                    <strong>Ваш уровень доступа: <span id="quality-access-role">ОКК и БМД</span></strong>
+                </div>
+                <div class="mini-link-grid">
+                    <a class="mini-link-card" href="https://docs.google.com/spreadsheets/d/1_b5-VF9Nvk8Rn4i9W7Tvx4SAWWmhAmti2V9hR-KeTCU/edit?gid=633307791#gid=633307791" target="_blank" rel="noreferrer">
+                        <strong>База документов</strong>
+                        <span>Рабочий реестр приказов, памяток и контрольных материалов</span>
+                    </a>
+                    <a class="mini-link-card" href="https://forms.yandex.ru/u/68be9fa4e010dbff11d321b6" target="_blank" rel="noreferrer">
+                        <strong>Нежелательные события</strong>
+                        <span>Точка входа для формы, учета и последующего разбора случаев</span>
+                    </a>
+                    <div class="mini-link-card static-card">
+                        <strong>Роли и ответственность</strong>
+                        <span>Здесь позже закрепим, кто за что отвечает внутри ОКК и БМД</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/config.js"></script>
+    <script src="assets/app.js"></script>
+</body>
+</html>

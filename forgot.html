@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://pgifephtehfyfzgpbelu.supabase.co https://*.supabase.co; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Забыли пароль — SP MedPortal</title>
+    <meta name="description" content="Запрос на восстановление пароля в портале Сергиево-Посадской больницы.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="auth-page portal-theme">
+    <div class="page-shell">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="grid-noise"></div>
+
+        <header class="site-header compact-header">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">SP</span>
+                <span class="brand-copy">
+                    <strong>MedPortal</strong>
+                    <small>Восстановление доступа</small>
+                </span>
+            </a>
+            <div class="header-actions">
+                <a class="ghost-btn" href="login.html">Назад ко входу</a>
+            </div>
+        </header>
+
+        <main class="auth-layout">
+            <section class="auth-copy">
+                <p class="eyebrow">Восстановление пароля</p>
+                <h1>Запросить новый пароль</h1>
+                <p class="lead">
+                    Если вы забыли пароль, отправьте запрос администратору портала. После проверки
+                    вам выдадут временный пароль, который затем можно будет заменить.
+                </p>
+            </section>
+
+            <section class="auth-card" aria-labelledby="forgot-title">
+                <p class="card-kicker">Запрос на восстановление</p>
+                <h2 id="forgot-title">Нужен доступ</h2>
+                <form id="forgot-form" class="auth-form">
+                    <label for="forgot-login">Логин</label>
+                    <input id="forgot-login" name="login" type="text" placeholder="Например: ivanovii" inputmode="latin" pattern="[A-Za-z0-9._-]{4,32}" maxlength="32" required>
+
+                    <label for="forgot-department">Подразделение</label>
+                    <input id="forgot-department" name="department_name" type="text" placeholder="Например: Поликлиника №1" maxlength="120" required>
+
+                    <label for="forgot-note">Комментарий</label>
+                    <textarea id="forgot-note" name="note" rows="4" placeholder="При желании укажите, что случилось" class="portal-select" maxlength="500"></textarea>
+
+                    <button type="submit" class="primary-btn wide-btn">Отправить запрос</button>
+                    <p id="forgot-message" class="form-message" aria-live="polite"></p>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/config.js"></script>
+    <script src="assets/app.js"></script>
+</body>
+</html>

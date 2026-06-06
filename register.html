@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://pgifephtehfyfzgpbelu.supabase.co https://*.supabase.co; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Регистрация сотрудника — SP MedPortal</title>
+    <meta name="description" content="Заявка на регистрацию сотрудника в портале Сергиево-Посадской больницы.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="auth-page portal-theme">
+    <div class="page-shell">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="grid-noise"></div>
+
+        <header class="site-header compact-header">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">SP</span>
+                <span class="brand-copy">
+                    <strong>MedPortal</strong>
+                    <small>Заявка на регистрацию</small>
+                </span>
+            </a>
+            <div class="header-actions">
+                <a class="ghost-btn" href="login.html">Назад ко входу</a>
+            </div>
+        </header>
+
+        <main class="register-layout">
+            <section class="portal-panel register-copy-panel">
+                <p class="portal-kicker">Регистрация</p>
+                <h1>Заявка на доступ в кабинет сотрудника</h1>
+                <p class="portal-lead">
+                    После отправки заявка попадает администратору портала. Доступ открывается
+                    только после подтверждения, что вы действительно сотрудник учреждения.
+                </p>
+                <div class="register-info-list">
+                    <div class="register-info-item">
+                        <strong>Что понадобится</strong>
+                        <span>ФИО, подразделение, должность, логин и пароль.</span>
+                    </div>
+                    <div class="register-info-item">
+                        <strong>Что происходит дальше</strong>
+                        <span>Заявка получает статус ожидания, а вы входите только после одобрения.</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="portal-panel register-form-panel">
+                <p class="portal-kicker">Форма сотрудника</p>
+                <h2>Подать заявку</h2>
+                <form id="register-form" class="auth-form">
+                    <label for="full-name">ФИО</label>
+                    <input id="full-name" name="full_name" type="text" placeholder="Иванов Иван Иванович" maxlength="120" required>
+
+                    <label for="department-type">Тип подразделения</label>
+                    <select id="department-type" name="department_type" class="portal-select" required>
+                        <option value="">Выберите вариант</option>
+                        <option value="Поликлиника">Поликлиника</option>
+                        <option value="Стационар">Стационар</option>
+                        <option value="Роддом">Роддом</option>
+                        <option value="Другое">Другое</option>
+                    </select>
+
+                    <label for="department-name">Подразделение / отделение</label>
+                    <input id="department-name" name="department_name" type="text" placeholder="Например: хирургическое отделение" maxlength="120" required>
+
+                    <label for="position">Должность</label>
+                    <input id="position" name="position" type="text" placeholder="Например: врач-терапевт" maxlength="120" required>
+
+                    <label for="requested-login">Желаемый логин</label>
+                    <input id="requested-login" name="requested_login" type="text" placeholder="Например: ivanovii" minlength="4" maxlength="32" inputmode="latin" pattern="[A-Za-z0-9._-]{4,32}" required>
+
+                    <label for="requested-password">Пароль</label>
+                    <input id="requested-password" name="requested_password" type="password" placeholder="Минимум 8 символов, буква и цифра" autocomplete="new-password" minlength="8" maxlength="128" required>
+
+                    <button type="submit" class="primary-btn wide-btn">Отправить заявку</button>
+                    <p id="register-message" class="form-message" aria-live="polite"></p>
+                </form>
+                <p class="password-policy-note">
+                    Пароль должен быть не короче 8 символов и содержать хотя бы одну букву и одну цифру.
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/config.js"></script>
+    <script src="assets/app.js"></script>
+</body>
+</html>

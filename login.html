@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://pgifephtehfyfzgpbelu.supabase.co https://*.supabase.co; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex,nofollow">
     <title>Вход в портал — SP MedPortal</title>
     <meta name="description" content="Авторизация сотрудников в цифровом портале Сергиево-Посадской больницы.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -11,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/site.css">
 </head>
-<body class="auth-page">
+<body class="auth-page portal-theme">
     <div class="page-shell">
         <div class="orb orb-a"></div>
         <div class="orb orb-b"></div>
@@ -22,7 +25,7 @@
                 <span class="brand-mark">SP</span>
                 <span class="brand-copy">
                     <strong>MedPortal</strong>
-                    <small>Служебный доступ</small>
+                    <small>Вход в портал</small>
                 </span>
             </a>
             <div class="header-actions">
@@ -32,24 +35,23 @@
 
         <main class="auth-layout">
             <section class="auth-copy">
-                <p class="eyebrow">Авторизация</p>
-                <h1>Новый вход в портал сотрудников</h1>
+                <p class="eyebrow">Авторизация сотрудников</p>
+                <h1>Единый вход в личный кабинет</h1>
                 <p class="lead">
-                    Это собственная точка входа на вашем домене. Сайт уже готов к
-                    настоящей авторизации через `Supabase`, а временный локальный вход
-                    оставлен только как запасной режим до подключения ключей проекта.
+                    Вход доступен только после одобрения регистрации. Если у вас еще нет доступа,
+                    сначала отправьте заявку администратору портала.
                 </p>
 
                 <div class="trust-grid">
                     <article class="mini-panel">
-                        <p class="card-kicker">Без разрыва</p>
-                        <h2>Единый пользовательский сценарий</h2>
-                        <p>Главная, вход и кабинет собраны в одном проекте и ощущаются как один продукт.</p>
+                        <p class="card-kicker">Безопасность</p>
+                        <h2>Доступ только после одобрения</h2>
+                        <p>Новые сотрудники не получают вход автоматически. Администратор сначала проверяет заявку.</p>
                     </article>
                     <article class="mini-panel">
-                        <p class="card-kicker">Готовность</p>
-                        <h2>Основа под прод-версию</h2>
-                        <p>Сюда можно подключить `Supabase`, `Cloudflare` или собственный сервер без переделки структуры.</p>
+                        <p class="card-kicker">Контроль</p>
+                        <h2>Автовыход по бездействию</h2>
+                        <p>Если пользователь долго не работает в кабинете, система завершает сессию автоматически.</p>
                     </article>
                 </div>
             </section>
@@ -57,22 +59,22 @@
             <section class="auth-card" aria-labelledby="login-title">
                 <p class="card-kicker">Доступ сотрудника</p>
                 <h2 id="login-title">Войти в кабинет</h2>
-                <p class="card-text">Введите учетные данные. Если `Supabase` еще не подключен, работает временный вход `admin`.</p>
+                <p class="card-text">Введите логин и пароль. Если доступ еще не одобрен, портал не впустит внутрь.</p>
 
                 <form id="login-form" class="auth-form">
                     <label for="email">Логин</label>
-                    <input id="email" name="email" type="text" placeholder="admin" autocomplete="username" required>
+                    <input id="email" name="email" type="text" placeholder="Например: ivanovii" autocomplete="username" inputmode="latin" pattern="[A-Za-z0-9._-]{4,32}" maxlength="32" required>
 
                     <label for="password">Пароль</label>
-                    <input id="password" name="password" type="password" placeholder="Минимум 6 символов" autocomplete="current-password" minlength="6" required>
+                    <input id="password" name="password" type="password" placeholder="Минимум 8 символов" autocomplete="current-password" minlength="8" required>
 
-                    <button type="submit" class="primary-btn wide-btn">Продолжить</button>
+                    <button type="submit" class="primary-btn wide-btn">Войти</button>
                     <p id="form-message" class="form-message" aria-live="polite"></p>
                 </form>
 
-                <div class="demo-note">
-                    <strong>Временно:</strong>
-                    <span>`admin` — резервный локальный вход</span>
+                <div class="auth-links-block">
+                    <a class="inline-link" href="register.html">Подать заявку на регистрацию</a>
+                    <a class="inline-link" href="forgot.html">Забыли пароль?</a>
                 </div>
             </section>
         </main>

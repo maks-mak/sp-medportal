@@ -3,335 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://pgifephtehfyfzgpbelu.supabase.co https://*.supabase.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://pgifephtehfyfzgpbelu.supabase.co https://*.supabase.co; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="robots" content="noindex,nofollow">
-    <title>Сергиево-Посадская больница — Портал для сотрудников</title>
-    <meta name="description" content="Единая точка доступа к медицинским ресурсам, документам и сервисам для сотрудников Сергиево-Посадской больницы.">
+    <title>SP MedPortal — цифровой контур клиники</title>
+    <meta name="description" content="Премиальный внутренний портал для сотрудников: доступ, документы, уведомления, НС, ОКК и рабочие сценарии в едином цифровом медицинском контуре.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --navy: #040810;
-            --cyan: #22d3ee;
-            --cyan-muted: rgba(34, 211, 238, 0.7);
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-hover: rgba(255, 255, 255, 0.06);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.65);
-            --text-muted: rgba(255, 255, 255, 0.4);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--navy);
-            min-height: 100vh;
-            color: var(--text-primary);
-            overflow-x: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .fallback-bg {
-            position: fixed; inset: 0; z-index: 0;
-            background:
-                radial-gradient(ellipse at 20% 80%, rgba(26, 42, 74, 0.8) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(10, 30, 50, 0.9) 0%, transparent 50%),
-                linear-gradient(180deg, #040810 0%, #081020 50%, #040810 100%);
-        }
-
-        .fallback-bg::before {
-            content: '';
-            position: absolute; inset: 0;
-            background:
-                radial-gradient(ellipse at 30% 60%, rgba(34, 211, 238, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 40%, rgba(34, 211, 238, 0.04) 0%, transparent 40%);
-            animation: meshMove 15s ease-in-out infinite;
-        }
-
-        @keyframes meshMove {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(5%, -3%) scale(1.05); }
-            66% { transform: translate(-3%, 5%) scale(0.95); }
-        }
-
-        .video-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        .video-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(4, 8, 16, 0.5) 0%, rgba(4, 8, 16, 0.15) 100%);
-            z-index: 1;
-        }
-
-        .particles-container {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 2;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            bottom: -10px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(165, 243, 252, 0.6) 0%, rgba(34, 211, 238, 0) 70%);
-            animation: floatUp linear infinite;
-            filter: blur(0.5px);
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-            10% { opacity: 0.35; }
-            90% { opacity: 0.25; }
-            100% { transform: translateY(-110vh) translateX(30px) scale(0.5); opacity: 0; }
-        }
-
-        .dna-glow {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px; height: 500px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(34, 211, 238, 0.05) 0%, transparent 70%);
-            z-index: 1;
-            pointer-events: none;
-            animation: glowPulse 6s ease-in-out infinite;
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
-            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
-        }
-
-        .landing-wrapper {
-            position: relative; z-index: 10;
-            width: 100%; max-width: 720px;
-            text-align: center;
-            opacity: 0;
-            animation: contentFadeIn 1.5s ease 0.3s forwards;
-        }
-
-        @keyframes contentFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 48px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            color: #ffffff;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-            line-height: 1.2;
-        }
-
-        h1 span {
-            display: block;
-            font-size: 16px;
-            margin-top: 10px;
-            letter-spacing: 4px;
-            font-weight: 500;
-            color: var(--cyan-muted);
-            font-family: 'Inter', sans-serif;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 16px;
-            line-height: 1.7;
-            margin-bottom: 48px;
-            max-width: 560px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0;
-            animation: contentFadeIn 1.5s ease 0.6s forwards;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 48px;
-            opacity: 0;
-            animation: contentFadeIn 1.5s ease 0.9s forwards;
-        }
-
-        .feature {
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 28px 16px;
-            transition: all 0.5s ease;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature:hover {
-            transform: translateY(-4px);
-            border-color: rgba(34, 211, 238, 0.3);
-            box-shadow: 0 0 40px rgba(34, 211, 238, 0.08);
-            background: var(--glass-hover);
-        }
-
-        .feature::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.03) 0%, transparent 50%);
-            animation: cardPulse 8s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes cardPulse {
-            0%, 100% { opacity: 0.3; transform: scale(0.9); }
-            50% { opacity: 0.7; transform: scale(1.1); }
-        }
-
-        .feature-icon { font-size: 32px; margin-bottom: 12px; position: relative; z-index: 1; }
-        .feature-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; position: relative; z-index: 1; }
-        .feature-desc { font-size: 12px; color: var(--text-muted); position: relative; z-index: 1; }
-
-        .actions {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: contentFadeIn 1.5s ease 1.2s forwards;
-        }
-
-        .login-btn,
-        .secondary-btn {
-            display: inline-block;
-            padding: 18px 34px;
-            backdrop-filter: blur(12px);
-            color: var(--text-primary);
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .login-btn {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(34, 211, 238, 0.3);
-        }
-
-        .secondary-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-
-        .login-btn:hover,
-        .secondary-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(34, 211, 238, 0.6);
-            box-shadow: 0 0 30px rgba(34, 211, 238, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .footer {
-            margin-top: 48px;
-            color: var(--text-muted);
-            font-size: 12px;
-            opacity: 0;
-            animation: contentFadeIn 1.5s ease 1.5s forwards;
-        }
-
-        @media (max-width: 640px) {
-            .features { grid-template-columns: 1fr; }
-            h1 { font-size: 32px; }
-            .actions { flex-direction: column; }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
-    <div class="fallback-bg"></div>
-    <video autoplay loop muted playsinline class="video-bg">
-        <source src="bg-dna.mp4" type="video/mp4">
-    </video>
-    <div class="video-overlay"></div>
-    <div class="dna-glow"></div>
-    <div class="particles-container" id="particles"></div>
+<body class="landing-v2-page portal-theme">
+    <div class="page-shell">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="grid-noise"></div>
 
-    <div class="landing-wrapper">
-        <h1>Сергиево-Посадская<br>больница<span>Информационный портал для сотрудников</span></h1>
-
-        <p class="subtitle">
-            Единая точка доступа к медицинским ресурсам, документам и сервисам.
-            Для врачей, медсестер и административного персонала.
-        </p>
-
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">&#x1F4CB;</div>
-                <div class="feature-title">Реестры</div>
-                <div class="feature-desc">Документы и приказы</div>
+        <header class="site-header landing-v2-header">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">SP</span>
+                <span class="brand-copy">
+                    <strong>MedPortal</strong>
+                    <small>Internal Clinical Workspace</small>
+                </span>
+            </a>
+            <div class="header-actions">
+                <a class="ghost-btn" href="login.html">Войти</a>
+                <a class="primary-btn" href="register.html">Подать заявку</a>
             </div>
-            <div class="feature">
-                <div class="feature-icon">&#x1F4E2;</div>
-                <div class="feature-title">Уведомления</div>
-                <div class="feature-desc">Важные сообщения</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">&#x1F48A;</div>
-                <div class="feature-title">Справочники</div>
-                <div class="feature-desc">Лекарства и протоколы</div>
-            </div>
-        </div>
+        </header>
 
-        <div class="actions">
-            <a href="login.html" class="login-btn">&#x1F510; Войти в личный кабинет</a>
-            <a href="register.html" class="secondary-btn">Подать заявку на доступ</a>
-        </div>
+        <main class="landing-v2-shell">
+            <section class="landing-v2-hero">
+                <div class="landing-v2-copy">
+                    <p class="eyebrow">Digital care operations</p>
+                    <h1>Единый цифровой контур для сотрудников клиники</h1>
+                    <p class="lead">
+                        SP MedPortal объединяет безопасный вход, уведомления, документы, рабочие сервисы,
+                        нежелательные события и защищённую зону ОККиБМД в одном управляемом медицинском продукте.
+                    </p>
+                    <div class="landing-v2-actions">
+                        <a class="primary-btn" href="login.html">Открыть защищённый вход</a>
+                        <a class="ghost-btn" href="dashboard.html">Посмотреть рабочий стол</a>
+                    </div>
+                </div>
 
-        <div class="footer">
-            &copy; 2026 Сергиево-Посадская больница<br>
-            Доступ только для авторизованных сотрудников
-        </div>
+                <div class="landing-v2-hero-panel">
+                    <article class="landing-v2-stat-card">
+                        <span>Identity</span>
+                        <strong>Одобренный доступ</strong>
+                        <p>Каждая учётная запись проходит подтверждение, а чувствительные действия идут только через серверный контур.</p>
+                    </article>
+                    <article class="landing-v2-stat-card">
+                        <span>Operations</span>
+                        <strong>Рабочий стол вместо хаоса</strong>
+                        <p>Сотрудник начинает день с приоритетов, уведомлений, документов, НС и понятных маршрутов действий.</p>
+                    </article>
+                    <article class="landing-v2-stat-card">
+                        <span>Quality & Safety</span>
+                        <strong>ОКК и НС встроены в продукт</strong>
+                        <p>Случаи, эскалация, меры, закрытие и защищённый разбор живут в рабочей системе, а не в разрозненных файлах.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="landing-v2-metrics">
+                <article class="landing-v2-metric-tile">
+                    <span>Доступ</span>
+                    <strong>Роли и уровни</strong>
+                    <p>Сотрудник, ОКК, руководитель ОКК, администратор.</p>
+                </article>
+                <article class="landing-v2-metric-tile">
+                    <span>Коммуникация</span>
+                    <strong>Уведомления и обращения</strong>
+                    <p>Служебные сообщения, обращения руководству и управляемый контур обратной связи.</p>
+                </article>
+                <article class="landing-v2-metric-tile">
+                    <span>Безопасность</span>
+                    <strong>Закрытый медицинский контур</strong>
+                    <p>RLS, серверная авторизация, ограничение источников и fail-closed подход к доступу.</p>
+                </article>
+                <article class="landing-v2-metric-tile">
+                    <span>Качество</span>
+                    <strong>Нежелательные события</strong>
+                    <p>От сообщения до закрытия случая, мер и проверки эффективности.</p>
+                </article>
+            </section>
+
+            <section class="landing-v2-grid">
+                <article class="landing-v2-feature-card is-wide">
+                    <p class="portal-kicker">Что внутри продукта</p>
+                    <h2>Не просто сайт, а полноценное рабочее пространство</h2>
+                    <div class="landing-v2-feature-list">
+                        <div>
+                            <strong>Рабочий кабинет</strong>
+                            <p>Живой дашборд сотрудника с приоритетами дня, новостями, сервисами и быстрыми действиями.</p>
+                        </div>
+                        <div>
+                            <strong>Безопасный auth-контур</strong>
+                            <p>Серверная авторизация, строгая валидация и запрет на случайные или неподтверждённые входы.</p>
+                        </div>
+                        <div>
+                            <strong>ОКК и БМД</strong>
+                            <p>Операционный стол НС, маршруты разбора, роли, эскалация, карточки случая и логика закрытия.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="landing-v2-feature-card">
+                    <p class="portal-kicker">Ключевой сценарий</p>
+                    <h2>Сотрудник не ищет — сотрудник действует</h2>
+                    <p>Хороший медпортал не заставляет думать, куда идти. Он показывает, что важно сегодня, и даёт нужный путь в один-два клика.</p>
+                </article>
+
+                <article class="landing-v2-feature-card">
+                    <p class="portal-kicker">Принцип продукта</p>
+                    <h2>Спокойный premium UX</h2>
+                    <p>Мы уходим от дешёвого “больничного” интерфейса к взрослому MedTech-визуалу: воздух, структура, доверие и дорогая чистота.</p>
+                </article>
+            </section>
+        </main>
     </div>
-
-    <script>
-        (function() {
-            var container = document.getElementById('particles');
-            for (var i = 0; i < 30; i++) {
-                var p = document.createElement('div');
-                p.className = 'particle';
-                var size = 1 + Math.random() * 2.5;
-                p.style.cssText =
-                    'left:' + (Math.random() * 100) + '%;' +
-                    'width:' + size + 'px;height:' + size + 'px;' +
-                    'animation-delay:' + (Math.random() * 15) + 's;' +
-                    'animation-duration:' + (12 + Math.random() * 10) + 's;' +
-                    'opacity:' + (0.15 + Math.random() * 0.35) + ';';
-                container.appendChild(p);
-            }
-        })();
-    </script>
 </body>
 </html>

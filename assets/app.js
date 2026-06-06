@@ -129,6 +129,26 @@
             action: "Через плашку ОКК"
         }
     ];
+    const dashboardNewsCards = [
+        {
+            title: "Главные новости дня",
+            text: "Быстрый вход в общую федеральную повестку, чтобы понимать, о чём сейчас говорят и что влияет на рабочий фон.",
+            action: "Открыть Яндекс Новости",
+            href: "https://dzen.ru/news"
+        },
+        {
+            title: "Здравоохранение",
+            text: "Решения, инициативы и события, которые относятся к медицине, системе здравоохранения и отраслевым изменениям.",
+            action: "Смотреть повестку",
+            href: "https://dzen.ru/news/rubric/health"
+        },
+        {
+            title: "Официальные отраслевые новости",
+            text: "Полезно сверять общую новостную повестку с официальными сообщениями регуляторов и профильных ведомств.",
+            action: "Открыть Росздравнадзор",
+            href: "https://www.roszdravnadzor.gov.ru/"
+        }
+    ];
     const dashboardSpotlightCards = [
         {
             title: "Что нового в кабинете",
@@ -1717,6 +1737,22 @@
         }
     }
 
+    function renderDashboardNews() {
+        const root = document.getElementById("dashboard-news-grid");
+        if (!root) {
+            return;
+        }
+        root.innerHTML = dashboardNewsCards.map(function (item) {
+            return [
+                '<a class="dashboard-news-card" href="' + item.href + '" target="_blank" rel="noreferrer">',
+                '  <strong>' + escapeHtml(item.title) + '</strong>',
+                '  <p>' + escapeHtml(item.text) + '</p>',
+                '  <span>' + escapeHtml(item.action) + '</span>',
+                '</a>'
+            ].join('');
+        }).join('');
+    }
+
     function renderDashboardSideContent(session) {
         const contactsRoot = document.getElementById("dashboard-contacts");
         if (contactsRoot) {
@@ -1781,6 +1817,7 @@
         const unreadCount = await renderNotices(session) || 0;
         renderDashboardHighlights(session, unreadCount);
         renderDashboardQuickStart(session, unreadCount);
+        renderDashboardNews();
         renderDashboardSideContent(session);
         bindNoticeEvents(session);
         bindMessageForms(session);

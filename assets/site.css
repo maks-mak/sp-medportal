@@ -1021,6 +1021,48 @@ h3 {
     gap: 18px;
 }
 
+.dashboard-news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.dashboard-news-card {
+    display: block;
+    padding: 20px;
+    border-radius: 22px;
+    border: 1px solid rgba(161, 196, 228, 0.22);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 250, 255, 0.98));
+    box-shadow: 0 16px 32px rgba(128, 158, 194, 0.10);
+    transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.dashboard-news-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(214, 180, 66, 0.32);
+    box-shadow: 0 18px 36px rgba(128, 158, 194, 0.14);
+}
+
+.dashboard-news-card strong {
+    display: block;
+    color: var(--text);
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+}
+
+.dashboard-news-card p {
+    color: rgba(23, 50, 77, 0.68);
+    line-height: 1.7;
+}
+
+.dashboard-news-card span {
+    display: inline-flex;
+    margin-top: 14px;
+    color: var(--accent);
+    font-weight: 800;
+}
+
 .dashboard-quick-actions,
 .dashboard-shift-list,
 .dashboard-contacts,
@@ -1775,7 +1817,8 @@ h3 {
     .admin-summary-grid,
     .quality-case-board,
     .dashboard-highlight-grid,
-    .dashboard-ops-grid {
+    .dashboard-ops-grid,
+    .dashboard-news-grid {
         grid-template-columns: 1fr;
     }
 

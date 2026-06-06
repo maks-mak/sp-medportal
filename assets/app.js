@@ -368,6 +368,101 @@
             tags: ["деонтология", "защищённый режим"]
         }
     ];
+    const adverseEventCaseDetails = {
+        "НС-2026-014": {
+            summary: "Повторный организационный сбой с риском повторного отклонения пациента от правильного маршрута.",
+            timeline: [
+                "08:15 — сигнал от дежурной смены о повторном эпизоде",
+                "08:25 — ОКК перевел случай в срочную эскалацию",
+                "08:40 — подключен руководитель подразделения и зам. главного врача",
+                "09:10 — временная схема маршрутизации утверждена до окончания разбора"
+            ],
+            measures: [
+                "Ввести временный чек-пункт подтверждения маршрута в приёмном отделении",
+                "Довести новый алгоритм до дежурных смен под подпись",
+                "Перепроверить визуальную навигацию и распределение ответственности"
+            ],
+            contacts: [
+                "Куратор: Начальник ОКК",
+                "Руководитель подразделения: Приёмное отделение",
+                "Эскалация: Зам. главного врача"
+            ],
+            closure: [
+                "Нет повторов в течение контрольного периода",
+                "Новый маршрут внедрен во всех сменах",
+                "Подразделение подтвердило исполнение"
+            ]
+        },
+        "НС-2026-015": {
+            summary: "Несоответствие между врачебным назначением и рабочим листом поста, потенциально влияющее на лекарственную безопасность.",
+            timeline: [
+                "Вчера 17:30 — зарегистрирован сигнал",
+                "Сегодня 09:00 — открыт разбор с дежурной сменой",
+                "Сегодня 10:20 — поднята документация и листы передачи"
+            ],
+            measures: [
+                "Пересмотреть передачу назначений между врачом и сестринским постом",
+                "Ввести двойную проверку в уязвимом участке",
+                "Провести короткое обучение смены"
+            ],
+            contacts: [
+                "Куратор: Специалист ОКК",
+                "Подразделение: Терапевтическое отделение",
+                "Эксперт: Лекарственная безопасность"
+            ],
+            closure: [
+                "Причина несоответствия определена",
+                "Обновлен локальный порядок передачи информации",
+                "Проверка на повторяемость выполнена"
+            ]
+        },
+        "НС-2026-016": {
+            summary: "Падение пациента после перевода без тяжелых последствий, требует проверки оценки риска, среды и сопровождения.",
+            timeline: [
+                "Позавчера — сообщение от отделения",
+                "Вчера — завершена первичная оценка",
+                "Сегодня — подразделение подтверждает внедрение мер"
+            ],
+            measures: [
+                "Проверить маркировку риска падения",
+                "Усилить контроль пространства около койки",
+                "Провести повторный инструктаж персонала"
+            ],
+            contacts: [
+                "Куратор: Руководитель подразделения",
+                "ОКК: Контроль эффективности",
+                "Старшая медсестра: исполнение мер"
+            ],
+            closure: [
+                "Среда и чек-листы приведены в порядок",
+                "Сотрудники повторно ознакомлены",
+                "Нет повторных падений в контрольный период"
+            ]
+        },
+        "НС-2026-017": {
+            summary: "Чувствительный деонтологический случай с необходимостью защищенного режима и защиты заявителя от давления.",
+            timeline: [
+                "Сегодня утром — получено обращение",
+                "Через 15 минут — включен защищенный контур",
+                "Назначено закрытое обсуждение с ограниченным кругом доступа"
+            ],
+            measures: [
+                "Ограничить круг доступа к материалам",
+                "Запретить неформальный контакт с заявителем по теме случая",
+                "Подготовить нейтральное заключение и план мер"
+            ],
+            contacts: [
+                "Куратор: Начальник ОКК",
+                "Подразделение: Поликлиника №2",
+                "Эскалация: руководство при необходимости"
+            ],
+            closure: [
+                "Исключено давление на заявителя",
+                "Факты подтверждены и разделены от оценок",
+                "Меры по коммуникации и этике утверждены"
+            ]
+        }
+    };
     const adverseEventStatusBoard = [
         {
             key: "Срочно эскалировано",
@@ -1995,9 +2090,9 @@
                     '    <span>' + escapeHtml(column.note) + '</span>',
                     '  </div>',
                     '  <div class="quality-case-list">',
-                    items.map(function (item) {
+                    items.map(function (item, index) {
                         return [
-                            '<article class="quality-case-card">',
+                            '<article class="quality-case-card' + (index === 0 ? ' is-featured' : '') + '">',
                             '  <div class="quality-case-meta">',
                             '    <span class="quality-case-code">' + escapeHtml(item.code) + '</span>',
                             '    <span class="quality-case-urgency">' + escapeHtml(item.urgency) + '</span>',
@@ -2017,6 +2112,51 @@
                     '</section>'
                 ].join('');
             }).join('');
+        }
+
+        const detailRoot = document.getElementById("quality-case-detail");
+        if (detailRoot) {
+            const focusCase = adverseEventCases[0];
+            const detail = adverseEventCaseDetails[focusCase.code];
+            detailRoot.innerHTML = [
+                '<div class="quality-detail-head">',
+                '  <div>',
+                '    <p class="portal-kicker">Фокус разбора</p>',
+                '    <h3>' + escapeHtml(focusCase.code + ' — ' + focusCase.title) + '</h3>',
+                '    <p class="quality-detail-summary">' + escapeHtml(detail.summary) + '</p>',
+                '  </div>',
+                '  <div class="quality-detail-badges">',
+                '    <span class="quality-case-code">' + escapeHtml(focusCase.status) + '</span>',
+                '    <span class="quality-case-urgency">' + escapeHtml(focusCase.owner) + '</span>',
+                '  </div>',
+                '</div>',
+                '<div class="quality-detail-grid">',
+                '  <section class="quality-detail-card">',
+                '    <strong>Хронология</strong>',
+                '    <div class="quality-detail-list">',
+                detail.timeline.map(function (item) { return '<span>' + escapeHtml(item) + '</span>'; }).join(''),
+                '    </div>',
+                '  </section>',
+                '  <section class="quality-detail-card">',
+                '    <strong>Назначенные меры</strong>',
+                '    <div class="quality-detail-list">',
+                detail.measures.map(function (item) { return '<span>' + escapeHtml(item) + '</span>'; }).join(''),
+                '    </div>',
+                '  </section>',
+                '  <section class="quality-detail-card">',
+                '    <strong>Контакты и участники</strong>',
+                '    <div class="quality-detail-list">',
+                detail.contacts.map(function (item) { return '<span>' + escapeHtml(item) + '</span>'; }).join(''),
+                '    </div>',
+                '  </section>',
+                '  <section class="quality-detail-card">',
+                '    <strong>Готовность к закрытию</strong>',
+                '    <div class="quality-detail-list">',
+                detail.closure.map(function (item) { return '<span>' + escapeHtml(item) + '</span>'; }).join(''),
+                '    </div>',
+                '  </section>',
+                '</div>'
+            ].join('');
         }
 
         const actionsGrid = document.getElementById("quality-actions-grid");

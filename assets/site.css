@@ -1399,6 +1399,73 @@ h3 {
     gap: 16px;
 }
 
+.quality-case-detail,
+.quality-detail-card {
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(250, 252, 255, 0.92));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+}
+
+.quality-case-detail {
+    border-radius: 24px;
+    padding: 20px;
+}
+
+.quality-detail-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: flex-start;
+    margin-bottom: 18px;
+}
+
+.quality-detail-head h3 {
+    margin: 0 0 10px;
+}
+
+.quality-detail-summary {
+    color: rgba(23, 50, 77, 0.72);
+    line-height: 1.7;
+}
+
+.quality-detail-badges {
+    display: grid;
+    gap: 10px;
+}
+
+.quality-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.quality-detail-card {
+    border-radius: 18px;
+    padding: 18px;
+}
+
+.quality-detail-card strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text);
+}
+
+.quality-detail-list {
+    display: grid;
+    gap: 10px;
+}
+
+.quality-detail-list span {
+    display: block;
+    color: rgba(23, 50, 77, 0.74);
+    line-height: 1.7;
+}
+
+.quality-case-card.is-featured {
+    border-color: rgba(214, 176, 93, 0.34);
+}
+
 .quality-case-column,
 .quality-case-card {
     border: 1px solid var(--line);
@@ -1612,7 +1679,8 @@ h3 {
     .quality-workflow-grid,
     .quality-taxonomy-grid,
     .quality-stat-grid,
-    .quality-lifecycle-grid {
+    .quality-lifecycle-grid,
+    .quality-detail-grid {
         grid-template-columns: 1fr;
     }
 }

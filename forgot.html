@@ -56,6 +56,11 @@
                     <label for="forgot-note">Комментарий</label>
                     <textarea id="forgot-note" name="note" rows="4" placeholder="При желании укажите, что случилось" class="portal-select" maxlength="500"></textarea>
 
+                    <label class="auth-v2-honeypot" aria-hidden="true">
+                        <span>Не заполняйте это поле</span>
+                        <input type="text" name="website" tabindex="-1" autocomplete="off">
+                    </label>
+
                     <button type="submit" class="primary-btn wide-btn">Отправить запрос</button>
                     <p id="forgot-message" class="form-message" aria-live="polite"></p>
                 </form>

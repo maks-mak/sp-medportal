@@ -1371,6 +1371,10 @@
         form.addEventListener("submit", async function (event) {
             event.preventDefault();
             const formData = new FormData(form);
+            if (String(formData.get("website") || "").trim()) {
+                showMessage(message, "Запрос отклонен системой защиты формы.", "error");
+                return;
+            }
             const login = String(formData.get("email") || "").trim().toLowerCase();
             const password = String(formData.get("password") || "").trim();
 
@@ -1487,6 +1491,10 @@
         form.addEventListener("submit", async function (event) {
             event.preventDefault();
             const formData = new FormData(form);
+            if (String(formData.get("website") || "").trim()) {
+                showMessage(message, "Запрос отклонен системой защиты формы.", "error");
+                return;
+            }
             const fullName = String(formData.get("full_name") || "").trim();
             const departmentType = String(formData.get("department_type") || "").trim();
             const departmentName = String(formData.get("department_name") || "").trim();
@@ -1573,6 +1581,10 @@
         form.addEventListener("submit", function (event) {
             event.preventDefault();
             const formData = new FormData(form);
+            if (String(formData.get("website") || "").trim()) {
+                showMessage(message, "Запрос отклонен системой защиты формы.", "error");
+                return;
+            }
             const login = String(formData.get("login") || "").trim().toLowerCase();
             const department = String(formData.get("department_name") || "").trim();
             const note = String(formData.get("note") || "").trim();

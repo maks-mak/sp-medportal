@@ -6,26 +6,26 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://pgifephtehfyfzgpbelu.supabase.co https://*.supabase.co; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="robots" content="noindex,nofollow">
-    <title>Вход в портал — SP MedPortal</title>
-    <meta name="description" content="Авторизация сотрудников в цифровом портале Сергиево-Посадской больницы.">
+    <title>Secure Access — SP MedPortal</title>
+    <meta name="description" content="Премиальная и безопасная авторизация сотрудников в цифровом медицинском портале Сергиево-Посадской больницы.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/site.css">
 </head>
-<body class="auth-page portal-theme">
+<body class="auth-page portal-theme auth-v2-page">
     <div class="page-shell">
         <div class="orb orb-a"></div>
         <div class="orb orb-b"></div>
         <div class="grid-noise"></div>
 
-        <header class="site-header compact-header">
+        <header class="site-header compact-header auth-v2-header">
             <a class="brand" href="index.html">
                 <span class="brand-mark">SP</span>
                 <span class="brand-copy">
                     <strong>MedPortal</strong>
-                    <small>Вход в портал</small>
+                    <small>Secure Access</small>
                 </span>
             </a>
             <div class="header-actions">
@@ -33,48 +33,107 @@
             </div>
         </header>
 
-        <main class="auth-layout">
-            <section class="auth-copy">
-                <p class="eyebrow">Авторизация сотрудников</p>
-                <h1>Единый вход в личный кабинет</h1>
-                <p class="lead">
-                    Вход доступен только после одобрения регистрации. Если у вас еще нет доступа,
-                    сначала отправьте заявку администратору портала.
-                </p>
+        <main class="auth-v2-layout">
+            <section class="auth-v2-hero">
+                <div class="auth-v2-shell-card auth-v2-shell-card-hero">
+                    <p class="eyebrow">Clinical-grade access</p>
+                    <h1>Безопасный вход в цифровой медицинский контур</h1>
+                    <p class="lead">
+                        Это не обычная форма входа, а защищённая точка доступа к внутреннему рабочему пространству.
+                        Вход получают только одобренные сотрудники, а действия внутри портала строятся вокруг принципов
+                        клинической ответственности, управляемого доступа и минимизации риска.
+                    </p>
 
-                <div class="trust-grid">
-                    <article class="mini-panel">
-                        <p class="card-kicker">Безопасность</p>
-                        <h2>Доступ только после одобрения</h2>
-                        <p>Новые сотрудники не получают вход автоматически. Администратор сначала проверяет заявку.</p>
+                    <div class="auth-v2-hero-grid">
+                        <article class="auth-v2-glass-card">
+                            <span class="auth-v2-metric-kicker">Identity</span>
+                            <strong>Одобренный доступ</strong>
+                            <p>Регистрация не активируется автоматически. Каждая новая учётная запись проходит админ-подтверждение.</p>
+                        </article>
+                        <article class="auth-v2-glass-card">
+                            <span class="auth-v2-metric-kicker">Security</span>
+                            <strong>Серверный контроль</strong>
+                            <p>Вход работает через серверную схему авторизации, а маршруты и роли дополнительно ограничены на уровне базы.</p>
+                        </article>
+                        <article class="auth-v2-glass-card">
+                            <span class="auth-v2-metric-kicker">Session</span>
+                            <strong>Автовыход и аудит</strong>
+                            <p>Сессия завершается при длительном бездействии, а чувствительные действия проходят через управляемый контур.</p>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="auth-v2-signal-row">
+                    <article class="auth-v2-signal-card">
+                        <span>Рекомендуемый путь</span>
+                        <strong>Сначала вход, потом рабочий стол</strong>
+                        <p>Сотрудник начинает день с уведомлений, документов, НС и служебных сценариев — без хаоса и лишнего поиска.</p>
                     </article>
-                    <article class="mini-panel">
-                        <p class="card-kicker">Контроль</p>
-                        <h2>Автовыход по бездействию</h2>
-                        <p>Если пользователь долго не работает в кабинете, система завершает сессию автоматически.</p>
+                    <article class="auth-v2-signal-card">
+                        <span>Безопасность по умолчанию</span>
+                        <strong>Доступ не открывается “на доверии”</strong>
+                        <p>Если статус учётной записи не подтверждён или доступ ограничен, портал не впускает пользователя внутрь.</p>
                     </article>
                 </div>
             </section>
 
-            <section class="auth-card" aria-labelledby="login-title">
-                <p class="card-kicker">Доступ сотрудника</p>
-                <h2 id="login-title">Войти в кабинет</h2>
-                <p class="card-text">Введите логин и пароль. Если доступ еще не одобрен, портал не впустит внутрь.</p>
+            <section class="auth-v2-panel">
+                <div class="auth-v2-shell-card auth-v2-shell-card-form">
+                    <div class="auth-v2-form-head">
+                        <p class="card-kicker">Доступ сотрудника</p>
+                        <h2>Войти в защищённый кабинет</h2>
+                        <p class="card-text">Используйте служебный логин. Если вы ещё не подключены к системе — сначала отправьте заявку на доступ.</p>
+                    </div>
 
-                <form id="login-form" class="auth-form">
-                    <label for="email">Логин</label>
-                    <input id="email" name="email" type="text" placeholder="Например: ivanovii" autocomplete="username" inputmode="latin" pattern="[A-Za-z0-9._-]{4,32}" maxlength="32" required>
+                    <div class="auth-v2-security-strip">
+                        <span>• только одобренные сотрудники</span>
+                        <span>• серверная валидация</span>
+                        <span>• ограничение попыток входа</span>
+                    </div>
 
-                    <label for="password">Пароль</label>
-                    <input id="password" name="password" type="password" placeholder="Минимум 8 символов" autocomplete="current-password" minlength="8" required>
+                    <form id="login-form" class="auth-form auth-v2-form">
+                        <div class="auth-v2-field-grid">
+                            <label class="auth-v2-field">
+                                <span>Логин</span>
+                                <input id="email" name="email" type="text" placeholder="Например: ivanovii" autocomplete="username" inputmode="latin" pattern="[A-Za-z0-9._-]{4,32}" maxlength="32" required>
+                            </label>
+                            <label class="auth-v2-field">
+                                <span>Пароль</span>
+                                <input id="password" name="password" type="password" placeholder="Минимум 8 символов" autocomplete="current-password" minlength="8" required>
+                            </label>
+                        </div>
 
-                    <button type="submit" class="primary-btn wide-btn">Войти</button>
-                    <p id="form-message" class="form-message" aria-live="polite"></p>
-                </form>
+                        <label class="auth-v2-honeypot" aria-hidden="true">
+                            <span>Не заполняйте это поле</span>
+                            <input type="text" name="website" tabindex="-1" autocomplete="off">
+                        </label>
 
-                <div class="auth-links-block">
-                    <a class="inline-link" href="register.html">Подать заявку на регистрацию</a>
-                    <a class="inline-link" href="forgot.html">Забыли пароль?</a>
+                        <button type="submit" class="primary-btn wide-btn">Продолжить безопасный вход</button>
+                        <p id="form-message" class="form-message" aria-live="polite"></p>
+                    </form>
+
+                    <div class="auth-v2-links">
+                        <a class="inline-link" href="register.html">Подать заявку на регистрацию</a>
+                        <a class="inline-link" href="forgot.html">Восстановить доступ</a>
+                    </div>
+                </div>
+
+                <div class="auth-v2-shell-card auth-v2-shell-card-side">
+                    <div class="auth-v2-side-block">
+                        <span class="card-kicker">Что будет дальше</span>
+                        <strong>После входа вы попадаете в живой рабочий стол</strong>
+                        <p>Там уже собраны приоритеты дня, уведомления, рабочие сервисы, НС, обращения и защищённые разделы.</p>
+                    </div>
+                    <div class="auth-v2-side-block">
+                        <span class="card-kicker">Если доступа ещё нет</span>
+                        <strong>Отправьте заявку и дождитесь одобрения</strong>
+                        <p>Сотрудник указывает ФИО, подразделение, должность, желаемый логин и пароль. Без проверки доступ не откроется.</p>
+                    </div>
+                    <div class="auth-v2-side-block">
+                        <span class="card-kicker">Принцип продукта</span>
+                        <strong>Спокойно. Чисто. Управляемо.</strong>
+                        <p>Визуально портал должен вызывать доверие, а технически — оставаться закрытым для случайного или несанкционированного доступа.</p>
+                    </div>
                 </div>
             </section>
         </main>

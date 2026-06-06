@@ -81,6 +81,11 @@
                     <label for="requested-password">Пароль</label>
                     <input id="requested-password" name="requested_password" type="password" placeholder="Минимум 8 символов, буква и цифра" autocomplete="new-password" minlength="8" maxlength="128" required>
 
+                    <label class="auth-v2-honeypot" aria-hidden="true">
+                        <span>Не заполняйте это поле</span>
+                        <input type="text" name="website" tabindex="-1" autocomplete="off">
+                    </label>
+
                     <button type="submit" class="primary-btn wide-btn">Отправить заявку</button>
                     <p id="register-message" class="form-message" aria-live="polite"></p>
                 </form>

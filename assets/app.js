@@ -441,10 +441,41 @@
             return;
         }
         adminDataCache = await fetchAdminServerData();
+        renderAdminSummary();
         renderAdminRequests();
         renderAdminUsers();
         renderAdminMessages();
         renderResetRequests();
+    }
+
+    function renderAdminSummary() {
+        const requestsNode = document.getElementById("admin-summary-requests");
+        const usersNode = document.getElementById("admin-summary-users");
+        const messagesNode = document.getElementById("admin-summary-messages");
+        const resetsNode = document.getElementById("admin-summary-resets");
+        const requests = (isServerAuthAvailable() && adminDataCache ? adminDataCache.requests : getRequests()).filter(function (item) {
+            return item.status === "pending";
+        });
+        const profiles = isServerAuthAvailable() && adminDataCache ? adminDataCache.profiles : getProfiles();
+        const messages = (isServerAuthAvailable() && adminDataCache ? adminDataCache.messages : getMessages()).filter(function (item) {
+            return item.status !== "closed";
+        });
+        const resets = (isServerAuthAvailable() && adminDataCache ? adminDataCache.resetRequests : getResetRequests()).filter(function (item) {
+            return item.status === "pending";
+        });
+
+        if (requestsNode) {
+            requestsNode.textContent = String(requests.length);
+        }
+        if (usersNode) {
+            usersNode.textContent = String(profiles.length);
+        }
+        if (messagesNode) {
+            messagesNode.textContent = String(messages.length);
+        }
+        if (resetsNode) {
+            resetsNode.textContent = String(resets.length);
+        }
     }
 
     function denyInProduction(messageNode, text) {
@@ -1401,12 +1432,19 @@
         root.innerHTML = messages.map(function (message) {
             const channelLabel = message.to_channel === "chief" ? "Главному врачу" : "Администратору";
             return [
-                '<article class="admin-card">',
+                '<article class="admin-card" data-message-id="' + message.id + '">',
                 "  <strong>" + escapeHtml(message.subject) + "</strong>",
                 "  <p>От: " + escapeHtml(message.from_name) + " (" + escapeHtml(message.from_login) + ")</p>",
                 "  <p>Канал: " + channelLabel + "</p>",
                 "  <p>" + escapeHtml(message.body) + "</p>",
-                "  <p>Статус: " + message.status + "</p>",
+                '  <div class="admin-card-row">',
+                '    <select class="portal-select" data-message-status="' + message.id + '">',
+                ["new", "in_review", "closed"].map(function (status) {
+                    const label = status === "new" ? "Новое" : status === "in_review" ? "В работе" : "Закрыто";
+                    return '<option value="' + status + '"' + (message.status === status ? " selected" : "") + ">" + label + "</option>";
+                }).join(""),
+                "    </select>",
+                "  </div>",
                 "</article>"
             ].join("");
         }).join("");
@@ -1448,6 +1486,7 @@
         const noticeForm = document.getElementById("admin-notice-form");
         const noticeMessage = document.getElementById("admin-form-message");
         const resetRoot = document.getElementById("reset-request-list");
+        const messageRoot = document.getElementById("message-list");
 
         if (requestRoot) {
             requestRoot.addEventListener("click", async function (event) {
@@ -1622,6 +1661,43 @@
             });
         }
 
+        if (messageRoot) {
+            messageRoot.addEventListener("change", async function (event) {
+                const statusSelect = event.target.closest("[data-message-status]");
+                if (!statusSelect) {
+                    return;
+                }
+                const messageId = statusSelect.getAttribute("data-message-status");
+                const nextStatus = statusSelect.value;
+                if (!messageId || !nextStatus) {
+                    return;
+                }
+
+                if (isServerAuthAvailable()) {
+                    const result = await supabaseClient
+                        .from("messages")
+                        .update({ status: nextStatus })
+                        .eq("id", messageId);
+                    if (result.error) {
+                        await refreshAdminPageData();
+                        return;
+                    }
+                    await refreshAdminPageData();
+                    return;
+                }
+
+                const messages = getMessages();
+                const message = messages.find(function (item) { return item.id === messageId; });
+                if (!message) {
+                    return;
+                }
+                message.status = nextStatus;
+                saveMessages(messages);
+                renderAdminSummary();
+                renderAdminMessages();
+            });
+        }
+
         if (resetRoot) {
             resetRoot.addEventListener("click", async function (event) {
                 const button = event.target.closest("[data-reset-generate]");
@@ -1686,6 +1762,22 @@
         const qualityRoot = document.getElementById("quality-access-role");
         if (qualityRoot) {
             qualityRoot.textContent = getRoleLabel(session.role);
+        }
+        const categoriesNode = document.getElementById("quality-stat-categories");
+        const statusesNode = document.getElementById("quality-stat-statuses");
+        const curatorsNode = document.getElementById("quality-stat-curators");
+        const causesNode = document.getElementById("quality-stat-causes");
+        if (categoriesNode) {
+            categoriesNode.textContent = String(qualityTaxonomy.categories.length);
+        }
+        if (statusesNode) {
+            statusesNode.textContent = String(qualityTaxonomy.statuses.length);
+        }
+        if (curatorsNode) {
+            curatorsNode.textContent = String(qualityTaxonomy.curators.length);
+        }
+        if (causesNode) {
+            causesNode.textContent = String(qualityTaxonomy.causeGroups.length);
         }
         const nextStep = document.getElementById("quality-next-step");
         if (nextStep) {
@@ -1820,6 +1912,7 @@
         if (isServerAuthAvailable()) {
             await refreshAdminPageData();
         }
+        renderAdminSummary();
         renderAdminRequests();
         renderAdminUsers();
         renderAdminMessages();

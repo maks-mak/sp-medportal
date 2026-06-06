@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сергиево-Посадская больница — Портал для сотрудников</title>
+    <meta name="description" content="Единая точка доступа к медицинским ресурсам, документам и сервисам для сотрудников Сергиево-Посадской больницы.">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -32,7 +33,6 @@
             padding: 20px;
         }
 
-        /* ========== FALLBACK BACKGROUND (always visible) ========== */
         .fallback-bg {
             position: fixed; inset: 0; z-index: 0;
             background:
@@ -41,7 +41,6 @@
                 linear-gradient(180deg, #040810 0%, #081020 50%, #040810 100%);
         }
 
-        /* Animated mesh gradient overlay */
         .fallback-bg::before {
             content: '';
             position: absolute; inset: 0;
@@ -50,13 +49,13 @@
                 radial-gradient(ellipse at 70% 40%, rgba(34, 211, 238, 0.04) 0%, transparent 40%);
             animation: meshMove 15s ease-in-out infinite;
         }
+
         @keyframes meshMove {
             0%, 100% { transform: translate(0, 0) scale(1); }
             33% { transform: translate(5%, -3%) scale(1.05); }
             66% { transform: translate(-3%, 5%) scale(0.95); }
         }
 
-        /* ========== VIDEO BACKGROUND (overrides fallback when loaded) ========== */
         .video-bg {
             position: fixed;
             top: 0; left: 0;
@@ -65,7 +64,6 @@
             z-index: 0;
         }
 
-        /* ========== VIGNETTE OVERLAY ========== */
         .video-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -74,7 +72,6 @@
             z-index: 1;
         }
 
-        /* ========== FLOATING PARTICLES ========== */
         .particles-container {
             position: fixed;
             top: 0; left: 0;
@@ -83,6 +80,7 @@
             pointer-events: none;
             overflow: hidden;
         }
+
         .particle {
             position: absolute;
             bottom: -10px;
@@ -91,6 +89,7 @@
             animation: floatUp linear infinite;
             filter: blur(0.5px);
         }
+
         @keyframes floatUp {
             0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
             10% { opacity: 0.35; }
@@ -98,7 +97,6 @@
             100% { transform: translateY(-110vh) translateX(30px) scale(0.5); opacity: 0; }
         }
 
-        /* ========== DNA GLOW PULSE ========== */
         .dna-glow {
             position: fixed;
             top: 50%; left: 50%;
@@ -110,12 +108,12 @@
             pointer-events: none;
             animation: glowPulse 6s ease-in-out infinite;
         }
+
         @keyframes glowPulse {
             0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
             50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
         }
 
-        /* ========== CONTENT ========== */
         .landing-wrapper {
             position: relative; z-index: 10;
             width: 100%; max-width: 720px;
@@ -123,6 +121,7 @@
             opacity: 0;
             animation: contentFadeIn 1.5s ease 0.3s forwards;
         }
+
         @keyframes contentFadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -139,6 +138,7 @@
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
             line-height: 1.2;
         }
+
         h1 span {
             display: block;
             font-size: 16px;
@@ -181,12 +181,14 @@
             position: relative;
             overflow: hidden;
         }
+
         .feature:hover {
             transform: translateY(-4px);
             border-color: rgba(34, 211, 238, 0.3);
             box-shadow: 0 0 40px rgba(34, 211, 238, 0.08);
             background: var(--glass-hover);
         }
+
         .feature::before {
             content: '';
             position: absolute;
@@ -197,18 +199,29 @@
             pointer-events: none;
             z-index: 0;
         }
+
         @keyframes cardPulse {
             0%, 100% { opacity: 0.3; transform: scale(0.9); }
             50% { opacity: 0.7; transform: scale(1.1); }
         }
+
         .feature-icon { font-size: 32px; margin-bottom: 12px; position: relative; z-index: 1; }
         .feature-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; position: relative; z-index: 1; }
         .feature-desc { font-size: 12px; color: var(--text-muted); position: relative; z-index: 1; }
 
-        .login-btn {
+        .actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: contentFadeIn 1.5s ease 1.2s forwards;
+        }
+
+        .login-btn,
+        .secondary-btn {
             display: inline-block;
-            padding: 18px 48px;
-            background: rgba(255, 255, 255, 0.06);
+            padding: 18px 34px;
             backdrop-filter: blur(12px);
             color: var(--text-primary);
             text-decoration: none;
@@ -217,12 +230,21 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
-            border: 1px solid rgba(34, 211, 238, 0.3);
             transition: all 0.3s ease;
-            opacity: 0;
-            animation: contentFadeIn 1.5s ease 1.2s forwards;
         }
-        .login-btn:hover {
+
+        .login-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+        }
+
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .login-btn:hover,
+        .secondary-btn:hover {
             background: rgba(255, 255, 255, 0.12);
             border-color: rgba(34, 211, 238, 0.6);
             box-shadow: 0 0 30px rgba(34, 211, 238, 0.15);
@@ -240,34 +262,25 @@
         @media (max-width: 640px) {
             .features { grid-template-columns: 1fr; }
             h1 { font-size: 32px; }
+            .actions { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <!-- Fallback background (visible if video fails to load) -->
     <div class="fallback-bg"></div>
-
-    <!-- DNA Video Background -->
-    <video autoplay loop muted playsInline class="video-bg">
+    <video autoplay loop muted playsinline class="video-bg">
         <source src="bg-dna.mp4" type="video/mp4">
     </video>
-
-    <!-- Vignette Overlay -->
     <div class="video-overlay"></div>
-
-    <!-- DNA Glow Pulse -->
     <div class="dna-glow"></div>
-
-    <!-- Floating Particles -->
     <div class="particles-container" id="particles"></div>
 
-    <!-- Content -->
     <div class="landing-wrapper">
         <h1>Сергиево-Посадская<br>больница<span>Информационный портал для сотрудников</span></h1>
 
         <p class="subtitle">
             Единая точка доступа к медицинским ресурсам, документам и сервисам.
-            Для врачей, медсестёр и административного персонала.
+            Для врачей, медсестер и административного персонала.
         </p>
 
         <div class="features">
@@ -288,7 +301,10 @@
             </div>
         </div>
 
-        <a href="https://script.google.com/macros/s/AKfycbyzJR_WzJOhk8f81bv344m2vPxXT7VA3I1hCK9BnYrIk_ATLdL2ZsmJ_7GI4Q2xx-jtXg/exec?page=login" class="login-btn">&#x1F510; Войти в личный кабинет</a>
+        <div class="actions">
+            <a href="login.html" class="login-btn">&#x1F510; Войти в личный кабинет</a>
+            <a href="dashboard.html" class="secondary-btn">Открыть демо-кабинет</a>
+        </div>
 
         <div class="footer">
             &copy; 2026 Сергиево-Посадская больница<br>
@@ -297,7 +313,6 @@
     </div>
 
     <script>
-        // Generate floating particles
         (function() {
             var container = document.getElementById('particles');
             for (var i = 0; i < 30; i++) {

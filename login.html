@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в портал — SP MedPortal</title>
+    <meta name="description" content="Авторизация сотрудников в цифровом портале Сергиево-Посадской больницы.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="auth-page">
+    <div class="page-shell">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="grid-noise"></div>
+
+        <header class="site-header compact-header">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">SP</span>
+                <span class="brand-copy">
+                    <strong>MedPortal</strong>
+                    <small>Служебный доступ</small>
+                </span>
+            </a>
+            <div class="header-actions">
+                <a class="ghost-btn" href="index.html">На главную</a>
+            </div>
+        </header>
+
+        <main class="auth-layout">
+            <section class="auth-copy">
+                <p class="eyebrow">Авторизация</p>
+                <h1>Новый вход в портал сотрудников</h1>
+                <p class="lead">
+                    Это уже не внешняя ссылка, а собственная точка входа на вашем домене.
+                    Сейчас включен демо-режим, чтобы мы могли спокойно развивать портал дальше.
+                </p>
+
+                <div class="trust-grid">
+                    <article class="mini-panel">
+                        <p class="card-kicker">Без разрыва</p>
+                        <h2>Единый пользовательский сценарий</h2>
+                        <p>Главная, вход и кабинет собраны в одном проекте и ощущаются как один продукт.</p>
+                    </article>
+                    <article class="mini-panel">
+                        <p class="card-kicker">Готовность</p>
+                        <h2>Основа под прод-версию</h2>
+                        <p>Сюда можно подключить `Supabase`, `Cloudflare` или собственный сервер без переделки структуры.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="auth-card" aria-labelledby="login-title">
+                <p class="card-kicker">Доступ сотрудника</p>
+                <h2 id="login-title">Войти в кабинет</h2>
+                <p class="card-text">Введите рабочую почту и пароль от 6 символов. В демо-режиме создается локальная сессия браузера.</p>
+
+                <form id="login-form" class="auth-form">
+                    <label for="email">Рабочая почта</label>
+                    <input id="email" name="email" type="email" placeholder="name@sp-medportal.ru" autocomplete="email" required>
+
+                    <label for="password">Пароль</label>
+                    <input id="password" name="password" type="password" placeholder="Минимум 6 символов" autocomplete="current-password" minlength="6" required>
+
+                    <button type="submit" class="primary-btn wide-btn">Продолжить</button>
+                    <p id="form-message" class="form-message" aria-live="polite"></p>
+                </form>
+
+                <div class="demo-note">
+                    <strong>Демо-профили:</strong>
+                    <span>`doctor@sp-medportal.ru`</span>
+                    <span>`nurse@sp-medportal.ru`</span>
+                    <span>`admin@sp-medportal.ru`</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="assets/app.js"></script>
+</body>
+</html>

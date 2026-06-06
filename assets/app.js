@@ -1352,7 +1352,7 @@
             return;
         }
 
-        const existingSession = readSession() || (isServerAuthAvailable() ? await hydrateSessionFromSupabase() : null);
+        const existingSession = isServerAuthAvailable() ? await hydrateSessionFromSupabase() : readSession();
         if (existingSession && existingSession.role) {
             window.location.href = existingSession.role === "admin"
                 ? "admin.html"
@@ -2533,10 +2533,7 @@
         if (!dashboardMarker) {
             return;
         }
-        let session = readSession();
-        if (!session && isServerAuthAvailable()) {
-            session = await hydrateSessionFromSupabase();
-        }
+        let session = isServerAuthAvailable() ? await hydrateSessionFromSupabase() : readSession();
         session = requireSession(["employee", "okk_member", "okk_head", "admin"]);
         if (!session) {
             return;
@@ -2549,10 +2546,7 @@
         if (!requestRoot) {
             return;
         }
-        let session = readSession();
-        if (!session && isServerAuthAvailable()) {
-            session = await hydrateSessionFromSupabase();
-        }
+        let session = isServerAuthAvailable() ? await hydrateSessionFromSupabase() : readSession();
         session = requireSession(["admin"]);
         if (!session) {
             return;
@@ -2574,10 +2568,7 @@
         if (!qualityMarker) {
             return;
         }
-        let session = readSession();
-        if (!session && isServerAuthAvailable()) {
-            session = await hydrateSessionFromSupabase();
-        }
+        let session = isServerAuthAvailable() ? await hydrateSessionFromSupabase() : readSession();
         session = requireSession(["okk_member", "okk_head", "admin"]);
         if (!session) {
             return;
@@ -2596,10 +2587,7 @@
         if (!trainingMarker) {
             return;
         }
-        let session = readSession();
-        if (!session && isServerAuthAvailable()) {
-            session = await hydrateSessionFromSupabase();
-        }
+        let session = isServerAuthAvailable() ? await hydrateSessionFromSupabase() : readSession();
         session = requireSession(["employee", "okk_member", "okk_head", "admin"]);
         if (!session) {
             return;

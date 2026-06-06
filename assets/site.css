@@ -13,11 +13,11 @@
     --mint: #92f0d0;
     --danger: #ff9090;
     --success: #a1f3bf;
-    --shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
-    --radius-xl: 32px;
-    --radius-lg: 24px;
-    --radius-md: 18px;
-    --radius-sm: 12px;
+    --shadow: 0 18px 54px rgba(0, 0, 0, 0.22);
+    --radius-xl: 18px;
+    --radius-lg: 14px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
     --font-body: "Manrope", sans-serif;
     --font-display: "Prata", serif;
 }
@@ -28,7 +28,7 @@
 
 html {
     scroll-behavior: smooth;
-    color-scheme: dark;
+    color-scheme: light;
 }
 
 body {
@@ -36,10 +36,7 @@ body {
     min-height: 100vh;
     font-family: var(--font-body);
     color: var(--text);
-    background:
-        radial-gradient(circle at 0% 0%, rgba(88, 184, 255, 0.14), transparent 22%),
-        radial-gradient(circle at 100% 10%, rgba(146, 240, 208, 0.1), transparent 18%),
-        linear-gradient(180deg, #06101a 0%, #0b1524 50%, #07111d 100%);
+    background: linear-gradient(180deg, #06101a 0%, #0b1524 50%, #07111d 100%);
 }
 
 a {
@@ -56,42 +53,6 @@ input {
     position: relative;
     min-height: 100vh;
     overflow: hidden;
-}
-
-.grid-noise {
-    position: fixed;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 52px 52px;
-    mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
-    opacity: 0.18;
-    pointer-events: none;
-}
-
-.orb {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(70px);
-    pointer-events: none;
-    opacity: 0.45;
-}
-
-.orb-a {
-    width: 22rem;
-    height: 22rem;
-    left: -7rem;
-    top: -5rem;
-    background: rgba(88, 184, 255, 0.24);
-}
-
-.orb-b {
-    width: 26rem;
-    height: 26rem;
-    right: -8rem;
-    bottom: -8rem;
-    background: rgba(146, 240, 208, 0.14);
 }
 
 .site-header,
@@ -201,12 +162,12 @@ p {
 
 h1 {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 7vw, 5.6rem);
+    font-size: clamp(3rem, 4.8rem, 5.6rem);
     line-height: 0.98;
 }
 
 h2 {
-    font-size: clamp(1.4rem, 2vw, 2rem);
+    font-size: clamp(1.4rem, 1.8rem, 2rem);
 }
 
 h3 {
@@ -705,7 +666,7 @@ h3 {
     }
 
     h1 {
-        font-size: clamp(2.5rem, 12vw, 4rem);
+        font-size: clamp(2.45rem, 3.2rem, 4rem);
     }
 }
 
@@ -716,11 +677,11 @@ h3 {
     --line: rgba(91, 143, 201, 0.18);
     --panel: rgba(255, 255, 255, 0.88);
     --panel-2: rgba(255, 252, 246, 0.94);
-    --shadow: 0 24px 70px rgba(95, 126, 163, 0.14);
-    background:
-        radial-gradient(circle at top right, rgba(255, 215, 158, 0.35), transparent 18%),
-        radial-gradient(circle at top left, rgba(146, 203, 255, 0.36), transparent 24%),
-        linear-gradient(180deg, #f6fbff 0%, #eef6ff 40%, #fdf9f2 100%);
+    --accent: #b7791f;
+    --accent-2: #2d6f91;
+    --mint: #247a63;
+    --shadow: 0 14px 34px rgba(95, 126, 163, 0.12);
+    background: linear-gradient(180deg, #f8fbfd 0%, #f3f7fb 48%, #fff8ee 100%);
 }
 
 .portal-shell {
@@ -791,7 +752,7 @@ h3 {
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 10px 16px;
-    border-radius: 24px;
+    border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 250, 244, 0.96));
 }
@@ -889,7 +850,7 @@ h3 {
 
 .portal-panel,
 .portal-wide-banner {
-    border-radius: 28px;
+    border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.06);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(250, 252, 255, 0.92));
     box-shadow: 0 24px 60px rgba(119, 151, 188, 0.14);
@@ -917,7 +878,7 @@ h3 {
 .portal-intro h1,
 .simple-page-panel h1 {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-size: clamp(2rem, 2.75rem, 3.2rem);
     line-height: 1.05;
 }
 
@@ -985,7 +946,7 @@ h3 {
 }
 
 .dashboard-highlight-card {
-    border-radius: 22px;
+    border-radius: 14px;
     padding: 20px;
 }
 
@@ -1031,7 +992,7 @@ h3 {
 .dashboard-news-card {
     display: block;
     padding: 20px;
-    border-radius: 22px;
+    border-radius: 14px;
     border: 1px solid rgba(161, 196, 228, 0.22);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 250, 255, 0.98));
     box-shadow: 0 16px 32px rgba(128, 158, 194, 0.10);
@@ -1075,7 +1036,7 @@ h3 {
 .dashboard-action-card,
 .dashboard-contact-card,
 .dashboard-spotlight-card {
-    border-radius: 22px;
+    border-radius: 14px;
     padding: 18px;
 }
 
@@ -1191,7 +1152,7 @@ h3 {
 .mini-link-card {
     display: block;
     padding: 26px;
-    border-radius: 24px;
+    border-radius: 14px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 250, 255, 0.98));
     border: 1px solid rgba(161, 196, 228, 0.22);
     box-shadow: 0 16px 32px rgba(128, 158, 194, 0.10);
@@ -1272,7 +1233,7 @@ h3 {
     justify-content: space-between;
     gap: 18px;
     align-items: center;
-    padding: 20px 24px;
+    padding: 20px 22px;
 }
 
 .portal-banner-icon {
@@ -1563,7 +1524,7 @@ h3 {
 }
 
 .quality-case-detail {
-    border-radius: 24px;
+    border-radius: 16px;
     padding: 20px;
 }
 
@@ -1630,7 +1591,7 @@ h3 {
 }
 
 .quality-case-column {
-    border-radius: 22px;
+    border-radius: 16px;
     padding: 18px;
 }
 
@@ -1715,7 +1676,7 @@ h3 {
 }
 
 .quality-action-card {
-    border-radius: 24px;
+    border-radius: 14px;
     padding: 20px;
     display: grid;
     gap: 12px;
@@ -1868,10 +1829,7 @@ h3 {
 
 
 .auth-v2-page .page-shell {
-    background:
-        radial-gradient(circle at 15% 20%, rgba(20, 51, 83, 0.24), transparent 35%),
-        radial-gradient(circle at 85% 14%, rgba(33, 76, 102, 0.18), transparent 30%),
-        linear-gradient(180deg, #f4f8fd 0%, #eef4fa 100%);
+    background: linear-gradient(180deg, #f7fbfe 0%, #eef5fb 100%);
 }
 
 .auth-v2-header {
@@ -1899,7 +1857,7 @@ h3 {
 }
 
 .auth-v2-shell-card {
-    border-radius: 32px;
+    border-radius: 18px;
     border: 1px solid rgba(174, 198, 224, 0.22);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(248, 251, 255, 0.92));
     box-shadow: 0 24px 70px rgba(110, 136, 171, 0.14);
@@ -1914,9 +1872,9 @@ h3 {
 
 .auth-v2-shell-card-hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(2.6rem, 5vw, 4.7rem);
+    font-size: clamp(2.4rem, 3.9rem, 4.7rem);
     line-height: 0.98;
-    letter-spacing: -0.03em;
+    letter-spacing: 0;
     margin-bottom: 18px;
 }
 
@@ -1936,7 +1894,7 @@ h3 {
 .auth-v2-glass-card,
 .auth-v2-signal-card,
 .auth-v2-side-block {
-    border-radius: 22px;
+    border-radius: 14px;
     border: 1px solid rgba(174, 198, 224, 0.2);
     background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.94));
     box-shadow: 0 18px 40px rgba(129, 154, 189, 0.10);
@@ -2057,10 +2015,7 @@ h3 {
 
 
 .landing-v2-page .page-shell {
-    background:
-        radial-gradient(circle at 16% 20%, rgba(25, 72, 104, 0.16), transparent 32%),
-        radial-gradient(circle at 85% 14%, rgba(168, 195, 221, 0.22), transparent 28%),
-        linear-gradient(180deg, #f5f9fd 0%, #edf3f9 100%);
+    background: linear-gradient(180deg, #f8fbfd 0%, #f0f6fb 100%);
 }
 
 .landing-v2-header {
@@ -2089,7 +2044,7 @@ h3 {
 .landing-v2-feature-card,
 .landing-v2-metric-tile,
 .admin-v2-signal-card {
-    border-radius: 30px;
+    border-radius: 18px;
     border: 1px solid rgba(174, 198, 224, 0.22);
     background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(248,251,255,0.94));
     box-shadow: 0 24px 70px rgba(110, 136, 171, 0.12);
@@ -2104,9 +2059,9 @@ h3 {
 
 .landing-v2-copy h1 {
     font-family: var(--font-display);
-    font-size: clamp(2.9rem, 5.1vw, 5.2rem);
+    font-size: clamp(2.6rem, 4.25rem, 5.2rem);
     line-height: 0.96;
-    letter-spacing: -0.04em;
+    letter-spacing: 0;
     margin-bottom: 18px;
 }
 
@@ -2124,7 +2079,7 @@ h3 {
 
 .landing-v2-stat-card,
 .landing-v2-metric-tile {
-    border-radius: 22px;
+    border-radius: 14px;
     border: 1px solid rgba(174, 198, 224, 0.18);
     background: rgba(255,255,255,0.72);
     padding: 20px;
@@ -2204,8 +2159,19 @@ h3 {
 
 .admin-v2-hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(2.1rem, 4vw, 3.6rem);
+    font-size: clamp(2.1rem, 3rem, 3.6rem);
     line-height: 1.02;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+    }
 }
 
 .admin-v2-hero-side {

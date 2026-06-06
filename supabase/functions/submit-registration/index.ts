@@ -2,7 +2,8 @@ import { createClient } from "npm:@supabase/supabase-js@2"
 import { ensureAllowedOrigin, getCorsHeaders } from "../_shared/cors.ts"
 import {
   buildAuthEmail,
-  json,
+  hasJsonContentType,
+  isRequestBodyTooLarge,
   LONG_BAN_DURATION,
   shortName,
   validateRegistrationPayload,
@@ -22,6 +23,20 @@ Deno.serve(async (req) => {
   if (!ensureAllowedOrigin(req)) {
     return new Response(JSON.stringify({ error: "Недопустимый источник запроса." }), {
       status: 403,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    })
+  }
+
+  if (!hasJsonContentType(req)) {
+    return new Response(JSON.stringify({ error: "Ожидается JSON-запрос." }), {
+      status: 415,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    })
+  }
+
+  if (isRequestBodyTooLarge(req)) {
+    return new Response(JSON.stringify({ error: "Запрос слишком большой." }), {
+      status: 413,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     })
   }
@@ -63,17 +78,6 @@ Deno.serve(async (req) => {
       })
     }
 
-    const { data: existingEmailUser } = await supabaseAdmin.auth.admin.listUsers({
-      page: 1,
-      perPage: 200,
-    })
-    if ((existingEmailUser?.users || []).some((item) => item.email === authEmail)) {
-      return new Response(JSON.stringify({ error: "Такой логин уже занят или ожидает одобрения." }), {
-        status: 409,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      })
-    }
-
     const { data: createdUser, error: createUserError } = await supabaseAdmin.auth.admin.createUser({
       email: authEmail,
       password: parsed.requestedPassword,
@@ -89,6 +93,13 @@ Deno.serve(async (req) => {
     })
 
     if (createUserError || !createdUser.user) {
+      const isDuplicateUser = /already|exists|registered|duplicate/i.test(createUserError?.message || "")
+      if (isDuplicateUser) {
+        return new Response(JSON.stringify({ error: "Такой логин уже занят или ожидает одобрения." }), {
+          status: 409,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        })
+      }
       return new Response(JSON.stringify({ error: "Не удалось создать учетную запись. Попробуйте позже." }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

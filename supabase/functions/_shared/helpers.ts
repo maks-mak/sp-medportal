@@ -1,5 +1,6 @@
 export const LOGIN_PATTERN = /^[a-z0-9._-]{4,32}$/
 export const MIN_PASSWORD_LENGTH = 8
+export const MAX_JSON_BODY_BYTES = 16 * 1024
 export const LONG_BAN_DURATION = "876000h"
 export const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
@@ -34,6 +35,15 @@ export function isStrongPassword(password: string) {
 
 export function isUuid(value: string) {
   return UUID_PATTERN.test(String(value || "").trim())
+}
+
+export function hasJsonContentType(req: Request) {
+  return (req.headers.get("content-type") || "").toLowerCase().includes("application/json")
+}
+
+export function isRequestBodyTooLarge(req: Request, maxBytes = MAX_JSON_BODY_BYTES) {
+  const contentLength = Number(req.headers.get("content-length") || "0")
+  return Number.isFinite(contentLength) && contentLength > maxBytes
 }
 
 export function validateRegistrationPayload(payload: Record<string, unknown>) {

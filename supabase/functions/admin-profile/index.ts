@@ -1,6 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2"
 import { ensureAllowedOrigin, getCorsHeaders } from "../_shared/cors.ts"
-import { isUuid, LONG_BAN_DURATION } from "../_shared/helpers.ts"
+import { hasJsonContentType, isRequestBodyTooLarge, isUuid, LONG_BAN_DURATION } from "../_shared/helpers.ts"
 
 const ALLOWED_ROLES = new Set(["employee", "okk_member", "okk_head", "admin"])
 const ALLOWED_STATUSES = new Set(["pending", "approved", "blocked", "rejected"])
@@ -52,6 +52,20 @@ Deno.serve(async (req) => {
   if (!ensureAllowedOrigin(req)) {
     return new Response(JSON.stringify({ error: "Недопустимый источник запроса." }), {
       status: 403,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    })
+  }
+
+  if (!hasJsonContentType(req)) {
+    return new Response(JSON.stringify({ error: "Ожидается JSON-запрос." }), {
+      status: 415,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    })
+  }
+
+  if (isRequestBodyTooLarge(req)) {
+    return new Response(JSON.stringify({ error: "Запрос слишком большой." }), {
+      status: 413,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     })
   }

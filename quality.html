@@ -19,34 +19,103 @@
         <div class="orb orb-a"></div>
         <div class="orb orb-b"></div>
         <div class="grid-noise"></div>
-        <main class="portal-shell simple-page-shell" id="quality-page-marker">
-            <header class="portal-simple-header">
-                <a class="portal-ghost-btn" href="dashboard.html">Назад в кабинет</a>
+        <main class="portal-shell quality-shell" id="quality-page-marker">
+            <header class="portal-header quality-header">
+                <a class="portal-brand" href="dashboard.html">
+                    <span class="portal-brand-mark">🛡</span>
+                    <span class="portal-brand-copy">
+                        <strong>ОКК и БМД</strong>
+                        <small>Защищённая рабочая зона</small>
+                    </span>
+                </a>
+                <div class="portal-user-actions">
+                    <a class="portal-ghost-btn" href="dashboard.html">К кабинету</a>
+                    <a class="portal-ghost-btn" id="quality-registry-link" href="https://docs.google.com/spreadsheets/d/1Y1HCTc9C2_FpMl3q2HbhswrUBaQCSZPqQFg8id_lUUQ/edit?gid=1322485474#gid=1322485474" target="_blank" rel="noreferrer">Открыть реестр</a>
+                    <button id="logout-button" class="portal-admin-btn" type="button">Выйти</button>
+                </div>
             </header>
-            <section class="portal-panel simple-page-panel">
-                <p class="portal-kicker">ОКК и БМД</p>
-                <h1>Отдел контроля качества, безопасность и медицинская деятельность</h1>
-                <p class="portal-lead">
-                    Это отдельная рабочая зона для сотрудников отдела контроля качества. Здесь можно разместить
-                    роли, зоны ответственности, приказы, разбор нежелательных событий и внутренние формы.
-                </p>
-                <div class="quality-role-banner">
-                    <strong>Ваш уровень доступа: <span id="quality-access-role">ОКК и БМД</span></strong>
+
+            <section class="portal-panel quality-hero-panel">
+                <div class="quality-hero-copy">
+                    <p class="portal-kicker">ОККиБМД</p>
+                    <h1>Отдел контроля качества, безопасности и медицинской деятельности</h1>
+                    <p class="portal-lead">
+                        Здесь собраны рабочие контуры ОКК: разбор нежелательных событий, защищённые обсуждения,
+                        справочники причин и мер, маршрутизация эскалаций, кураторы и внутренние материалы.
+                    </p>
                 </div>
-                <div class="mini-link-grid">
-                    <a class="mini-link-card" href="https://docs.google.com/spreadsheets/d/1_b5-VF9Nvk8Rn4i9W7Tvx4SAWWmhAmti2V9hR-KeTCU/edit?gid=633307791#gid=633307791" target="_blank" rel="noreferrer">
-                        <strong>База документов</strong>
-                        <span>Рабочий реестр приказов, памяток и контрольных материалов</span>
-                    </a>
-                    <a class="mini-link-card" href="https://forms.yandex.ru/u/68be9fa4e010dbff11d321b6" target="_blank" rel="noreferrer">
-                        <strong>Нежелательные события</strong>
-                        <span>Точка входа для формы, учета и последующего разбора случаев</span>
-                    </a>
-                    <div class="mini-link-card static-card">
-                        <strong>Роли и ответственность</strong>
-                        <span>Здесь позже закрепим, кто за что отвечает внутри ОКК и БМД</span>
+                <div class="quality-hero-side">
+                    <div class="quality-role-banner">
+                        <strong>Ваш уровень доступа: <span id="quality-access-role">ОКК и БМД</span></strong>
                     </div>
+                    <div class="quality-next-step" id="quality-next-step"></div>
                 </div>
+            </section>
+
+            <section class="portal-grid quality-grid">
+                <section class="portal-main-column">
+                    <section class="portal-panel">
+                        <div class="portal-section-head">
+                            <div>
+                                <p class="portal-kicker">Рабочие контуры</p>
+                                <h2>Куда сотрудники ОКК заходят каждый день</h2>
+                            </div>
+                        </div>
+                        <div id="quality-actions-grid" class="quality-card-grid"></div>
+                    </section>
+
+                    <section class="portal-panel">
+                        <div class="portal-section-head">
+                            <div>
+                                <p class="portal-kicker">Маршрут разбора</p>
+                                <h2>Как проходит защищённый разбор случая</h2>
+                            </div>
+                        </div>
+                        <div id="quality-workflow-grid" class="quality-workflow-grid"></div>
+                    </section>
+
+                    <section class="portal-panel">
+                        <div class="portal-section-head">
+                            <div>
+                                <p class="portal-kicker">Справочники</p>
+                                <h2>Основа для классификации инцидентов</h2>
+                            </div>
+                        </div>
+                        <div id="quality-taxonomy-summary" class="quality-taxonomy-grid"></div>
+                    </section>
+                </section>
+
+                <aside class="portal-side-column">
+                    <section class="portal-panel">
+                        <div class="portal-section-head">
+                            <div>
+                                <p class="portal-kicker">Кураторы</p>
+                                <h2>Кого подключаем к разбору</h2>
+                            </div>
+                        </div>
+                        <div id="quality-curator-grid" class="quality-mini-grid"></div>
+                    </section>
+
+                    <section class="portal-panel">
+                        <div class="portal-section-head">
+                            <div>
+                                <p class="portal-kicker">Защищённый разбор</p>
+                                <h2>Когда нужен закрытый режим</h2>
+                            </div>
+                        </div>
+                        <div id="quality-review-grid" class="quality-mini-grid"></div>
+                    </section>
+
+                    <section class="portal-panel">
+                        <div class="portal-section-head">
+                            <div>
+                                <p class="portal-kicker">Ресурсы</p>
+                                <h2>Реестр, форма и документы</h2>
+                            </div>
+                        </div>
+                        <div id="quality-catalog-grid" class="quality-mini-grid"></div>
+                    </section>
+                </aside>
             </section>
         </main>
     </div>

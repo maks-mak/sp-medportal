@@ -22,6 +22,7 @@
         : null;
     const secureServerModeReady = hasSupabaseConfig;
     const defaultRegistryUrl = "https://docs.google.com/spreadsheets/d/1_b5-VF9Nvk8Rn4i9W7Tvx4SAWWmhAmti2V9hR-KeTCU/edit?gid=633307791#gid=633307791";
+    const qualityWorkbookUrl = "https://docs.google.com/spreadsheets/d/1Y1HCTc9C2_FpMl3q2HbhswrUBaQCSZPqQFg8id_lUUQ/edit?gid=1322485474#gid=1322485474";
     const adverseEventUrl = "https://forms.yandex.ru/u/68be9fa4e010dbff11d321b6";
     const adminCredentials = {
         username: "admin",
@@ -103,12 +104,123 @@
         },
         {
             title: "ОКК и БМД",
-            description: "Отдельный закрытый раздел отдела контроля качества и безопасности медицинской деятельности.",
+            description: "Закрытая рабочая зона: разбор НС, справочники причин, меры, статусы, кураторы и защищённый разбор.",
             action: "Открыть раздел",
             icon: "🛡",
             href: "quality.html",
             featured: false,
             roles: ["okk_member", "okk_head", "admin"]
+        }
+    ];
+    const qualityActionCards = [
+        {
+            title: "Реестр ОКК и БМД",
+            description: "Основной рабочий реестр со справочниками, статусами, кураторами и логикой разбора.",
+            href: qualityWorkbookUrl,
+            action: "Открыть реестр",
+            icon: "🗂"
+        },
+        {
+            title: "Подать нежелательное событие",
+            description: "Точка входа для первичного сообщения о случае с последующим маршрутом в разбор.",
+            href: adverseEventUrl,
+            action: "Открыть форму",
+            icon: "⚠"
+        },
+        {
+            title: "Защищённый разбор",
+            description: "Используется для чувствительных случаев, повторных инцидентов и эпизодов с риском давления на сотрудников.",
+            href: qualityWorkbookUrl,
+            action: "Открыть контур",
+            icon: "🔒"
+        },
+        {
+            title: "Меры и контроль эффективности",
+            description: "После разбора фиксируются немедленные действия, корректирующие и предупредительные меры, обучение и проверка эффективности.",
+            href: qualityWorkbookUrl,
+            action: "Смотреть меры",
+            icon: "📈"
+        }
+    ];
+    const qualityWorkflowSteps = [
+        {
+            title: "1. Поступление сигнала",
+            body: "Сотрудник подаёт НС через форму. Сигнал сразу попадает в рабочий контур ОККиБМД."
+        },
+        {
+            title: "2. Первичная оценка",
+            body: "Определяются подразделение, категория, подкатегория, срочность, реализованность и последствия."
+        },
+        {
+            title: "3. Эскалация и защищённый разбор",
+            body: "Критические случаи, повторные инциденты, давление на сотрудника и тяжёлые последствия переводятся в защищённый режим."
+        },
+        {
+            title: "4. Причины и меры",
+            body: "Фиксируются группа причин, куратор, тип меры и маршрут выполнения: немедленно, корректирующе, предупредительно."
+        },
+        {
+            title: "5. Проверка эффективности",
+            body: "После внедрения мер ОКК проверяет устойчивость результата и только потом закрывает случай."
+        }
+    ];
+    const qualityTaxonomy = {
+        categories: [
+            "Идентификация и маршрутизация пациента", "Лекарственная безопасность", "Медицинские изделия и оборудование",
+            "Диагностика, лечение и медицинские вмешательства", "Инфекционная безопасность", "Уход за пациентом и безопасность среды",
+            "Этика, деонтология и коммуникация", "Документация, передача информации и организационные процессы", "Иное"
+        ],
+        subcategories: [
+            "Несвоевременная помощь", "Ошибка диагностики", "Ошибка назначения", "Ошибка дозировки", "Нарушение хранения лекарств / вакцин",
+            "Отказ оборудования", "Нарушение маршрутизации", "Инфекционный риск", "Ошибка документации", "Падение пациента",
+            "Грубое обращение", "Нарушение этики и деонтологии", "Давление после сообщения", "Повторный случай"
+        ],
+        statuses: [
+            "Новое", "На первичной оценке", "На защищённом разборе ОККиБМД", "Срочно эскалировано",
+            "Разбор в работе", "Меры в работе", "Проверка эффективности", "Закрыто"
+        ],
+        urgency: ["Обычная", "Срочная (48 часов)", "Критическая (немедленно)"],
+        curators: [
+            "ОККиБМД", "Руководитель подразделения", "Старшая медицинская сестра", "Зам. главного врача", "Инженер по МИ", "Эпидемиолог"
+        ],
+        measureTypes: [
+            "Немедленные действия", "Корректирующая мера", "Предупредительная мера", "Обучение", "Пересмотр СОП", "Проверка эффективности"
+        ],
+        causeGroups: [
+            "Коммуникация и деонтология", "Документация и передача информации", "Идентификация и маршрутизация",
+            "Оборудование и оснащение", "Лекарства", "Инфекционный контроль", "Уход и безопасность среды",
+            "Организация процесса", "Недостаток навыков / обучения", "Прочее"
+        ]
+    };
+    const qualityReviewRules = [
+        {
+            title: "Когда сразу закрытый режим",
+            text: "Критическая срочность, значительный вред, летальный исход, давление на сотрудника после сообщения, повторные случаи и этически чувствительные конфликты."
+        },
+        {
+            title: "Что фиксируем в первую очередь",
+            text: "Подразделение, категория, подкатегория, реализованность, последствия, срочность и первичного куратора."
+        },
+        {
+            title: "Что должно выйти из разбора",
+            text: "Причина, решение, ответственный, срок, тип меры и отдельная проверка эффективности после внедрения."
+        }
+    ];
+    const qualityResourceCards = [
+        {
+            title: "Рабочий реестр ОКК",
+            description: "Вся матрица категорий, статусов, кураторов, причин и тегов для стандартизированного разбора.",
+            href: qualityWorkbookUrl
+        },
+        {
+            title: "Форма подачи НС",
+            description: "Стартовая точка для сотрудника. После подачи случай должен дойти до ОКК и войти в разбор.",
+            href: adverseEventUrl
+        },
+        {
+            title: "База приказов и материалов",
+            description: "Внутренний Google-реестр документов, СОПов, приказов и памяток, связанных с качеством и безопасностью.",
+            href: defaultRegistryUrl
         }
     ];
     let adminDataCache = null;
@@ -1575,6 +1687,104 @@
         if (qualityRoot) {
             qualityRoot.textContent = getRoleLabel(session.role);
         }
+        const nextStep = document.getElementById("quality-next-step");
+        if (nextStep) {
+            const roleHint = session.role === "admin"
+                ? "Как администратор, вы можете открывать доступ сотрудникам ОКК, менять роли и контролировать защищённые разборы."
+                : session.role === "okk_head"
+                    ? "Как руководитель ОКК, вы ведёте эскалации, защищённые разборы и контроль выполнения мер."
+                    : "Как сотрудник ОКК, вы ведёте первичную оценку, категоризацию случая и сопровождение мер.";
+            nextStep.innerHTML = '<strong>Что делать дальше</strong><p>' + escapeHtml(roleHint) + "</p>";
+        }
+
+        const actionsGrid = document.getElementById("quality-actions-grid");
+        if (actionsGrid) {
+            actionsGrid.innerHTML = qualityActionCards.map(function (item) {
+                return [
+                    '<a class="quality-action-card" href="' + item.href + '" target="_blank" rel="noreferrer">',
+                    '  <div class="quality-action-top">',
+                    '    <span class="quality-action-icon">' + item.icon + "</span>",
+                    '    <span class="quality-action-arrow">→</span>',
+                    "  </div>",
+                    "  <strong>" + escapeHtml(item.title) + "</strong>",
+                    "  <p>" + escapeHtml(item.description) + "</p>",
+                    '  <span class="quality-action-link">' + escapeHtml(item.action) + "</span>",
+                    "</a>"
+                ].join("");
+            }).join("");
+        }
+
+        const workflowGrid = document.getElementById("quality-workflow-grid");
+        if (workflowGrid) {
+            workflowGrid.innerHTML = qualityWorkflowSteps.map(function (item) {
+                return [
+                    '<article class="quality-step-card">',
+                    "  <strong>" + escapeHtml(item.title) + "</strong>",
+                    "  <p>" + escapeHtml(item.body) + "</p>",
+                    "</article>"
+                ].join("");
+            }).join("");
+        }
+
+        const taxonomyRoot = document.getElementById("quality-taxonomy-summary");
+        if (taxonomyRoot) {
+            const groups = [
+                { title: "Категории", items: qualityTaxonomy.categories },
+                { title: "Подкатегории", items: qualityTaxonomy.subcategories },
+                { title: "Статусы", items: qualityTaxonomy.statuses },
+                { title: "Срочность", items: qualityTaxonomy.urgency },
+                { title: "Типы мер", items: qualityTaxonomy.measureTypes },
+                { title: "Группы причин", items: qualityTaxonomy.causeGroups }
+            ];
+            taxonomyRoot.innerHTML = groups.map(function (group) {
+                return [
+                    '<article class="quality-taxonomy-card">',
+                    "  <strong>" + escapeHtml(group.title) + "</strong>",
+                    '  <div class="quality-chip-wrap">',
+                    group.items.map(function (item) {
+                        return '<span class="quality-chip">' + escapeHtml(item) + "</span>";
+                    }).join(""),
+                    "  </div>",
+                    "</article>"
+                ].join("");
+            }).join("");
+        }
+
+        const curatorGrid = document.getElementById("quality-curator-grid");
+        if (curatorGrid) {
+            curatorGrid.innerHTML = qualityTaxonomy.curators.map(function (item) {
+                return [
+                    '<article class="quality-mini-card">',
+                    "  <strong>" + escapeHtml(item) + "</strong>",
+                    "  <span>Подключается в зависимости от категории, срочности и последствий.</span>",
+                    "</article>"
+                ].join("");
+            }).join("");
+        }
+
+        const reviewGrid = document.getElementById("quality-review-grid");
+        if (reviewGrid) {
+            reviewGrid.innerHTML = qualityReviewRules.map(function (item) {
+                return [
+                    '<article class="quality-mini-card">',
+                    "  <strong>" + escapeHtml(item.title) + "</strong>",
+                    "  <span>" + escapeHtml(item.text) + "</span>",
+                    "</article>"
+                ].join("");
+            }).join("");
+        }
+
+        const catalogGrid = document.getElementById("quality-catalog-grid");
+        if (catalogGrid) {
+            catalogGrid.innerHTML = qualityResourceCards.map(function (item) {
+                return [
+                    '<a class="quality-mini-card quality-mini-link" href="' + item.href + '" target="_blank" rel="noreferrer">',
+                    "  <strong>" + escapeHtml(item.title) + "</strong>",
+                    "  <span>" + escapeHtml(item.description) + "</span>",
+                    "</a>"
+                ].join("");
+            }).join("");
+        }
     }
 
     async function handleDashboardPage() {
@@ -1631,6 +1841,12 @@
             return;
         }
         renderQualityPage(session);
+        const logoutButton = document.getElementById("logout-button");
+        if (logoutButton) {
+            logoutButton.addEventListener("click", function () {
+                void signOutEverywhere(false);
+            });
+        }
     }
 
     async function handleTrainingPage() {

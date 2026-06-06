@@ -1284,7 +1284,150 @@ h3 {
     color: #e0bc4d;
 }
 
+.quality-shell {
+    padding-bottom: 48px;
+}
+
+.quality-header {
+    margin-bottom: 20px;
+}
+
+.quality-hero-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 360px);
+    gap: 20px;
+    align-items: start;
+}
+
+.quality-hero-side {
+    display: grid;
+    gap: 16px;
+}
+
+.quality-next-step,
+.quality-mini-card,
+.quality-step-card,
+.quality-taxonomy-card,
+.quality-action-card {
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+}
+
+.quality-next-step,
+.quality-mini-card,
+.quality-step-card,
+.quality-taxonomy-card {
+    border-radius: 18px;
+    padding: 18px;
+}
+
+.quality-next-step {
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.7;
+}
+
+.quality-next-step strong,
+.quality-action-card strong,
+.quality-step-card strong,
+.quality-taxonomy-card strong,
+.quality-mini-card strong {
+    display: block;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.quality-grid {
+    margin-top: 24px;
+}
+
+.quality-card-grid,
+.quality-workflow-grid,
+.quality-taxonomy-grid,
+.quality-mini-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.quality-card-grid,
+.quality-workflow-grid,
+.quality-taxonomy-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.quality-mini-grid {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.quality-action-card {
+    border-radius: 24px;
+    padding: 20px;
+    display: grid;
+    gap: 12px;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.quality-action-card:hover,
+.quality-mini-link:hover {
+    transform: translateY(-4px);
+    border-color: rgba(141, 224, 255, 0.28);
+}
+
+.quality-action-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.quality-action-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(141, 224, 255, 0.08);
+    border: 1px solid rgba(141, 224, 255, 0.2);
+    font-size: 1.25rem;
+}
+
+.quality-action-arrow,
+.quality-action-link {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.quality-action-card p,
+.quality-step-card p,
+.quality-mini-card span {
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.7;
+}
+
+.quality-chip-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.quality-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(141, 224, 255, 0.16);
+    background: rgba(141, 224, 255, 0.07);
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.quality-mini-link {
+    text-decoration: none;
+}
+
 @media (max-width: 1100px) {
+    .quality-hero-panel,
     .portal-grid,
     .service-tile-grid,
     .register-layout,
@@ -1301,6 +1444,12 @@ h3 {
 
     .notice-card {
         display: grid;
+    }
+
+    .quality-card-grid,
+    .quality-workflow-grid,
+    .quality-taxonomy-grid {
+        grid-template-columns: 1fr;
     }
 }
 

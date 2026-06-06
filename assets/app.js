@@ -322,6 +322,74 @@
         "Есть подтверждение выполнения мер",
         "Проверка эффективности завершена и риск снижен"
     ];
+    const adverseEventCases = [
+        {
+            code: "НС-2026-014",
+            title: "Повторная ошибка маршрутизации пациента между приёмным отделением и профильным постом",
+            department: "Стационар / приёмное отделение",
+            status: "Срочно эскалировано",
+            urgency: "Критическая",
+            owner: "Начальник ОКК",
+            deadline: "Сегодня до 19:00",
+            nextStep: "Подтвердить временную схему маршрута и довести до дежурных смен.",
+            tags: ["повторный случай", "маршрутизация", "руководство"]
+        },
+        {
+            code: "НС-2026-015",
+            title: "Несоответствие маркировки лекарственного назначения и листа сестринского поста",
+            department: "Терапевтическое отделение",
+            status: "Разбор в работе",
+            urgency: "Срочная 48ч",
+            owner: "Специалист ОКК",
+            deadline: "Завтра до 12:00",
+            nextStep: "Сверить первичную документацию, объяснения смены и маршрут передачи информации.",
+            tags: ["лекарственная безопасность", "документация"]
+        },
+        {
+            code: "НС-2026-016",
+            title: "Падение пациента без тяжёлых последствий в палате после перевода",
+            department: "Хирургическое отделение",
+            status: "Меры в работе",
+            urgency: "Обычная",
+            owner: "Руководитель подразделения",
+            deadline: "Через 3 дня",
+            nextStep: "Проверить внедрение памятки риска падения и контроль окружающей среды.",
+            tags: ["безопасность среды", "уход"]
+        },
+        {
+            code: "НС-2026-017",
+            title: "Конфликтный случай с жалобой на деонтологию и риском давления на заявителя",
+            department: "Поликлиника №2",
+            status: "На защищённом разборе ОККиБМД",
+            urgency: "Срочная 48ч",
+            owner: "Начальник ОКК",
+            deadline: "Завтра до 16:00",
+            nextStep: "Провести разбор в закрытом контуре и исключить контакт заинтересованных лиц с заявителем.",
+            tags: ["деонтология", "защищённый режим"]
+        }
+    ];
+    const adverseEventStatusBoard = [
+        {
+            key: "Срочно эскалировано",
+            title: "Немедленное управление",
+            note: "Руководство и кураторы подключены сразу"
+        },
+        {
+            key: "Разбор в работе",
+            title: "Анализ и сбор материалов",
+            note: "Фиксируем факты, причины и участников"
+        },
+        {
+            key: "Меры в работе",
+            title: "Исполнение решений",
+            note: "Контроль сроков, ответственных и внедрения"
+        },
+        {
+            key: "На защищённом разборе ОККиБМД",
+            title: "Закрытый контур",
+            note: "Для чувствительных и конфликтных случаев"
+        }
+    ];
     const adverseEventCaseFields = [
         {
             title: "Что должно быть в карточке случая",
@@ -1914,6 +1982,41 @@
                     ? "Как руководитель ОКК, вы ведёте эскалации, защищённые разборы и контроль выполнения мер."
                     : "Как сотрудник ОКК, вы ведёте первичную оценку, категоризацию случая и сопровождение мер.";
             nextStep.innerHTML = '<strong>Что делать дальше</strong><p>' + escapeHtml(roleHint) + "</p>";
+        }
+
+        const caseBoard = document.getElementById("quality-case-board");
+        if (caseBoard) {
+            caseBoard.innerHTML = adverseEventStatusBoard.map(function (column) {
+                const items = adverseEventCases.filter(function (item) { return item.status === column.key; });
+                return [
+                    '<section class="quality-case-column">',
+                    '  <div class="quality-case-column-head">',
+                    '    <strong>' + escapeHtml(column.title) + '</strong>',
+                    '    <span>' + escapeHtml(column.note) + '</span>',
+                    '  </div>',
+                    '  <div class="quality-case-list">',
+                    items.map(function (item) {
+                        return [
+                            '<article class="quality-case-card">',
+                            '  <div class="quality-case-meta">',
+                            '    <span class="quality-case-code">' + escapeHtml(item.code) + '</span>',
+                            '    <span class="quality-case-urgency">' + escapeHtml(item.urgency) + '</span>',
+                            '  </div>',
+                            '  <strong>' + escapeHtml(item.title) + '</strong>',
+                            '  <p>' + escapeHtml(item.department) + '</p>',
+                            '  <span class="quality-case-owner">Куратор: ' + escapeHtml(item.owner) + '</span>',
+                            '  <span class="quality-case-deadline">Срок: ' + escapeHtml(item.deadline) + '</span>',
+                            '  <p class="quality-case-next">Следующий шаг: ' + escapeHtml(item.nextStep) + '</p>',
+                            '  <div class="quality-chip-wrap">',
+                            item.tags.map(function (tag) { return '<span class="quality-chip">' + escapeHtml(tag) + '</span>'; }).join(''),
+                            '  </div>',
+                            '</article>'
+                        ].join('');
+                    }).join('') || '<article class="quality-case-card quality-case-empty"><strong>Нет активных случаев</strong><p>В этой колонке сейчас нет кейсов.</p></article>',
+                    '  </div>',
+                    '</section>'
+                ].join('');
+            }).join('');
         }
 
         const actionsGrid = document.getElementById("quality-actions-grid");

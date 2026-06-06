@@ -112,6 +112,33 @@
             roles: ["okk_member", "okk_head", "admin"]
         }
     ];
+    const dashboardContactCards = [
+        {
+            title: "Администратор портала",
+            note: "Доступы, ошибки, новые разделы, предложения по улучшению.",
+            action: "Через форму справа"
+        },
+        {
+            title: "Главный врач",
+            note: "Служебные вопросы, организационные решения, маршрутизация сложных обращений.",
+            action: "Через форму обращения"
+        },
+        {
+            title: "ОКК и БМД",
+            note: "Нежелательные события, безопасность, защищённый разбор и профилактика повторов.",
+            action: "Через плашку ОКК"
+        }
+    ];
+    const dashboardSpotlightCards = [
+        {
+            title: "Что нового в кабинете",
+            text: "Рабочий стол стал живым: приоритеты дня, быстрые действия, контакты и более удобный навигатор по служебным сценариям."
+        },
+        {
+            title: "Практика безопасной работы",
+            text: "Лучший внутренний портал помогает быстро стартовать день, видеть приоритеты, не терять уведомления и мгновенно понимать, куда идти по задаче."
+        }
+    ];
     const qualityActionCards = [
         {
             title: "Реестр ОКК и БМД",
@@ -1219,6 +1246,7 @@
                 "</article>"
             ].join("");
         }).join("");
+        return unreadCount;
     }
 
     function bindNoticeEvents(session) {
@@ -1598,6 +1626,126 @@
         });
     }
 
+    function renderDashboardHighlights(session, unreadCount) {
+        const root = document.getElementById("dashboard-highlight-grid");
+        if (!root) {
+            return;
+        }
+        const cards = [
+            {
+                title: "Непрочитанные уведомления",
+                value: String(unreadCount),
+                note: unreadCount ? "Есть новые сообщения от администрации" : "Все уведомления прочитаны"
+            },
+            {
+                title: "Роль и доступ",
+                value: getRoleLabel(session.role),
+                note: session.role.indexOf("okk") === 0 || session.role === "admin" ? "Открыт и базовый кабинет, и защищённый контур ОКК" : "Открыт персональный рабочий кабинет"
+            },
+            {
+                title: "Первый фокус дня",
+                value: unreadCount ? "Проверить ленту" : "Открыть рабочие разделы",
+                note: unreadCount ? "Начните с новых публикаций и распоряжений" : "Сразу переходите к документам, сервисам и задачам"
+            },
+            {
+                title: "Безопасность",
+                value: "НС под рукой",
+                note: "Форма НС и рабочий контур ОКК доступны из кабинета без поиска"
+            }
+        ];
+        root.innerHTML = cards.map(function (item) {
+            return [
+                '<article class="dashboard-highlight-card">',
+                '  <span>' + escapeHtml(item.title) + '</span>',
+                '  <strong>' + escapeHtml(item.value) + '</strong>',
+                '  <p>' + escapeHtml(item.note) + '</p>',
+                '</article>'
+            ].join('');
+        }).join('');
+    }
+
+    function renderDashboardQuickStart(session, unreadCount) {
+        const actionsRoot = document.getElementById("dashboard-quick-actions");
+        if (actionsRoot) {
+            const actions = [
+                {
+                    title: unreadCount ? "Открыть новые уведомления" : "Проверить ленту сотрудников",
+                    text: unreadCount ? "У вас есть новые служебные публикации. Лучше прочитать их в начале работы." : "Даже без новых публикаций полезно быстро просмотреть ленту и убедиться, что всё спокойно.",
+                    action: "Сначала — лента и распоряжения"
+                },
+                {
+                    title: "Перейти к документам и реестрам",
+                    text: "Клинические рекомендации, реестры, лекарственные сервисы и служебные материалы должны быть доступны в один клик.",
+                    action: "Открыть нужный раздел"
+                },
+                {
+                    title: "Сообщить о НС или риске",
+                    text: "Если заметили нежелательное событие, риск повторения или опасный процесс — лучше сообщить сразу, не откладывая.",
+                    action: "Открыть форму НС"
+                }
+            ];
+            actionsRoot.innerHTML = actions.map(function (item, index) {
+                return [
+                    '<article class="dashboard-action-card' + (index === 0 ? ' is-priority' : '') + '">',
+                    '  <strong>' + escapeHtml(item.title) + '</strong>',
+                    '  <p>' + escapeHtml(item.text) + '</p>',
+                    '  <span>' + escapeHtml(item.action) + '</span>',
+                    '</article>'
+                ].join('');
+            }).join('');
+        }
+
+        const shiftRoot = document.getElementById("dashboard-shift-list");
+        if (shiftRoot) {
+            const roleHint = session.role.indexOf("okk") === 0 || session.role === "admin"
+                ? "Если есть инциденты, повторы или сложные случаи — держите открытую зону ОКК и статусы разбора."
+                : "Если замечаете риск или уже случилось НС — сообщайте сразу, без ожидания конца смены.";
+            const items = [
+                "Проверьте новые уведомления и распоряжения",
+                "Откройте нужные документы, реестры и клинические сервисы",
+                roleHint,
+                "Если нужен вопрос руководству, отправьте его через встроенные обращения, чтобы он не потерялся"
+            ];
+            shiftRoot.innerHTML = items.map(function (item, index) {
+                return [
+                    '<article class="dashboard-shift-card">',
+                    '  <span class="dashboard-shift-index">' + String(index + 1) + '</span>',
+                    '  <p>' + escapeHtml(item) + '</p>',
+                    '</article>'
+                ].join('');
+            }).join('');
+        }
+    }
+
+    function renderDashboardSideContent(session) {
+        const contactsRoot = document.getElementById("dashboard-contacts");
+        if (contactsRoot) {
+            contactsRoot.innerHTML = dashboardContactCards.map(function (item) {
+                return [
+                    '<article class="dashboard-contact-card">',
+                    '  <strong>' + escapeHtml(item.title) + '</strong>',
+                    '  <p>' + escapeHtml(item.note) + '</p>',
+                    '  <span>' + escapeHtml(item.action) + '</span>',
+                    '</article>'
+                ].join('');
+            }).join('');
+        }
+        const spotlightRoot = document.getElementById("dashboard-spotlight");
+        if (spotlightRoot) {
+            const cards = dashboardSpotlightCards.concat(session.role.indexOf("okk") === 0 || session.role === "admin"
+                ? [{ title: "Для ОКК и БМД", text: "У вас открыт доступ к защищённой рабочей зоне: там собраны маршруты НС, роли, эскалация, активные случаи и карточки разбора." }]
+                : []);
+            spotlightRoot.innerHTML = cards.map(function (item) {
+                return [
+                    '<article class="dashboard-spotlight-card">',
+                    '  <strong>' + escapeHtml(item.title) + '</strong>',
+                    '  <p>' + escapeHtml(item.text) + '</p>',
+                    '</article>'
+                ].join('');
+            }).join('');
+        }
+    }
+
     async function renderDashboard(session) {
         const nameNode = document.getElementById("session-name");
         const roleNode = document.getElementById("session-role");
@@ -1630,7 +1778,10 @@
         }
 
         renderServiceTiles(session);
-        await renderNotices(session);
+        const unreadCount = await renderNotices(session) || 0;
+        renderDashboardHighlights(session, unreadCount);
+        renderDashboardQuickStart(session, unreadCount);
+        renderDashboardSideContent(session);
         bindNoticeEvents(session);
         bindMessageForms(session);
 

@@ -35,8 +35,9 @@
                 <p class="eyebrow">Авторизация</p>
                 <h1>Новый вход в портал сотрудников</h1>
                 <p class="lead">
-                    Это уже не внешняя ссылка, а собственная точка входа на вашем домене.
-                    Сейчас включен демо-режим, чтобы мы могли спокойно развивать портал дальше.
+                    Это собственная точка входа на вашем домене. Сайт уже готов к
+                    настоящей авторизации через `Supabase`, а временный локальный вход
+                    оставлен только как запасной режим до подключения ключей проекта.
                 </p>
 
                 <div class="trust-grid">
@@ -56,7 +57,7 @@
             <section class="auth-card" aria-labelledby="login-title">
                 <p class="card-kicker">Доступ сотрудника</p>
                 <h2 id="login-title">Войти в кабинет</h2>
-                <p class="card-text">Введите логин и пароль администратора. Проверка идет по соли и хэшу прямо в браузере.</p>
+                <p class="card-text">Введите учетные данные. Если `Supabase` еще не подключен, работает временный вход `admin`.</p>
 
                 <form id="login-form" class="auth-form">
                     <label for="email">Логин</label>
@@ -70,13 +71,15 @@
                 </form>
 
                 <div class="demo-note">
-                    <strong>Роль:</strong>
-                    <span>admin — полный обзор кабинета</span>
+                    <strong>Временно:</strong>
+                    <span>`admin` — резервный локальный вход</span>
                 </div>
             </section>
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/config.js"></script>
     <script src="assets/app.js"></script>
 </body>
 </html>

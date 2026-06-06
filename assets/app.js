@@ -1,5 +1,10 @@
 (function () {
     const storageKey = "spMedPortalSession";
+    const config = window.SP_MEDPORTAL_CONFIG || {};
+    const hasSupabaseConfig = Boolean(config.supabaseUrl && config.supabaseAnonKey);
+    const supabaseClient = hasSupabaseConfig && window.supabase
+        ? window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey)
+        : null;
     const adminCredentials = {
         username: "admin",
         saltBase64: "aBfTpOYw64maNA1BaTymWQ==",
@@ -45,6 +50,32 @@
 
     function clearSession() {
         window.localStorage.removeItem(storageKey);
+    }
+
+    async function readServerSession() {
+        if (!supabaseClient) {
+            return null;
+        }
+
+        const result = await supabaseClient.auth.getSession();
+        return result && result.data ? result.data.session : null;
+    }
+
+    function getSessionFromSupabase(session) {
+        if (!session || !session.user) {
+            return null;
+        }
+
+        const email = session.user.email || "admin";
+        const profile = getProfile(email);
+        return {
+            email: email,
+            name: profile.name,
+            role: profile.role,
+            greeting: profile.greeting,
+            signedInAt: session.user.last_sign_in_at || new Date().toISOString(),
+            authMode: "supabase"
+        };
     }
 
     function getProfile(email) {
@@ -108,15 +139,41 @@
         }).format(new Date());
     }
 
-    function handleLoginPage() {
+    async function signInWithSupabase(username, password) {
+        const normalizedEmail = username.indexOf("@") === -1
+            ? username + "@sp-medportal.ru"
+            : username;
+
+        const result = await supabaseClient.auth.signInWithPassword({
+            email: normalizedEmail,
+            password: password
+        });
+
+        if (result.error) {
+            throw result.error;
+        }
+
+        return getSessionFromSupabase(result.data.session);
+    }
+
+    function showMessage(messageNode, text, kind) {
+        messageNode.textContent = text;
+        messageNode.className = "form-message " + kind;
+    }
+
+    async function handleLoginPage() {
         const form = document.getElementById("login-form");
         if (!form) {
             return;
         }
 
         const message = document.getElementById("form-message");
-        const session = readSession();
+        const serverSession = await readServerSession();
+        const session = getSessionFromSupabase(serverSession) || readSession();
         if (session) {
+            if (!readSession()) {
+                writeSession(session);
+            }
             window.location.href = "dashboard.html";
             return;
         }
@@ -128,46 +185,73 @@
             const password = String(formData.get("password") || "").trim();
 
             if (!email || !password || password.length < 6) {
-                message.textContent = "Проверьте логин и длину пароля.";
-                message.className = "form-message error";
+                showMessage(message, "Проверьте логин и длину пароля.", "error");
                 return;
             }
 
-            const isValid = await verifyPassword(email, password);
-            if (!isValid) {
-                message.textContent = "Неверный логин или пароль.";
-                message.className = "form-message error";
-                return;
+            try {
+                let sessionData = null;
+
+                if (supabaseClient) {
+                    sessionData = await signInWithSupabase(email, password);
+                } else {
+                    const isValid = await verifyPassword(email, password);
+                    if (!isValid) {
+                        showMessage(message, "Неверный логин или пароль.", "error");
+                        return;
+                    }
+
+                    const profile = getProfile(email);
+                    sessionData = {
+                        email: email,
+                        name: profile.name,
+                        role: profile.role,
+                        greeting: profile.greeting,
+                        signedInAt: new Date().toISOString(),
+                        authMode: "local-fallback"
+                    };
+                }
+
+                writeSession(sessionData);
+                showMessage(
+                    message,
+                    supabaseClient
+                        ? "Вход выполнен через Supabase. Открываем кабинет."
+                        : "Вход выполнен через временный локальный режим.",
+                    "success"
+                );
+
+                window.setTimeout(function () {
+                    window.location.href = "dashboard.html";
+                }, 320);
+            } catch (error) {
+                showMessage(
+                    message,
+                    supabaseClient
+                        ? "Не удалось выполнить вход. Проверьте учетные данные."
+                        : "Ошибка локального входа.",
+                    "error"
+                );
             }
-
-            const profile = getProfile(email);
-            writeSession({
-                email: email,
-                name: profile.name,
-                role: profile.role,
-                greeting: profile.greeting,
-                signedInAt: new Date().toISOString()
-            });
-
-            message.textContent = "Вход выполнен. Открываем панель администратора.";
-            message.className = "form-message success";
-
-            window.setTimeout(function () {
-                window.location.href = "dashboard.html";
-            }, 320);
         });
     }
 
-    function handleDashboardPage() {
+    async function handleDashboardPage() {
         const emailNode = document.getElementById("session-email");
         if (!emailNode) {
             return;
         }
 
-        const session = readSession();
+        const serverSession = await readServerSession();
+        const sessionFromServer = getSessionFromSupabase(serverSession);
+        const session = sessionFromServer || readSession();
         if (!session) {
             window.location.href = "login.html";
             return;
+        }
+
+        if (sessionFromServer) {
+            writeSession(sessionFromServer);
         }
 
         const nameNode = document.getElementById("session-name");
@@ -191,8 +275,11 @@
 
         const logoutButton = document.getElementById("logout-button");
         if (logoutButton) {
-            logoutButton.addEventListener("click", function () {
+            logoutButton.addEventListener("click", async function () {
                 clearSession();
+                if (supabaseClient) {
+                    await supabaseClient.auth.signOut();
+                }
                 window.location.href = "login.html";
             });
         }

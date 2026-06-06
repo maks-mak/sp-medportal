@@ -18,7 +18,12 @@
 - `Cloudflare Pages`
 - `Vercel`
 
-Вход пока работает в демонстрационном режиме: после формы создается локальная сессия в браузере. Это нужно, чтобы быстро отвязаться от старого `Apps Script` и начать собирать нормальный портал.
+Вход сейчас работает в двух режимах:
+
+- основной режим: `Supabase Auth`, если заполнен файл `assets/config.js`
+- временный режим: локальный вход `admin`, пока `Supabase` еще не подключен
+
+Это позволяет уже сейчас пользоваться сайтом и безболезненно перейти на настоящую авторизацию.
 
 ## Следующий этап
 
@@ -27,6 +32,22 @@
 1. `Supabase Auth + Supabase Database`
 2. `Cloudflare Pages + Workers + D1`
 3. `Next.js + Vercel + PostgreSQL`
+
+## Как включить настоящий вход через Supabase
+
+1. Создать проект в `Supabase`
+2. Включить `Email Auth`
+3. Создать администратора, например `admin@sp-medportal.ru`
+4. Заполнить `assets/config.js`:
+
+```js
+window.SP_MEDPORTAL_CONFIG = {
+    supabaseUrl: "https://your-project-id.supabase.co",
+    supabaseAnonKey: "your-public-anon-key"
+};
+```
+
+5. Перезалить сайт
 
 ## Что советую дальше
 

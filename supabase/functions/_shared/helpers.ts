@@ -4,15 +4,6 @@ export const MAX_JSON_BODY_BYTES = 16 * 1024
 export const LONG_BAN_DURATION = "876000h"
 export const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
-export function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-}
-
 export function buildAuthEmail(login: string) {
   return `${login}@users.sp-medportal.local`
 }

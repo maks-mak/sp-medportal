@@ -13,9 +13,12 @@
     const minPasswordLength = 8;
     const loginPattern = /^[a-z0-9._-]{4,32}$/;
     const config = window.SP_MEDPORTAL_CONFIG || {};
-    const isLocalPrototype = window.location.protocol === "file:" ||
+    const isLocalPrototype = Boolean(config.enableLocalPrototype) && (
+        window.location.protocol === "file:" ||
         window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1";
+        window.location.hostname === "127.0.0.1"
+    );
+    const localAdminCredentials = config.localAdmin || null;
     const hasSupabaseConfig = Boolean(config.supabaseUrl && config.supabaseAnonKey);
     const supabaseClient = hasSupabaseConfig && window.supabase
         ? window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey)
@@ -24,12 +27,6 @@
     const defaultRegistryUrl = "https://docs.google.com/spreadsheets/d/1_b5-VF9Nvk8Rn4i9W7Tvx4SAWWmhAmti2V9hR-KeTCU/edit?gid=633307791#gid=633307791";
     const qualityWorkbookUrl = "https://docs.google.com/spreadsheets/d/1Y1HCTc9C2_FpMl3q2HbhswrUBaQCSZPqQFg8id_lUUQ/edit?gid=1322485474#gid=1322485474";
     const adverseEventUrl = "https://forms.yandex.ru/u/68be9fa4e010dbff11d321b6";
-    const adminCredentials = {
-        username: "admin",
-        saltBase64: "aBfTpOYw64maNA1BaTymWQ==",
-        hashBase64: "+yyl3ljfrPf5EFrhdgdi6lUsMc3xbbvfmuL034P2Hpc=",
-        iterations: 120000
-    };
     const roleLabels = {
         employee: "Сотрудник",
         okk_member: "ОКК и БМД",
@@ -1049,12 +1046,20 @@
     }
 
     async function verifyAdminPassword(username, password) {
-        if (!isLocalPrototype || username !== adminCredentials.username || !window.crypto || !window.crypto.subtle) {
+        if (
+            !isLocalPrototype ||
+            !localAdminCredentials ||
+            username !== localAdminCredentials.username ||
+            !localAdminCredentials.saltBase64 ||
+            !localAdminCredentials.hashBase64 ||
+            !window.crypto ||
+            !window.crypto.subtle
+        ) {
             return false;
         }
 
-        const hashed = await hashPassword(password, adminCredentials.saltBase64, adminCredentials.iterations);
-        return hashed.hashBase64 === adminCredentials.hashBase64;
+        const hashed = await hashPassword(password, localAdminCredentials.saltBase64, localAdminCredentials.iterations);
+        return hashed.hashBase64 === localAdminCredentials.hashBase64;
     }
 
     async function verifyProfilePassword(profile, password) {

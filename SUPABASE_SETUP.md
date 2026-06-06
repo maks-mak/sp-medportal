@@ -1,6 +1,6 @@
 # Быстрый запуск backend для SP MedPortal
 
-Если сайт уже открывает админ-панель, значит фронт и база уже подключены. Осталось вручную добавить серверные функции в Supabase.
+Боевой backend состоит из SQL-схемы, секретов проекта и четырёх `Edge Functions`.
 
 ## Что уже должно быть
 - Выполнен `schema_v1.sql`
@@ -8,10 +8,10 @@
 - Создан профиль `admin` в `public.profiles`
 - Админ входит на `https://sp-medportal.ru/login.html`
 
-## Что осталось
-1. Добавить секреты в `Supabase`
-2. Создать 4 `Edge Functions`
-3. Проверить регистрацию и одобрение заявки
+## Что осталось после изменения backend
+1. Проверить секреты в `Supabase`
+2. Задеплоить 4 `Edge Functions` из папки `supabase/functions`
+3. Проверить регистрацию, одобрение заявки и сброс пароля
 
 ## 1. Секреты
 В `Supabase` открой `Edge Functions` → `Secrets` и добавь:
@@ -21,23 +21,25 @@
 - `SUPABASE_SERVICE_ROLE_KEY` = service_role key проекта
 
 ## 2. Функции
-В `Supabase` → `Edge Functions` → `Open Editor` создай по очереди 4 функции:
+Источник функций находится только здесь:
 
 - `submit-registration`
 - `admin-registration`
 - `admin-profile`
 - `admin-reset-password`
 
-Для каждой функции:
-- создавай файл `index.ts`
-- вставляй код из одноимённого файла в папке `supabase/manual-deploy/`
-- публикуй функцию
+Деплой выполняется через Supabase CLI:
 
-## Какие файлы копировать
-- `supabase/manual-deploy/submit-registration.ts`
-- `supabase/manual-deploy/admin-registration.ts`
-- `supabase/manual-deploy/admin-profile.ts`
-- `supabase/manual-deploy/admin-reset-password.ts`
+```bash
+read -s SUPABASE_ACCESS_TOKEN
+export SUPABASE_ACCESS_TOKEN
+for fn in submit-registration admin-registration admin-profile admin-reset-password; do
+  .tools/supabase functions deploy "$fn" --project-ref pgifephtehfyfzgpbelu
+done
+unset SUPABASE_ACCESS_TOKEN
+```
+
+Так токен не попадает в текст команды. После деплоя проверь, что `Origin: null` больше не разрешается.
 
 ## 3. Проверка
 После публикации функций:

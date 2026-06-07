@@ -33,10 +33,18 @@
 Деплой выполняется через Supabase CLI:
 
 ```bash
+./scripts/deploy_supabase_functions.sh
+```
+
+Скрипт сам попросит токен скрытым вводом, задеплоит все функции через `--use-api` и удалит токен из окружения после завершения.
+
+Ручной вариант:
+
+```bash
 read -s SUPABASE_ACCESS_TOKEN
 export SUPABASE_ACCESS_TOKEN
 for fn in submit-registration submit-password-reset admin-registration admin-profile admin-reset-password; do
-  .tools/supabase functions deploy "$fn" --project-ref pgifephtehfyfzgpbelu
+  .tools/supabase functions deploy "$fn" --project-ref pgifephtehfyfzgpbelu --use-api
 done
 unset SUPABASE_ACCESS_TOKEN
 ```

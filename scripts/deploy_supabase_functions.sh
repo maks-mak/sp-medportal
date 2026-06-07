@@ -25,6 +25,7 @@ else
     admin-registration
     admin-profile
     admin-reset-password
+    portal-links
   )
 fi
 

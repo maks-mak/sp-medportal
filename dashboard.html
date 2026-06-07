@@ -16,10 +16,11 @@
 </head>
 <body class="dashboard-page portal-theme">
     <div class="page-shell">
+        <a class="skip-link" href="#dashboard-page-marker">Перейти к содержанию</a>
         <main class="portal-shell" id="dashboard-page-marker">
             <header class="portal-header">
                 <a class="portal-brand" href="index.html">
-                    <span class="portal-brand-mark">✚</span>
+                    <span class="portal-brand-mark">SP</span>
                     <span class="portal-brand-copy">
                         <strong>Личный кабинет</strong>
                         <small>Сергиево-Посадской больницы</small>
@@ -28,7 +29,7 @@
 
                 <div class="portal-userbar">
                     <div class="portal-user-pill">
-                        <span class="portal-user-avatar">👤</span>
+                        <span class="portal-user-avatar">ID</span>
                         <div class="portal-user-meta">
                             <strong id="session-name">Сотрудник</strong>
                             <small id="session-email">admin</small>
@@ -124,13 +125,13 @@
 
                     <section class="portal-wide-banner">
                         <div class="portal-wide-copy">
-                            <span class="portal-banner-icon">⚠</span>
+                            <span class="portal-banner-icon">НС</span>
                             <div>
                                 <strong>Подать нежелательное событие</strong>
                                 <p>Форма для регистрации нежелательных событий и разбора клинических случаев.</p>
                             </div>
                         </div>
-                        <a id="adverse-link" class="portal-banner-btn" href="https://forms.yandex.ru/u/68be9fa4e010dbff11d321b6" target="_blank" rel="noreferrer">Перейти к форме</a>
+                        <a id="adverse-link" class="portal-banner-btn" href="#" aria-disabled="true">Перейти к форме</a>
                     </section>
                 </section>
 
@@ -170,7 +171,7 @@
                             <textarea id="chief-body" name="body" rows="4" placeholder="Опишите ваш вопрос главному врачу" maxlength="2000" required></textarea>
 
                             <button class="portal-admin-btn wide-btn" type="submit">Отправить главному врачу</button>
-                            <p id="message-feedback-chief" class="form-message" aria-live="polite"></p>
+                            <p id="message-feedback-chief" class="form-message" role="status" aria-live="polite"></p>
                         </form>
                     </section>
 
@@ -189,7 +190,7 @@
                             <textarea id="admin-body" name="body" rows="4" placeholder="Опишите вопрос или предложение администратору" maxlength="2000" required></textarea>
 
                             <button class="portal-ghost-btn wide-btn" type="submit">Отправить администратору</button>
-                            <p id="message-feedback-admin" class="form-message" aria-live="polite"></p>
+                            <p id="message-feedback-admin" class="form-message" role="status" aria-live="polite"></p>
                         </form>
                     </section>
 

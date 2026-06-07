@@ -16,10 +16,11 @@
 </head>
 <body class="dashboard-page portal-theme">
     <div class="page-shell">
-        <main class="portal-shell admin-v2-shell">
+        <a class="skip-link" href="#admin-main">Перейти к содержанию</a>
+        <main class="portal-shell admin-v2-shell" id="admin-main">
             <header class="portal-header admin-header">
                 <a class="portal-brand" href="dashboard.html">
-                    <span class="portal-brand-mark">✚</span>
+                    <span class="portal-brand-mark">SP</span>
                     <span class="portal-brand-copy">
                         <strong>Админ-панель</strong>
                         <small>Управление порталом</small>
@@ -106,7 +107,7 @@
                         <textarea id="notice-body" name="body" rows="4" placeholder="Короткое уведомление для сотрудников" maxlength="2000" required></textarea>
 
                         <button class="portal-admin-btn wide-btn" type="submit">Опубликовать уведомление</button>
-                        <p id="admin-form-message" class="form-message" aria-live="polite"></p>
+                        <p id="admin-form-message" class="form-message" role="status" aria-live="polite"></p>
                     </form>
                 </section>
 

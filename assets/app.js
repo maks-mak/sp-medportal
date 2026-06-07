@@ -25,9 +25,11 @@
         : null;
     const secureServerModeReady = hasSupabaseConfig;
     const passwordResetFunctionReady = Boolean(config.passwordResetFunctionReady);
-    const defaultRegistryUrl = "https://docs.google.com/spreadsheets/d/1_b5-VF9Nvk8Rn4i9W7Tvx4SAWWmhAmti2V9hR-KeTCU/edit?gid=633307791#gid=633307791";
-    const qualityWorkbookUrl = "https://docs.google.com/spreadsheets/d/1Y1HCTc9C2_FpMl3q2HbhswrUBaQCSZPqQFg8id_lUUQ/edit?gid=1322485474#gid=1322485474";
-    const adverseEventUrl = "https://forms.yandex.ru/u/68be9fa4e010dbff11d321b6";
+    const protectedLinks = {
+        documents: "",
+        qualityWorkbook: "",
+        adverseEvent: ""
+    };
     const roleLabels = {
         employee: "Сотрудник",
         okk_member: "ОКК и БМД",
@@ -59,8 +61,9 @@
             title: "Реестр документов (Google)",
             description: "Рабочий доступ к документам, приказам и внутренним материалам учреждения.",
             action: "Открыть",
-            icon: "📋",
-            href: defaultRegistryUrl,
+            icon: "DOC",
+            href: "",
+            linkKey: "documents",
             featured: false,
             roles: ["employee", "okk_member", "okk_head", "admin"]
         },
@@ -68,7 +71,7 @@
             title: "Клинические рекомендации",
             description: "Официальные клинические рекомендации Минздрава Российской Федерации.",
             action: "Перейти",
-            icon: "📚",
+            icon: "REC",
             href: "https://cr.minzdrav.gov.ru/",
             featured: false,
             roles: ["employee", "okk_member", "okk_head", "admin"]
@@ -77,7 +80,7 @@
             title: "Реестр лекарств",
             description: "Проверка лекарственных препаратов в государственном реестре лекарственных средств.",
             action: "Проверить",
-            icon: "💊",
+            icon: "RX",
             href: "https://grls.rosminzdrav.ru/",
             featured: false,
             roles: ["employee", "okk_member", "okk_head", "admin"]
@@ -86,7 +89,7 @@
             title: "Взаимодействие лекарств",
             description: "Проверка совместимости и лекарственных взаимодействий препаратов.",
             action: "Открыть",
-            icon: "⚖",
+            icon: "INT",
             href: "https://www.vidal.ru/drugs/interaction/new",
             featured: false,
             roles: ["employee", "okk_member", "okk_head", "admin"]
@@ -95,7 +98,7 @@
             title: "Обучение сотрудников",
             description: "Курсы, чек-листы, вводные материалы и справочные разделы для персонала.",
             action: "Открыть раздел",
-            icon: "🎓",
+            icon: "EDU",
             href: "training.html",
             featured: false,
             roles: ["employee", "okk_member", "okk_head", "admin"]
@@ -104,7 +107,7 @@
             title: "ОКК и БМД",
             description: "Закрытая рабочая зона: разбор НС, справочники причин, меры, статусы, кураторы и защищённый разбор.",
             action: "Открыть раздел",
-            icon: "🛡",
+            icon: "QMS",
             href: "quality.html",
             featured: false,
             roles: ["okk_member", "okk_head", "admin"]
@@ -161,30 +164,34 @@
         {
             title: "Реестр ОКК и БМД",
             description: "Основной рабочий реестр со справочниками, статусами, кураторами и логикой разбора.",
-            href: qualityWorkbookUrl,
+            href: "",
+            linkKey: "qualityWorkbook",
             action: "Открыть реестр",
-            icon: "🗂"
+            icon: "REG"
         },
         {
             title: "Подать нежелательное событие",
             description: "Точка входа для первичного сообщения о случае с последующим маршрутом в разбор.",
-            href: adverseEventUrl,
+            href: "",
+            linkKey: "adverseEvent",
             action: "Открыть форму",
-            icon: "⚠"
+            icon: "НС"
         },
         {
             title: "Защищённый разбор",
             description: "Используется для чувствительных случаев, повторных инцидентов и эпизодов с риском давления на сотрудников.",
-            href: qualityWorkbookUrl,
+            href: "",
+            linkKey: "qualityWorkbook",
             action: "Открыть контур",
-            icon: "🔒"
+            icon: "PRV"
         },
         {
             title: "Меры и контроль эффективности",
             description: "После разбора фиксируются немедленные действия, корректирующие и предупредительные меры, обучение и проверка эффективности.",
-            href: qualityWorkbookUrl,
+            href: "",
+            linkKey: "qualityWorkbook",
             action: "Смотреть меры",
-            icon: "📈"
+            icon: "CAPA"
         }
     ];
     const qualityWorkflowSteps = [
@@ -369,127 +376,127 @@
     ];
     const adverseEventCases = [
         {
-            code: "НС-2026-014",
-            title: "Повторная ошибка маршрутизации пациента между приёмным отделением и профильным постом",
-            department: "Стационар / приёмное отделение",
+            code: "Шаблон-01",
+            title: "Маршрутизация: требуется первичная оценка и временная мера",
+            department: "Учебный пример / подразделение не указано",
             status: "Срочно эскалировано",
             urgency: "Критическая",
-            owner: "Начальник ОКК",
-            deadline: "Сегодня до 19:00",
-            nextStep: "Подтвердить временную схему маршрута и довести до дежурных смен.",
-            tags: ["повторный случай", "маршрутизация", "руководство"]
+            owner: "Руководитель ОКК",
+            deadline: "Задаётся при triage",
+            nextStep: "Определить временный безопасный маршрут и ответственного за обратную связь.",
+            tags: ["учебный шаблон", "маршрутизация", "эскалация"]
         },
         {
-            code: "НС-2026-015",
-            title: "Несоответствие маркировки лекарственного назначения и листа сестринского поста",
-            department: "Терапевтическое отделение",
+            code: "Шаблон-02",
+            title: "Лекарственная безопасность: сверка назначения и передачи информации",
+            department: "Учебный пример / подразделение не указано",
             status: "Разбор в работе",
             urgency: "Срочная 48ч",
             owner: "Специалист ОКК",
-            deadline: "Завтра до 12:00",
-            nextStep: "Сверить первичную документацию, объяснения смены и маршрут передачи информации.",
-            tags: ["лекарственная безопасность", "документация"]
+            deadline: "Задаётся куратором",
+            nextStep: "Проверить канал передачи назначения, контрольные точки и полноту документации.",
+            tags: ["учебный шаблон", "лекарства", "документация"]
         },
         {
-            code: "НС-2026-016",
-            title: "Падение пациента без тяжёлых последствий в палате после перевода",
-            department: "Хирургическое отделение",
+            code: "Шаблон-03",
+            title: "Безопасность среды: проверка риска падения и профилактических мер",
+            department: "Учебный пример / подразделение не указано",
             status: "Меры в работе",
             urgency: "Обычная",
             owner: "Руководитель подразделения",
-            deadline: "Через 3 дня",
-            nextStep: "Проверить внедрение памятки риска падения и контроль окружающей среды.",
-            tags: ["безопасность среды", "уход"]
+            deadline: "После утверждения мер",
+            nextStep: "Проверить чек-лист среды, обучение смены и контроль эффективности.",
+            tags: ["учебный шаблон", "среда", "профилактика"]
         },
         {
-            code: "НС-2026-017",
-            title: "Конфликтный случай с жалобой на деонтологию и риском давления на заявителя",
-            department: "Поликлиника №2",
+            code: "Шаблон-04",
+            title: "Коммуникация и деонтология: чувствительный разбор без давления",
+            department: "Учебный пример / подразделение не указано",
             status: "На защищённом разборе ОККиБМД",
             urgency: "Срочная 48ч",
-            owner: "Начальник ОКК",
-            deadline: "Завтра до 16:00",
-            nextStep: "Провести разбор в закрытом контуре и исключить контакт заинтересованных лиц с заявителем.",
-            tags: ["деонтология", "защищённый режим"]
+            owner: "Руководитель ОКК",
+            deadline: "Задаётся закрытым разбором",
+            nextStep: "Ограничить круг доступа, зафиксировать факты и назначить нейтрального куратора.",
+            tags: ["учебный шаблон", "деонтология", "закрытый режим"]
         }
     ];
     const adverseEventCaseDetails = {
-        "НС-2026-014": {
-            summary: "Повторный организационный сбой с риском повторного отклонения пациента от правильного маршрута.",
+        "Шаблон-01": {
+            summary: "Обезличенный пример показывает, как ОКК фиксирует срочный сигнал, назначает куратора и запускает временную меру до полного разбора.",
             timeline: [
-                "08:15 — сигнал от дежурной смены о повторном эпизоде",
-                "08:25 — ОКК перевел случай в срочную эскалацию",
-                "08:40 — подключен руководитель подразделения и зам. главного врача",
-                "09:10 — временная схема маршрутизации утверждена до окончания разбора"
+                "Сигнал получен и зарегистрирован",
+                "Определена срочность и категория события",
+                "Назначены куратор и ответственный руководитель",
+                "Временная мера действует до итогового решения"
             ],
             measures: [
-                "Ввести временный чек-пункт подтверждения маршрута в приёмном отделении",
-                "Довести новый алгоритм до дежурных смен под подпись",
-                "Перепроверить визуальную навигацию и распределение ответственности"
+                "Зафиксировать временный безопасный маршрут",
+                "Довести решение до задействованных сотрудников",
+                "Проверить, что риск повторения снижен уже до завершения разбора"
             ],
             contacts: [
-                "Куратор: Начальник ОКК",
-                "Руководитель подразделения: Приёмное отделение",
-                "Эскалация: Зам. главного врача"
+                "Куратор: сотрудник ОКК",
+                "Исполнитель мер: руководитель подразделения",
+                "Эскалация: профильный руководитель по уровню риска"
             ],
             closure: [
-                "Нет повторов в течение контрольного периода",
-                "Новый маршрут внедрен во всех сменах",
-                "Подразделение подтвердило исполнение"
+                "Причина и мера зафиксированы",
+                "Исполнитель подтвердил выполнение",
+                "ОКК провёл проверку эффективности"
             ]
         },
-        "НС-2026-015": {
-            summary: "Несоответствие между врачебным назначением и рабочим листом поста, потенциально влияющее на лекарственную безопасность.",
+        "Шаблон-02": {
+            summary: "Обезличенный пример для разбора лекарственного риска: фокус на фактах, документации, передаче информации и профилактике повторов.",
             timeline: [
-                "Вчера 17:30 — зарегистрирован сигнал",
-                "Сегодня 09:00 — открыт разбор с дежурной сменой",
-                "Сегодня 10:20 — поднята документация и листы передачи"
+                "Сигнал зарегистрирован",
+                "Открыт разбор с ответственными участниками",
+                "Проверены документы и маршрут передачи информации"
             ],
             measures: [
-                "Пересмотреть передачу назначений между врачом и сестринским постом",
-                "Ввести двойную проверку в уязвимом участке",
-                "Провести короткое обучение смены"
+                "Определить уязвимую точку передачи информации",
+                "Назначить контрольное действие",
+                "Провести точечное обучение по обновлённому порядку"
             ],
             contacts: [
                 "Куратор: Специалист ОКК",
-                "Подразделение: Терапевтическое отделение",
-                "Эксперт: Лекарственная безопасность"
+                "Исполнитель: руководитель процесса",
+                "Эксперт: профильный специалист по риску"
             ],
             closure: [
-                "Причина несоответствия определена",
-                "Обновлен локальный порядок передачи информации",
-                "Проверка на повторяемость выполнена"
+                "Канал передачи информации уточнён",
+                "Контрольная мера внедрена",
+                "Проверка повторяемости выполнена"
             ]
         },
-        "НС-2026-016": {
-            summary: "Падение пациента после перевода без тяжелых последствий, требует проверки оценки риска, среды и сопровождения.",
+        "Шаблон-03": {
+            summary: "Обезличенный пример для оценки среды: важно отделить немедленные меры от системной профилактики и проверки эффективности.",
             timeline: [
-                "Позавчера — сообщение от отделения",
-                "Вчера — завершена первичная оценка",
-                "Сегодня — подразделение подтверждает внедрение мер"
+                "Сигнал принят",
+                "Первичная оценка завершена",
+                "Подразделение подтверждает внедрение мер"
             ],
             measures: [
-                "Проверить маркировку риска падения",
-                "Усилить контроль пространства около койки",
-                "Провести повторный инструктаж персонала"
+                "Проверить чек-лист риска",
+                "Усилить контроль среды",
+                "Провести повторный инструктаж сотрудников"
             ],
             contacts: [
                 "Куратор: Руководитель подразделения",
-                "ОКК: Контроль эффективности",
-                "Старшая медсестра: исполнение мер"
+                "ОКК: контроль эффективности",
+                "Ответственный исполнитель: назначается в карточке"
             ],
             closure: [
                 "Среда и чек-листы приведены в порядок",
-                "Сотрудники повторно ознакомлены",
-                "Нет повторных падений в контрольный период"
+                "Сотрудники ознакомлены",
+                "Контрольный период завершён без повторов"
             ]
         },
-        "НС-2026-017": {
-            summary: "Чувствительный деонтологический случай с необходимостью защищенного режима и защиты заявителя от давления.",
+        "Шаблон-04": {
+            summary: "Обезличенный пример закрытого разбора: цель — защитить заявителя, ограничить круг доступа и не допустить неформального давления.",
             timeline: [
-                "Сегодня утром — получено обращение",
-                "Через 15 минут — включен защищенный контур",
-                "Назначено закрытое обсуждение с ограниченным кругом доступа"
+                "Обращение принято",
+                "Включён закрытый режим",
+                "Назначено обсуждение с ограниченным кругом доступа"
             ],
             measures: [
                 "Ограничить круг доступа к материалам",
@@ -497,9 +504,9 @@
                 "Подготовить нейтральное заключение и план мер"
             ],
             contacts: [
-                "Куратор: Начальник ОКК",
-                "Подразделение: Поликлиника №2",
-                "Эскалация: руководство при необходимости"
+                "Куратор: Руководитель ОКК",
+                "Участники: только назначенный круг",
+                "Эскалация: руководство по уровню риска"
             ],
             closure: [
                 "Исключено давление на заявителя",
@@ -545,17 +552,20 @@
         {
             title: "Рабочий реестр ОКК",
             description: "Вся матрица категорий, статусов, кураторов, причин и тегов для стандартизированного разбора.",
-            href: qualityWorkbookUrl
+            href: "",
+            linkKey: "qualityWorkbook"
         },
         {
             title: "Форма подачи НС",
             description: "Стартовая точка для сотрудника. После подачи случай должен дойти до ОКК и войти в разбор.",
-            href: adverseEventUrl
+            href: "",
+            linkKey: "adverseEvent"
         },
         {
             title: "База приказов и материалов",
             description: "Внутренний Google-реестр документов, СОПов, приказов и памяток, связанных с качеством и безопасностью.",
-            href: defaultRegistryUrl
+            href: "",
+            linkKey: "documents"
         }
     ];
     let adminDataCache = null;
@@ -584,6 +594,45 @@
 
     function isServerAuthAvailable() {
         return secureServerModeReady && Boolean(supabaseClient);
+    }
+
+    function isSafeExternalUrl(value) {
+        try {
+            const url = new URL(String(value || ""));
+            return url.protocol === "https:";
+        } catch (_error) {
+            return false;
+        }
+    }
+
+    function setProtectedLinks(links) {
+        if (!links || typeof links !== "object") {
+            return;
+        }
+
+        ["documents", "qualityWorkbook", "adverseEvent"].forEach(function (key) {
+            if (isSafeExternalUrl(links[key])) {
+                protectedLinks[key] = links[key];
+            }
+        });
+    }
+
+    function getProtectedHref(key) {
+        return protectedLinks[key] || "";
+    }
+
+    async function hydrateProtectedLinks() {
+        if (!isServerAuthAvailable()) {
+            return;
+        }
+
+        try {
+            const result = await invokeEdgeFunction("portal-links", {});
+            if (!result.error && result.data && result.data.links) {
+                setProtectedLinks(result.data.links);
+            }
+        } catch (_error) {
+        }
     }
 
     function buildAuthEmail(login) {
@@ -1245,18 +1294,19 @@
         }
 
         grid.innerHTML = serviceLinks.map(function (item) {
-            const hasAccess = item.roles.indexOf(session.role) !== -1;
-            const href = hasAccess ? item.href : "#";
+            const resolvedHref = item.linkKey ? getProtectedHref(item.linkKey) : item.href;
+            const hasAccess = item.roles.indexOf(session.role) !== -1 && Boolean(resolvedHref);
+            const href = hasAccess ? resolvedHref : "#";
             const extraClass = item.featured ? " service-tile-featured" : "";
             const lockClass = hasAccess ? "" : " service-tile-locked";
-            const action = hasAccess ? item.action : "Доступ по специальной роли";
+            const action = hasAccess ? item.action : "Временно недоступно";
             const target = href.indexOf("http") === 0 ? ' target="_blank" rel="noreferrer"' : "";
 
             return [
                 '<a class="service-tile' + extraClass + lockClass + '" href="' + href + '"' + target + (hasAccess ? "" : ' aria-disabled="true"') + ">",
                 '  <div class="service-tile-top">',
                 '    <span class="service-tile-icon">' + item.icon + "</span>",
-                '    <span class="service-tile-arrow">' + (hasAccess ? "→" : "🔒") + "</span>",
+                '    <span class="service-tile-arrow">' + (hasAccess ? "→" : "LOCK") + "</span>",
                 "  </div>",
                 "  <strong>" + escapeHtml(item.title) + "</strong>",
                 "  <p>" + escapeHtml(item.description) + "</p>",
@@ -1845,7 +1895,18 @@
             dateNode.textContent = formatDate();
         }
         if (adverseLink) {
-            adverseLink.href = adverseEventUrl;
+            const adverseHref = getProtectedHref("adverseEvent");
+            if (adverseHref) {
+                adverseLink.href = adverseHref;
+                adverseLink.target = "_blank";
+                adverseLink.rel = "noreferrer";
+                adverseLink.removeAttribute("aria-disabled");
+            } else {
+                adverseLink.href = "#";
+                adverseLink.removeAttribute("target");
+                adverseLink.setAttribute("aria-disabled", "true");
+                adverseLink.textContent = "Форма временно недоступна";
+            }
         }
         if (adminEntry && session.role !== "admin") {
             adminEntry.remove();
@@ -2275,6 +2336,21 @@
     }
 
     function renderQualityPage(session) {
+        const registryLink = document.getElementById("quality-registry-link");
+        if (registryLink) {
+            const qualityHref = getProtectedHref("qualityWorkbook");
+            if (qualityHref) {
+                registryLink.href = qualityHref;
+                registryLink.target = "_blank";
+                registryLink.rel = "noreferrer";
+                registryLink.removeAttribute("aria-disabled");
+            } else {
+                registryLink.href = "#";
+                registryLink.removeAttribute("target");
+                registryLink.setAttribute("aria-disabled", "true");
+            }
+        }
+
         const qualityRoot = document.getElementById("quality-access-role");
         if (qualityRoot) {
             qualityRoot.textContent = getRoleLabel(session.role);
@@ -2388,16 +2464,21 @@
         const actionsGrid = document.getElementById("quality-actions-grid");
         if (actionsGrid) {
             actionsGrid.innerHTML = qualityActionCards.map(function (item) {
+                const href = item.linkKey ? getProtectedHref(item.linkKey) : item.href;
+                const tagName = href ? "a" : "span";
+                const attr = href
+                    ? ' href="' + href + '" target="_blank" rel="noreferrer"'
+                    : ' aria-disabled="true"';
                 return [
-                    '<a class="quality-action-card" href="' + item.href + '" target="_blank" rel="noreferrer">',
+                    '<' + tagName + ' class="quality-action-card' + (href ? "" : " quality-action-disabled") + '"' + attr + '>',
                     '  <div class="quality-action-top">',
                     '    <span class="quality-action-icon">' + item.icon + "</span>",
-                    '    <span class="quality-action-arrow">→</span>',
+                    '    <span class="quality-action-arrow">' + (href ? "→" : "LOCK") + "</span>",
                     "  </div>",
                     "  <strong>" + escapeHtml(item.title) + "</strong>",
                     "  <p>" + escapeHtml(item.description) + "</p>",
-                    '  <span class="quality-action-link">' + escapeHtml(item.action) + "</span>",
-                    "</a>"
+                    '  <span class="quality-action-link">' + escapeHtml(href ? item.action : "Временно недоступно") + "</span>",
+                    "</" + tagName + ">"
                 ].join("");
             }).join("");
         }
@@ -2544,11 +2625,16 @@
         const catalogGrid = document.getElementById("quality-catalog-grid");
         if (catalogGrid) {
             catalogGrid.innerHTML = qualityResourceCards.map(function (item) {
+                const href = item.linkKey ? getProtectedHref(item.linkKey) : item.href;
+                const tagName = href ? "a" : "span";
+                const attr = href
+                    ? ' href="' + href + '" target="_blank" rel="noreferrer"'
+                    : ' aria-disabled="true"';
                 return [
-                    '<a class="quality-mini-card quality-mini-link" href="' + item.href + '" target="_blank" rel="noreferrer">',
+                    '<' + tagName + ' class="quality-mini-card quality-mini-link' + (href ? "" : " quality-action-disabled") + '"' + attr + '>',
                     "  <strong>" + escapeHtml(item.title) + "</strong>",
                     "  <span>" + escapeHtml(item.description) + "</span>",
-                    "</a>"
+                    "</" + tagName + ">"
                 ].join("");
             }).join("");
         }
@@ -2564,6 +2650,7 @@
         if (!session) {
             return;
         }
+        await hydrateProtectedLinks();
         await renderDashboard(session);
     }
 
@@ -2599,6 +2686,7 @@
         if (!session) {
             return;
         }
+        await hydrateProtectedLinks();
         renderQualityPage(session);
         const logoutButton = document.getElementById("logout-button");
         if (logoutButton) {
@@ -2617,6 +2705,21 @@
         session = requireSession(["employee", "okk_member", "okk_head", "admin"]);
         if (!session) {
             return;
+        }
+        await hydrateProtectedLinks();
+        const trainingRegistryLink = document.getElementById("training-registry-link");
+        if (trainingRegistryLink) {
+            const documentsHref = getProtectedHref("documents");
+            if (documentsHref) {
+                trainingRegistryLink.href = documentsHref;
+                trainingRegistryLink.target = "_blank";
+                trainingRegistryLink.rel = "noreferrer";
+                trainingRegistryLink.removeAttribute("aria-disabled");
+            } else {
+                trainingRegistryLink.href = "#";
+                trainingRegistryLink.removeAttribute("target");
+                trainingRegistryLink.setAttribute("aria-disabled", "true");
+            }
         }
         const logoutButton = document.getElementById("logout-button");
         if (logoutButton) {

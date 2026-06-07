@@ -6,8 +6,8 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://pgifephtehfyfzgpbelu.supabase.co; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="robots" content="noindex,nofollow">
-    <title>Secure Access — SP MedPortal</title>
-    <meta name="description" content="Премиальная и безопасная авторизация сотрудников в цифровом медицинском портале Сергиево-Посадской больницы.">
+    <title>Вход в портал — SP MedPortal</title>
+    <meta name="description" content="Вход сотрудников в цифровой портал Сергиево-Посадской больницы.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,12 +16,13 @@
 </head>
 <body class="auth-page portal-theme auth-v2-page">
     <div class="page-shell">
+        <a class="skip-link" href="#main">Перейти к форме входа</a>
         <header class="site-header compact-header auth-v2-header">
             <a class="brand" href="index.html">
                 <span class="brand-mark">SP</span>
                 <span class="brand-copy">
                     <strong>MedPortal</strong>
-                    <small>Secure Access</small>
+                    <small>Вход в портал</small>
                 </span>
             </a>
             <div class="header-actions">
@@ -29,46 +30,27 @@
             </div>
         </header>
 
-        <main class="auth-v2-layout">
+        <main class="auth-v2-layout" id="main">
             <section class="auth-v2-hero">
                 <div class="auth-v2-shell-card auth-v2-shell-card-hero">
-                    <p class="eyebrow">Clinical-grade access</p>
-                    <h1>Безопасный вход в цифровой медицинский контур</h1>
+                    <p class="eyebrow">SP MedPortal</p>
+                    <h1>Вход в рабочий кабинет сотрудника</h1>
                     <p class="lead">
-                        Это не обычная форма входа, а защищённая точка доступа к внутреннему рабочему пространству.
-                        Вход получают только одобренные сотрудники, а действия внутри портала строятся вокруг принципов
-                        клинической ответственности, управляемого доступа и минимизации риска.
+                        Используйте служебный логин и пароль. Если доступа ещё нет — отправьте заявку,
+                        дождитесь одобрения администратора и затем войдите в кабинет.
                     </p>
-
-                    <div class="auth-v2-hero-grid">
-                        <article class="auth-v2-glass-card">
-                            <span class="auth-v2-metric-kicker">Identity</span>
-                            <strong>Одобренный доступ</strong>
-                            <p>Регистрация не активируется автоматически. Каждая новая учётная запись проходит админ-подтверждение.</p>
-                        </article>
-                        <article class="auth-v2-glass-card">
-                            <span class="auth-v2-metric-kicker">Security</span>
-                            <strong>Серверный контроль</strong>
-                            <p>Вход работает через серверную схему авторизации, а маршруты и роли дополнительно ограничены на уровне базы.</p>
-                        </article>
-                        <article class="auth-v2-glass-card">
-                            <span class="auth-v2-metric-kicker">Session</span>
-                            <strong>Автовыход и аудит</strong>
-                            <p>Сессия завершается при длительном бездействии, а чувствительные действия проходят через управляемый контур.</p>
-                        </article>
-                    </div>
                 </div>
 
                 <div class="auth-v2-signal-row">
                     <article class="auth-v2-signal-card">
-                        <span>Рекомендуемый путь</span>
-                        <strong>Сначала вход, потом рабочий стол</strong>
-                        <p>Сотрудник начинает день с уведомлений, документов, НС и служебных сценариев — без хаоса и лишнего поиска.</p>
+                        <span>Нет доступа?</span>
+                        <strong>Подайте заявку на регистрацию</strong>
+                        <p>Укажите ФИО, подразделение, должность, желаемый логин и пароль. Вход откроется после одобрения.</p>
                     </article>
                     <article class="auth-v2-signal-card">
-                        <span>Безопасность по умолчанию</span>
-                        <strong>Доступ не открывается “на доверии”</strong>
-                        <p>Если статус учётной записи не подтверждён или доступ ограничен, портал не впускает пользователя внутрь.</p>
+                        <span>Забыли пароль?</span>
+                        <strong>Запросите восстановление</strong>
+                        <p>Администратор проверит заявку и выдаст временный пароль через рабочий порядок учреждения.</p>
                     </article>
                 </div>
             </section>
@@ -77,14 +59,14 @@
                 <div class="auth-v2-shell-card auth-v2-shell-card-form">
                     <div class="auth-v2-form-head">
                         <p class="card-kicker">Доступ сотрудника</p>
-                        <h2>Войти в защищённый кабинет</h2>
+                        <h2>Войти в кабинет</h2>
                         <p class="card-text">Используйте служебный логин. Если вы ещё не подключены к системе — сначала отправьте заявку на доступ.</p>
                     </div>
 
                     <div class="auth-v2-security-strip">
                         <span>• только одобренные сотрудники</span>
-                        <span>• серверная валидация</span>
-                        <span>• ограничение попыток входа</span>
+                        <span>• пароль не короче 8 символов</span>
+                        <span>• автоматический выход при бездействии</span>
                     </div>
 
                     <form id="login-form" class="auth-form auth-v2-form">
@@ -104,8 +86,8 @@
                             <input type="text" name="website" tabindex="-1" autocomplete="off">
                         </label>
 
-                        <button type="submit" class="primary-btn wide-btn">Продолжить безопасный вход</button>
-                        <p id="form-message" class="form-message" aria-live="polite"></p>
+                        <button type="submit" class="primary-btn wide-btn">Войти</button>
+                        <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
                     </form>
 
                     <div class="auth-v2-links">
@@ -116,9 +98,9 @@
 
                 <div class="auth-v2-shell-card auth-v2-shell-card-side">
                     <div class="auth-v2-side-block">
-                        <span class="card-kicker">Что будет дальше</span>
-                        <strong>После входа вы попадаете в живой рабочий стол</strong>
-                        <p>Там уже собраны приоритеты дня, уведомления, рабочие сервисы, НС, обращения и защищённые разделы.</p>
+                        <span class="card-kicker">После входа</span>
+                        <strong>Откроется рабочий стол</strong>
+                        <p>В нём собраны уведомления, документы, обучение, обращения и доступные вам служебные разделы.</p>
                     </div>
                     <div class="auth-v2-side-block">
                         <span class="card-kicker">Если доступа ещё нет</span>
@@ -126,9 +108,9 @@
                         <p>Сотрудник указывает ФИО, подразделение, должность, желаемый логин и пароль. Без проверки доступ не откроется.</p>
                     </div>
                     <div class="auth-v2-side-block">
-                        <span class="card-kicker">Принцип продукта</span>
-                        <strong>Спокойно. Чисто. Управляемо.</strong>
-                        <p>Визуально портал должен вызывать доверие, а технически — оставаться закрытым для случайного или несанкционированного доступа.</p>
+                        <span class="card-kicker">Рабочий принцип</span>
+                        <strong>Меньше шума — быстрее действие</strong>
+                        <p>Форма входа оставлена простой, чтобы сотрудник не тратил время на лишние тексты.</p>
                     </div>
                 </div>
             </section>

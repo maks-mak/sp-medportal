@@ -69,6 +69,17 @@ create table if not exists public.password_reset_requests (
     created_at timestamptz not null default now()
 );
 
+create table if not exists public.audit_logs (
+    id uuid primary key default gen_random_uuid(),
+    actor_profile_id uuid references public.profiles(id) on delete set null,
+    actor_auth_user_id uuid,
+    action text not null,
+    target_table text,
+    target_id uuid,
+    metadata jsonb not null default '{}'::jsonb,
+    created_at timestamptz not null default now()
+);
+
 create unique index if not exists password_reset_requests_one_pending_per_login
     on public.password_reset_requests (login)
     where status = 'pending';
@@ -81,6 +92,12 @@ create index if not exists messages_status_created_idx
 
 create index if not exists profiles_role_status_idx
     on public.profiles (role, status, created_at desc);
+
+create index if not exists audit_logs_created_idx
+    on public.audit_logs (created_at desc);
+
+create index if not exists audit_logs_actor_created_idx
+    on public.audit_logs (actor_profile_id, created_at desc);
 
 create or replace function public.current_profile_id()
 returns uuid
@@ -146,12 +163,38 @@ as $$
     )
 $$;
 
+create or replace function public.protect_profile_identity_fields()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+    if new.id is distinct from old.id
+       or new.auth_user_id is distinct from old.auth_user_id
+       or new.auth_email is distinct from old.auth_email
+       or new.login is distinct from old.login
+       or new.created_at is distinct from old.created_at then
+        raise exception 'Protected profile identity fields cannot be changed';
+    end if;
+
+    return new;
+end;
+$$;
+
+drop trigger if exists protect_profile_identity_fields on public.profiles;
+create trigger protect_profile_identity_fields
+before update on public.profiles
+for each row
+execute function public.protect_profile_identity_fields();
+
 alter table public.registration_requests enable row level security;
 alter table public.profiles enable row level security;
 alter table public.notices enable row level security;
 alter table public.notice_reads enable row level security;
 alter table public.messages enable row level security;
 alter table public.password_reset_requests enable row level security;
+alter table public.audit_logs enable row level security;
 
 drop policy if exists "admins read requests" on public.registration_requests;
 create policy "admins read requests"
@@ -168,7 +211,20 @@ to authenticated
 using (public.is_admin())
 with check (public.is_admin());
 
-drop policy if exists "own or admin read profile" on public.profiles;
+do $$
+declare
+    policy_record record;
+begin
+    for policy_record in
+        select policyname
+        from pg_policies
+        where schemaname = 'public'
+          and tablename = 'profiles'
+    loop
+        execute format('drop policy if exists %I on public.profiles', policy_record.policyname);
+    end loop;
+end $$;
+
 create policy "own or admin read profile"
 on public.profiles
 for select
@@ -185,6 +241,13 @@ for update
 to authenticated
 using (public.is_admin())
 with check (public.is_admin());
+
+drop policy if exists "admins read audit logs" on public.audit_logs;
+create policy "admins read audit logs"
+on public.audit_logs
+for select
+to authenticated
+using (public.is_admin());
 
 drop policy if exists "approved users read notices" on public.notices;
 create policy "approved users read notices"

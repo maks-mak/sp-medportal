@@ -3,128 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://pgifephtehfyfzgpbelu.supabase.co; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; connect-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="robots" content="noindex,nofollow">
-    <title>SP MedPortal — цифровой контур клиники</title>
-    <meta name="description" content="Премиальный внутренний портал для сотрудников: доступ, документы, уведомления, НС, ОКК и рабочие сценарии в едином цифровом медицинском контуре.">
+    <title>Сергиево-Посадская больница — Портал для сотрудников</title>
+    <meta name="description" content="Единая точка доступа к медицинским ресурсам, документам и сервисам для сотрудников Сергиево-Посадской больницы.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/site.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/landing-original.css">
 </head>
-<body class="landing-v2-page portal-theme">
-    <div class="page-shell">
-        <video class="landing-video-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-            <source src="assets/media/bg-dna.mp4" type="video/mp4">
-        </video>
-        <div class="landing-video-overlay" aria-hidden="true"></div>
+<body>
+    <div class="fallback-bg" aria-hidden="true"></div>
 
-        <header class="site-header landing-v2-header">
-            <a class="brand" href="index.html">
-                <span class="brand-mark">SP</span>
-                <span class="brand-copy">
-                    <strong>MedPortal</strong>
-                    <small>Internal Clinical Workspace</small>
-                </span>
-            </a>
-            <div class="header-actions">
-                <a class="ghost-btn" href="login.html">Войти</a>
-                <a class="primary-btn" href="register.html">Подать заявку</a>
-            </div>
-        </header>
+    <video autoplay loop muted playsinline preload="metadata" class="video-bg" aria-hidden="true">
+        <source src="assets/media/bg-dna.mp4" type="video/mp4">
+    </video>
 
-        <main class="landing-v2-shell">
-            <section class="landing-v2-hero">
-                <div class="landing-v2-copy">
-                    <p class="eyebrow">Digital care operations</p>
-                    <h1>Единый цифровой контур для сотрудников клиники</h1>
-                    <p class="lead">
-                        SP MedPortal объединяет безопасный вход, уведомления, документы, рабочие сервисы,
-                        нежелательные события и защищённую зону ОККиБМД в одном управляемом медицинском продукте.
-                    </p>
-                    <div class="landing-v2-actions">
-                        <a class="primary-btn" href="login.html">Открыть защищённый вход</a>
-                        <a class="ghost-btn" href="dashboard.html">Посмотреть рабочий стол</a>
-                    </div>
-                </div>
-
-                <div class="landing-v2-hero-panel">
-                    <article class="landing-v2-stat-card">
-                        <span>Identity</span>
-                        <strong>Одобренный доступ</strong>
-                        <p>Каждая учётная запись проходит подтверждение, а чувствительные действия идут только через серверный контур.</p>
-                    </article>
-                    <article class="landing-v2-stat-card">
-                        <span>Operations</span>
-                        <strong>Рабочий стол вместо хаоса</strong>
-                        <p>Сотрудник начинает день с приоритетов, уведомлений, документов, НС и понятных маршрутов действий.</p>
-                    </article>
-                    <article class="landing-v2-stat-card">
-                        <span>Quality & Safety</span>
-                        <strong>ОКК и НС встроены в продукт</strong>
-                        <p>Случаи, эскалация, меры, закрытие и защищённый разбор живут в рабочей системе, а не в разрозненных файлах.</p>
-                    </article>
-                </div>
-            </section>
-
-            <section class="landing-v2-metrics">
-                <article class="landing-v2-metric-tile">
-                    <span>Доступ</span>
-                    <strong>Роли и уровни</strong>
-                    <p>Сотрудник, ОКК, руководитель ОКК, администратор.</p>
-                </article>
-                <article class="landing-v2-metric-tile">
-                    <span>Коммуникация</span>
-                    <strong>Уведомления и обращения</strong>
-                    <p>Служебные сообщения, обращения руководству и управляемый контур обратной связи.</p>
-                </article>
-                <article class="landing-v2-metric-tile">
-                    <span>Безопасность</span>
-                    <strong>Закрытый медицинский контур</strong>
-                    <p>RLS, серверная авторизация, ограничение источников и fail-closed подход к доступу.</p>
-                </article>
-                <article class="landing-v2-metric-tile">
-                    <span>Качество</span>
-                    <strong>Нежелательные события</strong>
-                    <p>От сообщения до закрытия случая, мер и проверки эффективности.</p>
-                </article>
-            </section>
-
-            <section class="landing-v2-grid">
-                <article class="landing-v2-feature-card is-wide">
-                    <p class="portal-kicker">Что внутри продукта</p>
-                    <h2>Не просто сайт, а полноценное рабочее пространство</h2>
-                    <div class="landing-v2-feature-list">
-                        <div>
-                            <strong>Рабочий кабинет</strong>
-                            <p>Живой дашборд сотрудника с приоритетами дня, новостями, сервисами и быстрыми действиями.</p>
-                        </div>
-                        <div>
-                            <strong>Безопасный auth-контур</strong>
-                            <p>Серверная авторизация, строгая валидация и запрет на случайные или неподтверждённые входы.</p>
-                        </div>
-                        <div>
-                            <strong>ОКК и БМД</strong>
-                            <p>Операционный стол НС, маршруты разбора, роли, эскалация, карточки случая и логика закрытия.</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="landing-v2-feature-card">
-                    <p class="portal-kicker">Ключевой сценарий</p>
-                    <h2>Сотрудник не ищет — сотрудник действует</h2>
-                    <p>Хороший медпортал не заставляет думать, куда идти. Он показывает, что важно сегодня, и даёт нужный путь в один-два клика.</p>
-                </article>
-
-                <article class="landing-v2-feature-card">
-                    <p class="portal-kicker">Принцип продукта</p>
-                    <h2>Спокойный premium UX</h2>
-                    <p>Мы уходим от дешёвого “больничного” интерфейса к взрослому MedTech-визуалу: воздух, структура, доверие и дорогая чистота.</p>
-                </article>
-            </section>
-        </main>
+    <div class="video-overlay" aria-hidden="true"></div>
+    <div class="dna-glow" aria-hidden="true"></div>
+    <div class="particles-container" aria-hidden="true">
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
     </div>
+
+    <main class="landing-wrapper">
+        <h1>Сергиево-Посадская<br>больница<span>Информационный портал для сотрудников</span></h1>
+
+        <p class="subtitle">
+            Единая точка доступа к медицинским ресурсам, документам и сервисам.
+            Для врачей, медсестер и административного персонала.
+        </p>
+
+        <section class="features" aria-label="Разделы портала">
+            <article class="feature">
+                <div class="feature-icon" aria-hidden="true">&#x1F4CB;</div>
+                <div class="feature-title">Реестры</div>
+                <div class="feature-desc">Документы и приказы</div>
+            </article>
+            <article class="feature">
+                <div class="feature-icon" aria-hidden="true">&#x1F4E2;</div>
+                <div class="feature-title">Уведомления</div>
+                <div class="feature-desc">Важные сообщения</div>
+            </article>
+            <article class="feature">
+                <div class="feature-icon" aria-hidden="true">&#x1F48A;</div>
+                <div class="feature-title">Справочники</div>
+                <div class="feature-desc">Лекарства и протоколы</div>
+            </article>
+        </section>
+
+        <nav class="actions" aria-label="Доступ к порталу">
+            <a href="login.html" class="login-btn">&#x1F510; Войти</a>
+            <a href="register.html" class="secondary-btn">Запросить доступ</a>
+        </nav>
+
+        <footer class="footer">
+            &copy; 2026 Сергиево-Посадская больница<br>
+            Доступ только для авторизованных сотрудников
+        </footer>
+    </main>
 </body>
 </html>

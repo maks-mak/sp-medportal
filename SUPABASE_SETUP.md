@@ -63,6 +63,14 @@ passwordResetFunctionReady: true
 
 Затем выполни актуальный `supabase/schema_v1.sql`: он закрывает прямую вставку в `password_reset_requests` через клиент и оставляет сброс пароля только через Edge Function.
 
+Можно выполнить одной командой:
+
+```bash
+./scripts/apply_supabase_schema.sh
+```
+
+Скрипт попросит Supabase access token скрытым вводом и применит `supabase/schema_v1.sql` через `Supabase CLI`.
+
 ## 4. Проверка
 После публикации функций:
 - `register.html` должен принимать заявку

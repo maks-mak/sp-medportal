@@ -85,6 +85,14 @@ passwordResetFunctionReady: true
 
 Он скопирует весь SQL в буфер обмена и откроет `Supabase SQL Editor`. Останется нажать `Cmd+V`, затем `Run`.
 
+Самый устойчивый вариант без SQL Editor и без прямого подключения к Postgres:
+
+```bash
+./scripts/apply_schema_via_management_api.sh
+```
+
+Он применяет схему через `Supabase Management API` как миграцию и тоже просит токен скрытым вводом.
+
 ## 4. Проверка
 После публикации функций:
 - `register.html` должен принимать заявку

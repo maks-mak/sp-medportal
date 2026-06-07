@@ -13,15 +13,20 @@ if [[ -z "${SUPABASE_ACCESS_TOKEN:-}" ]]; then
   echo
   export SUPABASE_ACCESS_TOKEN
 fi
+trap 'unset SUPABASE_ACCESS_TOKEN' EXIT
 
 project_ref="pgifephtehfyfzgpbelu"
-functions=(
-  submit-registration
-  submit-password-reset
-  admin-registration
-  admin-profile
-  admin-reset-password
-)
+if [[ "$#" -gt 0 ]]; then
+  functions=("$@")
+else
+  functions=(
+    submit-registration
+    submit-password-reset
+    admin-registration
+    admin-profile
+    admin-reset-password
+  )
+fi
 
 for fn in "${functions[@]}"; do
   echo "Deploying ${fn}..."
@@ -29,7 +34,5 @@ for fn in "${functions[@]}"; do
   echo "Done ${fn}"
   echo
 done
-
-unset SUPABASE_ACCESS_TOKEN
 
 echo "All functions deployed."

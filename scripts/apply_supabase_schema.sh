@@ -8,6 +8,9 @@ if [[ ! -x .tools/supabase ]]; then
   exit 1
 fi
 
+mkdir -p supabase/.temp
+printf 'pgifephtehfyfzgpbelu' > supabase/.temp/project-ref
+
 if [[ -z "${SUPABASE_ACCESS_TOKEN:-}" ]]; then
   read -r -s -p "Вставь Supabase access token: " SUPABASE_ACCESS_TOKEN
   echo

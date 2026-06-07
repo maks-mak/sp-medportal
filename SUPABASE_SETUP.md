@@ -77,6 +77,14 @@ passwordResetFunctionReady: true
 
 Скрипт попросит Supabase access token скрытым вводом и применит `supabase/schema_v1.sql` через `Supabase CLI`.
 
+Если CLI ругается на IPv6 или `supabase link`, используй вариант через браузер:
+
+```bash
+./scripts/copy_schema_for_sql_editor.sh
+```
+
+Он скопирует весь SQL в буфер обмена и откроет `Supabase SQL Editor`. Останется нажать `Cmd+V`, затем `Run`.
+
 ## 4. Проверка
 После публикации функций:
 - `register.html` должен принимать заявку

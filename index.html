@@ -1,372 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; connect-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="robots" content="noindex,nofollow">
-    <title>Поликлиника № 2 — Сергиево-Посадская больница</title>
-    <meta name="description" content="Информационные ресурсы Поликлиники № 2 Сергиево-Посадской больницы для сотрудников.">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/landing-original.css">    <link rel="stylesheet" href="assets/premium-base.css">    <link rel="stylesheet" href="assets/premium-cards.css">    <link rel="stylesheet" href="assets/premium-layout.css">
-    <link rel="stylesheet" href="assets/studio-override.css">
-    <style>
-        :root {
-            --ink: #eaf5ff;
-            --soft: rgba(234, 245, 255, 0.66);
-            --line: rgba(190, 226, 255, 0.19);
-            --aqua: #54d7ff;
-            --blue: #4b81ff;
-            --signal: #ff6675;
-            --dark: rgba(5, 17, 33, 0.72);
-        }
-
-        * { box-sizing: border-box; }
-        body {
-            display: block;
-            min-height: 100vh;
-            padding: 0;
-            overflow-x: hidden;
-            font-family: "Manrope", "Inter", sans-serif;
-        }
-
-        .fallback-bg { background: #041121; }
-        .video-overlay {
-            background:
-                radial-gradient(circle at 17% 32%, rgba(24, 91, 142, 0.26), transparent 34%),
-                radial-gradient(circle at 86% 70%, rgba(54, 40, 106, 0.28), transparent 38%),
-                linear-gradient(105deg, rgba(2, 10, 23, 0.88) 0%, rgba(3, 14, 29, 0.60) 48%, rgba(2, 9, 20, 0.78) 100%);
-        }
-        .dna-glow, .particles-container { display: none; }
-
-        .premium-page {
-            position: relative;
-            z-index: 10;
-            width: min(1320px, calc(100% - 48px));
-            min-height: 100vh;
-            margin: 0 auto;
-            padding: 26px 0 32px;
-        }
-
-        .topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 28px;
-            padding: 0 0 22px;
-            border-bottom: 1px solid var(--line);
-        }
-
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 13px;
-            min-width: 0;
-            color: var(--ink);
-            text-decoration: none;
-        }
-        .brand-mark {
-            display: grid;
-            place-items: center;
-            width: 44px;
-            height: 44px;
-            flex: 0 0 auto;
-            border: 1px solid rgba(84, 215, 255, 0.58);
-            background: linear-gradient(135deg, rgba(84, 215, 255, 0.26), rgba(75, 129, 255, 0.14));
-            color: #ffffff;
-            font-size: 0.74rem;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-        }
-        .brand-copy { display: grid; gap: 2px; }
-        .brand-copy strong { font-size: 0.83rem; letter-spacing: 0.12em; text-transform: uppercase; }
-        .brand-copy small { color: var(--soft); font-size: 0.68rem; letter-spacing: 0.05em; }
-
-        .topbar-right { display: flex; align-items: center; gap: 16px; }
-        .secure-label { color: rgba(234,245,255,0.52); font-size: 0.67rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-        .login-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 42px;
-            padding: 0 18px;
-            border: 1px solid rgba(84, 215, 255, 0.44);
-            color: #ffffff;
-            font-size: 0.7rem;
-            font-weight: 800;
-            letter-spacing: 0.13em;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: background 180ms ease, transform 180ms ease;
-        }
-        .login-link:hover { background: rgba(84, 215, 255, 0.15); transform: translateY(-2px); }
-
-        .hero {
-            display: grid;
-            grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
-            gap: clamp(28px, 6vw, 96px);
-            align-items: center;
-            padding: clamp(66px, 11vh, 130px) 0 48px;
-        }
-        .eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 0 0 20px;
-            color: var(--aqua);
-            font-size: 0.7rem;
-            font-weight: 800;
-            letter-spacing: 0.19em;
-            text-transform: uppercase;
-        }
-        .eyebrow::before { content: ""; width: 38px; height: 2px; background: var(--signal); }
-        .hero h1 {
-            max-width: 850px;
-            margin: 0;
-            color: #ffffff;
-            font-family: "Inter", sans-serif;
-            font-size: clamp(3.25rem, 6vw, 6.5rem);
-            font-weight: 800;
-            letter-spacing: -0.075em;
-            line-height: 0.91;
-            text-transform: uppercase;
-        }
-        .hero h1 span { display: block; color: var(--aqua); }
-        .hero h1 em {
-            display: block;
-            margin-top: 14px;
-            color: #ffffff;
-            font-size: clamp(1.05rem, 2vw, 1.55rem);
-            font-style: normal;
-            font-weight: 600;
-            letter-spacing: 0.17em;
-            line-height: 1.35;
-        }
-        .mission {
-            max-width: 710px;
-            margin: 34px 0 0;
-            padding: 19px 0 19px 24px;
-            border-left: 2px solid var(--signal);
-            color: rgba(242, 249, 255, 0.86);
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-        .mission strong { color: #ffffff; }
-
-        .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
-        .button-main, .button-ghost {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 52px;
-            padding: 0 23px;
-            font-size: 0.73rem;
-            font-weight: 800;
-            letter-spacing: 0.13em;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: transform 180ms ease, background 180ms ease;
-        }
-        .button-main { background: var(--aqua); color: #06203a; }
-        .button-ghost { border: 1px solid var(--line); background: rgba(3, 17, 34, 0.34); color: #ffffff; }
-        .button-main:hover, .button-ghost:hover { transform: translateY(-2px); }
-        .button-ghost:hover { background: rgba(255,255,255,0.10); }
-
-        .control-card {
-            position: relative;
-            overflow: hidden;
-            padding: 28px;
-            border: 1px solid rgba(165, 221, 255, 0.25);
-            background: linear-gradient(155deg, rgba(12, 42, 70, 0.87), rgba(4, 16, 32, 0.76));
-            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
-        }
-        .control-card::after {
-            content: "";
-            position: absolute;
-            top: -66px;
-            right: -66px;
-            width: 160px;
-            height: 160px;
-            border: 1px solid rgba(84, 215, 255, 0.3);
-            border-radius: 50%;
-        }
-        .control-kicker { position: relative; z-index: 1; margin: 0; color: var(--aqua); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.17em; text-transform: uppercase; }
-        .control-card h2 { position: relative; z-index: 1; margin: 14px 0 24px; color: #ffffff; font-size: 1.75rem; letter-spacing: -0.045em; line-height: 1.05; }
-        .control-list { position: relative; z-index: 1; display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
-        .control-list a { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 16px 0; border-top: 1px solid rgba(218, 239, 255, 0.14); color: #ffffff; font-size: 0.83rem; text-decoration: none; }
-        .control-list a:hover { color: var(--aqua); }
-        .control-list b { color: var(--aqua); font-size: 0.66rem; letter-spacing: 0.1em; }
-        .control-list span:last-child { color: var(--soft); font-size: 1rem; }
-
-        .services { padding: 24px 0 0; }
-        .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
-        .section-head h2 { margin: 0; color: #ffffff; font-size: clamp(1.55rem, 2.5vw, 2.3rem); letter-spacing: -0.055em; }
-        .section-head p { max-width: 390px; margin: 0; color: var(--soft); font-size: 0.84rem; line-height: 1.55; }
-        .service-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
-        .service-card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-height: 212px;
-            padding: 22px;
-            border: 1px solid var(--line);
-            background: rgba(5, 20, 38, 0.60);
-            color: #ffffff;
-            overflow: hidden;
-            text-decoration: none;
-            transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
-        }
-        .service-card:hover { transform: translateY(-4px); border-color: rgba(84, 215, 255, 0.58); background: rgba(7, 30, 53, 0.82); }
-        .service-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--aqua); }
-        .service-card:nth-child(2)::before { background: var(--blue); }
-        .service-card:nth-child(3)::before { background: var(--signal); }
-        .service-card:nth-child(4)::before { background: #ba86ff; }
-        .service-card:nth-child(5)::before { background: #f4cf6c; }
-        .service-card small { color: var(--aqua); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; }
-        .service-card h3 { margin: auto 0 10px; color: #ffffff; font-size: 1.23rem; letter-spacing: -0.035em; line-height: 1.1; }
-        .service-card p { margin: 0; color: var(--soft); font-size: 0.77rem; line-height: 1.55; }
-        .service-card .arrow { margin-top: 17px; color: #ffffff; font-size: 1.1rem; }
-        .service-card--wide { grid-column: span 4; }
-        .service-card--half { grid-column: span 3; }
-        .report-card { grid-column: span 4; background: linear-gradient(150deg, rgba(42, 34, 71, 0.76), rgba(8, 23, 43, 0.77)); }
-        .report-list { display: grid; gap: 7px; margin-top: 16px; }
-        .report-list span { display: flex; align-items: center; justify-content: space-between; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.13); color: rgba(245,248,255,0.8); font-size: 0.71rem; font-weight: 700; }
-        .report-list span::after { content: "↗"; color: #f4cf6c; }
-
-        .bottom-strip { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 42px; padding: 24px 0 0; border-top: 1px solid var(--line); }
-        .bottom-strip p { margin: 0; color: var(--soft); font-size: 0.77rem; line-height: 1.55; }
-        .bottom-strip strong { display: block; margin-bottom: 4px; color: #ffffff; font-size: 0.83rem; }
-        .footer { display: flex; justify-content: space-between; gap: 18px; padding-top: 30px; color: rgba(226,241,255,0.42); font-size: 0.66rem; letter-spacing: 0.05em; }
-
-        @media (max-width: 920px) {
-            .hero { grid-template-columns: 1fr; padding-top: 72px; }
-            .control-card { max-width: 660px; }
-            .service-card--wide, .report-card { grid-column: span 6; }
-            .service-card--half { grid-column: span 4; }
-        }
-        @media (max-width: 620px) {
-            .premium-page { width: min(100% - 28px, 1320px); padding-top: 16px; }
-            .secure-label { display: none; }
-            .topbar { padding-bottom: 16px; }
-            .hero { padding: 58px 0 32px; }
-            .hero h1 { font-size: clamp(2.8rem, 15vw, 4.15rem); }
-            .hero h1 em { font-size: 0.84rem; }
-            .section-head, .bottom-strip, .footer { align-items: flex-start; flex-direction: column; }
-            .service-card--wide, .service-card--half, .report-card { grid-column: span 12; min-height: 180px; }
-            .footer { padding-top: 24px; }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; connect-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Поликлиника № 2 — Сергиево-Посадская больница</title>
+  <meta name="description" content="Служебный портал Поликлиники № 2 Сергиево-Посадской больницы.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/portal-2026.css">
 </head>
 <body>
-    <div class="fallback-bg" aria-hidden="true"></div>
-    <video autoplay loop muted playsinline preload="metadata" class="video-bg" aria-hidden="true">
-        <source src="assets/media/bg-dna.mp4" type="video/mp4">
-    </video>
-    <div class="video-overlay" aria-hidden="true"></div>
-
-    <div class="premium-page">
-        <header class="topbar">
-            <a class="brand" href="index.html" aria-label="Поликлиника № 2 — на главную">
-                <span class="brand-mark">П2</span>
-                <span class="brand-copy">
-                    <strong>Поликлиника № 2</strong>
-                    <small>ГБУЗ Московской области «Сергиево-Посадская больница»</small>
-                </span>
-            </a>
-            <div class="topbar-right">
-                <span class="secure-label">Служебный контур</span>
-                <a class="login-link" href="login.html">Войти</a>
-            </div>
-        </header>
-
-        <main>
-            <section class="hero" aria-labelledby="hero-title">
-                <div>
-                    <p class="eyebrow">Информационные ресурсы</p>
-                    <h1 id="hero-title">Поликлиника <span>№ 2</span><em>Сергиево-Посадская больница</em></h1>
-                    <p class="mission"><strong>Развиваем систему здравоохранения Подмосковья</strong> через бережное отношение к здоровью каждого.</p>
-                    <div class="hero-actions">
-                        <a class="button-main" href="login.html">Открыть рабочий кабинет</a>
-                        <a class="button-ghost" href="register.html">Запросить доступ</a>
-                    </div>
-                </div>
-
-                <aside class="control-card" aria-label="Быстрый доступ">
-                    <p class="control-kicker">Быстрый доступ</p>
-                    <h2>Рабочие<br>контуры</h2>
-                    <ul class="control-list">
-                        <li><a href="dashboard.html"><b>01</b><span>Рабочий кабинет</span><span>→</span></a></li>
-                        <li><a href="quality.html"><b>02</b><span>ОКК и БМД</span><span>→</span></a></li>
-                        <li><a href="training.html"><b>03</b><span>Обучение</span><span>→</span></a></li>
-                    </ul>
-                </aside>
-            </section>
-
-            <section class="services" aria-labelledby="services-title">
-                <div class="section-head">
-                    <h2 id="services-title">Сервисы для ежедневной работы</h2>
-                    <p>Единая точка доступа к документам, маршрутам и служебным действиям Поликлиники № 2.</p>
-                </div>
-                <div class="service-grid">
-                    <a class="service-card service-card--wide" href="dashboard.html">
-                        <small>01 · Рабочий кабинет</small>
-                        <h3>Планы, журналы<br>и контроль</h3>
-                        <p>Персональная рабочая среда сотрудника с доступом по роли.</p>
-                        <span class="arrow">↗</span>
-                    </a>
-                    <a class="service-card service-card--half" href="login.html">
-                        <small>02 · Документы</small>
-                        <h3>Приказы<br>и регламенты</h3>
-                        <p>Актуальные документы и рабочие материалы.</p>
-                        <span class="arrow">↗</span>
-                    </a>
-                    <a class="service-card service-card--half" href="login.html">
-                        <small>03 · Коммуникации</small>
-                        <h3>Уведомления<br>и обращения</h3>
-                        <p>Важные сообщения и рабочая маршрутизация.</p>
-                        <span class="arrow">↗</span>
-                    </a>
-                    <a class="service-card service-card--half" href="quality.html">
-                        <small>04 · Качество</small>
-                        <h3>ОКК и БМД</h3>
-                        <p>Инструменты контроля качества и безопасности деятельности.</p>
-                        <span class="arrow">↗</span>
-                    </a>
-                    <a class="service-card service-card--half" href="training.html">
-                        <small>05 · Обучение</small>
-                        <h3>Развитие<br>компетенций</h3>
-                        <p>Обучающие материалы и доступные программы.</p>
-                        <span class="arrow">↗</span>
-                    </a>
-                    <article class="service-card report-card">
-                        <small>06 · Росздравнадзор</small>
-                        <h3>Подать сведения</h3>
-                        <p>Рабочий маршрут для направления сведений и подготовки документов.</p>
-                        <div class="report-list" aria-label="Разделы блока">
-                            <span>Алгоритм АПП</span>
-                            <span>Скачать бланк</span>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <section class="bottom-strip" aria-label="Доступ к порталу">
-                <div>
-                    <strong>Нет учётной записи?</strong>
-                    <p>Подайте заявку: доступ откроется после проверки и подтверждения администратором.</p>
-                </div>
-                <a class="button-ghost" href="register.html">Оформить доступ</a>
-            </section>
-        </main>
-
-        <footer class="footer">
-            <span>© 2026 Поликлиника № 2 · ГБУЗ МО «Сергиево-Посадская больница»</span>
-            <span>Доступ только для авторизованных сотрудников</span>
-        </footer>
-    </div>
+  <div class="fallback-bg" aria-hidden="true"></div>
+  <video autoplay loop muted playsinline preload="metadata" class="video-bg" aria-hidden="true"><source src="assets/media/bg-dna.mp4" type="video/mp4"></video>
+  <div class="video-overlay" aria-hidden="true"></div>
+  <div class="page">
+    <header class="masthead">
+      <div class="identity" aria-label="Поликлиника № 2 Сергиево-Посадской больницы">
+        <span class="monogram">П2</span>
+        <span class="identity-text"><strong>Поликлиника № 2</strong><small>Сергиево-Посадская больница</small></span>
+      </div>
+      <div class="header-actions"><span>Служебный портал</span><a class="sign-in" href="login.html">Войти</a></div>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="portal-title">
+        <p class="eyebrow">Сергиев Посад · Московская область</p>
+        <h1 class="hero-title" id="portal-title"><span class="line">Поликлиника <span class="number">№ 2</span></span><span class="hospital">Сергиево-Посадская больница</span></h1>
+        <div class="hero-footer">
+          <p class="purpose"><b>Развиваем систему здравоохранения Подмосковья</b> через бережное отношение к здоровью каждого.</p>
+          <div class="intro-actions"><a class="primary" href="login.html">Войти в портал</a><a class="secondary" href="register.html">Запросить доступ</a></div>
+        </div>
+      </section>
+      <section class="workspace" aria-labelledby="workspace-title">
+        <div class="workspace-top"><h2 id="workspace-title">Рабочая среда</h2><p>Быстрый и понятный доступ к служебным разделам Поликлиники № 2.</p></div>
+        <div class="route-grid">
+          <a class="route route--wide" data-index="01" href="dashboard.html"><span class="route-type">Персональный контур</span><h3>Рабочий кабинет</h3><span class="route-arrow">↗</span></a>
+          <a class="route" data-index="02" href="quality.html"><span class="route-type">Качество</span><h3>ОКК и БМД</h3><span class="route-arrow">↗</span></a>
+          <a class="route" data-index="03" href="training.html"><span class="route-type">Развитие</span><h3>Обучение</h3><span class="route-arrow">↗</span></a>
+          <a class="route" data-index="04" href="login.html"><span class="route-type">Материалы</span><h3>Документы и регламенты</h3><span class="route-arrow">↗</span></a>
+          <a class="route route--wide" data-index="05" href="login.html"><span class="route-type">Росздравнадзор</span><h3>Сведения, алгоритмы и бланки</h3><span class="route-arrow">↗</span></a>
+        </div>
+      </section>
+      <section class="support" aria-label="Запрос доступа"><p><strong>Нет учётной записи?</strong>Доступ к рабочим разделам открывается после проверки и подтверждения администратором.</p><a href="register.html">Оформить доступ →</a></section>
+    </main>
+    <footer class="footer"><span>© 2026 Поликлиника № 2 · Сергиево-Посадская больница</span><span>Для авторизованных сотрудников</span></footer>
+  </div>
 </body>
 </html>

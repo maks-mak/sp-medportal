@@ -12,42 +12,41 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/portal-2026.css?v=2">
+  <link rel="stylesheet" href="assets/launch-atelier.css?v=1">
 </head>
 <body>
   <div class="fallback-bg" aria-hidden="true"></div>
   <video autoplay loop muted playsinline preload="metadata" class="video-bg" aria-hidden="true"><source src="assets/media/bg-dna.mp4" type="video/mp4"></video>
   <div class="video-overlay" aria-hidden="true"></div>
   <div class="page">
-    <header class="masthead">
-      <div class="identity" aria-label="Поликлиника № 2 Сергиево-Посадской больницы">
-        <span class="monogram">П2</span>
-        <span class="identity-text"><strong>Поликлиника № 2</strong><small>Сергиево-Посадская больница</small></span>
-      </div>
-      <div class="header-actions"><span>Служебный портал</span><a class="sign-in" href="login.html">Войти</a></div>
+    <header class="site-header">
+      <div class="identity" aria-label="Поликлиника № 2 Сергиево-Посадской больницы"><span class="mark">П2</span><span><b>Поликлиника № 2</b><small>Сергиево-Посадская больница</small></span></div>
+      <nav class="header-nav" aria-label="Основная навигация"><span>Служебный доступ</span><a href="login.html">Войти</a></nav>
     </header>
     <main>
-      <section class="intro" aria-labelledby="portal-title">
-        <p class="eyebrow">Сергиев Посад · Московская область</p>
-        <h1 class="hero-title" id="portal-title"><span class="line">Поликлиника <span class="number">№ 2</span></span><span class="hospital">Сергиево-Посадская больница</span></h1>
-        <div class="hero-footer">
-          <p class="purpose"><b>Развиваем систему здравоохранения Подмосковья</b> через бережное отношение к здоровью каждого.</p>
-          <div class="intro-actions"><a class="primary" href="login.html">Войти в портал</a><a class="secondary" href="register.html">Запросить доступ</a></div>
+      <section class="hero" aria-labelledby="main-title">
+        <div class="hero-copy">
+          <p class="locator">Сергиев Посад · Московская область</p>
+          <h1 id="main-title">Поликлиника <span>№ 2</span></h1>
+          <span class="hospital">Сергиево-Посадская больница</span>
+          <p class="statement"><b>Развиваем систему здравоохранения Подмосковья</b> через бережное отношение к здоровью каждого.</p>
+        </div>
+        <aside class="portal-door" aria-label="Вход в портал"><p>Внутренний доступ</p><h2>Рабочий<br>портал</h2><a href="login.html">Войти в систему</a><small>Для сотрудников Поликлиники № 2</small></aside>
+        <div class="hero-meta"><span>02 / Медицинская организация</span><span>Единая рабочая среда</span></div>
+      </section>
+      <section class="routes" aria-labelledby="routes-title">
+        <div class="routes-intro"><h2 id="routes-title">Единая точка<br>доступа</h2><p>Рабочие разделы, документы и инструменты собраны в одном служебном контуре.</p></div>
+        <div class="route-list">
+          <a class="route" href="dashboard.html"><span class="route-no">01</span><span><h3>Рабочий кабинет</h3><p>Персональная среда сотрудника</p></span><span class="route-arrow">↗</span></a>
+          <a class="route" href="quality.html"><span class="route-no">02</span><span><h3>ОКК и БМД</h3><p>Качество и безопасность деятельности</p></span><span class="route-arrow">↗</span></a>
+          <a class="route" href="training.html"><span class="route-no">03</span><span><h3>Обучение</h3><p>Развитие компетенций и материалы</p></span><span class="route-arrow">↗</span></a>
+          <a class="route" href="login.html"><span class="route-no">04</span><span><h3>Документы и регламенты</h3><p>Актуальные рабочие материалы</p></span><span class="route-arrow">↗</span></a>
+          <a class="route" href="login.html"><span class="route-no">05</span><span><h3>Росздравнадзор</h3><p>Сведения, алгоритмы и бланки</p></span><span class="route-arrow">↗</span></a>
         </div>
       </section>
-      <section class="workspace" aria-labelledby="workspace-title">
-        <div class="workspace-top"><h2 id="workspace-title">Рабочая среда</h2><p>Быстрый и понятный доступ к служебным разделам Поликлиники № 2.</p></div>
-        <div class="route-grid">
-          <a class="route route--wide" data-index="01" href="dashboard.html"><span class="route-type">Персональный контур</span><h3>Рабочий кабинет</h3><span class="route-arrow">↗</span></a>
-          <a class="route" data-index="02" href="quality.html"><span class="route-type">Качество</span><h3>ОКК и БМД</h3><span class="route-arrow">↗</span></a>
-          <a class="route" data-index="03" href="training.html"><span class="route-type">Развитие</span><h3>Обучение</h3><span class="route-arrow">↗</span></a>
-          <a class="route" data-index="04" href="login.html"><span class="route-type">Материалы</span><h3>Документы и регламенты</h3><span class="route-arrow">↗</span></a>
-          <a class="route route--wide" data-index="05" href="login.html"><span class="route-type">Росздравнадзор</span><h3>Сведения, алгоритмы и бланки</h3><span class="route-arrow">↗</span></a>
-        </div>
-      </section>
-      <section class="support" aria-label="Запрос доступа"><p><strong>Нет учётной записи?</strong>Доступ к рабочим разделам открывается после проверки и подтверждения администратором.</p><a href="register.html">Оформить доступ →</a></section>
+      <section class="access" aria-label="Запрос доступа"><p><b>Нет учётной записи?</b>Доступ к служебным разделам открывается после проверки администратором.</p><a href="register.html">Запросить доступ</a></section>
     </main>
-    <footer class="footer"><span>© 2026 Поликлиника № 2 · Сергиево-Посадская больница</span><span>Для авторизованных сотрудников</span></footer>
+    <footer class="footer"><span>© 2026 Поликлиника № 2 · Сергиево-Посадская больница</span><span>Доступ только для сотрудников</span></footer>
   </div>
 </body>
 </html>
